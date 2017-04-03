@@ -7,4 +7,9 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_chanhe_languange">UK/ΕΛ</string>
+    <string name="carString">Car</string>
+    <string name="motoString">Moto</string>
+    <string name="change_Language_String">Change Language</string>
+    <string name="main_language_changed_message">Language changed to English</string>
+    <string name="choose_what_to_insert_message">Choose what do yοu want to insert car/Moto</string>
 </resources>

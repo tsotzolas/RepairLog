@@ -3,8 +3,13 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="general_information">Αυτή η εφαρμογή έχει υλοποιηθεί για να κρατά τιςεργασίες συντήρησης των οχημάτων σου</string>
+    <string name="general_information">Αυτή η εφαρμογή έχει υλοποιηθεί για να κρατά τις εργασίες συντήρησης των οχημάτων σου</string>
 
     <string name="action_settings">Ρυθμήσεις</string>
     <string name="action_chanhe_languange">UK/ΕΛ</string>
+    <string name="carString">Αυτοκίνητο</string>
+    <string name="motoString">Μηχανή</string>
+    <string name="change_Language_String">Αλλαγή γλώσσας</string>
+    <string name="main_language_changed_message">Η γλώσσα άλλαξε σε Ελληνικά</string>
+    <string name="choose_what_to_insert_message">Επέλεξε τι θες να εισάγεις αυτοκίνητο/μηχανή</string>
 </resources>

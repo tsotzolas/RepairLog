@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackgroung"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="tsotzolas.ps.com.repairlog.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -28,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/general_information"
+                android:text="@string/choose_what_to_insert_message"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -47,29 +46,7 @@
             android:layout_marginRight="10pt"
             android:layout_marginTop="3pt">
 
-            <ImageButton
-                android:id="@+id/imageButtonCar"
-                android:layout_width="122dp"
-                android:layout_height="113dp"
-                android:background="@drawable/ic_car_24dp"
-                android:layout_marginLeft="10pt"
-                android:layout_marginRight="10pt"
-                android:layout_marginTop="3pt"
-                tools:layout_editor_absoluteX="46dp"
-                tools:layout_editor_absoluteY="173dp"
-                android:onClick="carSelected"/>
 
-            <ImageButton
-                android:id="@+id/imageButtonMoto"
-                android:layout_width="103dp"
-                android:layout_height="113dp"
-                android:layout_marginLeft="10pt"
-                android:layout_marginRight="10pt"
-                android:layout_marginTop="3pt"
-                android:background="@drawable/ic_motorcycle_dp"
-                tools:layout_editor_absoluteX="220dp"
-                tools:layout_editor_absoluteY="173dp"
-                android:onClick="motoSelected"/>
 
         </LinearLayout>
 
@@ -91,7 +68,7 @@
                 android:text="@string/carString"
                 tools:layout_editor_absoluteX="46dp"
                 tools:layout_editor_absoluteY="173dp"
-                android:onClick="carSelected"/>
+                android:onClick="selectCar"/>
 
             <Button
                 android:id="@+id/buttonMoto"
@@ -103,7 +80,7 @@
                 android:layout_marginTop="3pt"
                 tools:layout_editor_absoluteX="220dp"
                 tools:layout_editor_absoluteY="173dp"
-                android:onClick="motoSelected"/>
+                android:onClick="selectMoto"/>
 
         </LinearLayout>
 
