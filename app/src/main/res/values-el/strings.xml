@@ -12,4 +12,10 @@
     <string name="change_Language_String">Αλλαγή γλώσσας</string>
     <string name="main_language_changed_message">Η γλώσσα άλλαξε σε Ελληνικά</string>
     <string name="choose_what_to_insert_message">Επέλεξε τι θες να εισάγεις αυτοκίνητο/μηχανή</string>
+
+    <!--Car Insert-->
+    <string name="insert_vehicle_brand">Μάρκα</string>
+    <string name="insert_vehicle_model">Μοντέλο</string>
+    <string name="insert_vehicle_instructions">Συμπληρώστε τα στοιχεία του αυτοκινήτου σας</string>
+    <string name="insert_vehicle_add_photo">Προσθέστε Φωτογραφία</string>
 </resources>

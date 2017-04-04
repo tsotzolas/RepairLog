@@ -11,10 +11,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp">
+        tools:layout_editor_absoluteX="-1dp">
 
         <LinearLayout
             android:id="@+id/linearLayout1"
@@ -27,8 +27,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/choose_what_to_insert_message"
+                android:text="@string/insert_vehicle_instructions"
                 android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -38,174 +39,116 @@
                 app:layout_constraintVertical_bias="0.033" />
         </LinearLayout>
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/linearLayout2"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="10pt"-->
-            <!--android:layout_marginRight="10pt"-->
-            <!--android:layout_marginTop="3pt">-->
+
+        <LinearLayout
+            android:id="@+id/linearLayout212"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10pt"
+            android:layout_marginRight="10pt"
+            android:layout_marginTop="3pt"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10pt"
+                android:layout_marginRight="10pt"
+                android:layout_marginTop="3pt"
+                android:text="@string/insert_vehicle_brand"
+                android:textAlignment="gravity"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorWhite" />
+
+
+            <EditText
+                android:id="@+id/carBrand"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10pt"
+                android:layout_marginRight="10pt"
+                android:layout_marginTop="3pt"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout211"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10pt"
+            android:layout_marginRight="10pt"
+            android:layout_marginTop="3pt"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10pt"
+                android:layout_marginRight="10pt"
+                android:layout_marginTop="3pt"
+                android:text="@string/insert_vehicle_model"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorWhite" />
+
+
+            <EditText
+                android:id="@+id/carmodel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10pt"
+                android:layout_marginRight="10pt"
+                android:layout_marginTop="3pt"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout21"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10pt"
+            android:layout_marginRight="10pt"
+            android:layout_marginTop="3pt"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/photoButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="dispatchTakePictureIntent"
+                android:text="@string/insert_vehicle_add_photo" />
 
 
 
-        <!--</LinearLayout>-->
+        </LinearLayout>
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/linearLayout3"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="10pt"-->
-            <!--android:layout_marginRight="10pt"-->
-            <!--android:layout_marginTop="3pt">-->
-
-           <!--<TextView-->
-               <!--android:layout_width="match_parent"-->
-               <!--android:layout_height="match_parent"-->
-               <!--android:layout_marginLeft="10pt"-->
-               <!--android:layout_marginRight="10pt"-->
-               <!--android:layout_marginTop="3pt"-->
-               <!--android:text="test"/>-->
+        <LinearLayout
+            android:id="@+id/linearLayout215"
+            android:layout_width="match_parent"
+            android:layout_height="234dp"
+            android:layout_marginLeft="10pt"
+            android:layout_marginRight="10pt"
+            android:layout_marginTop="3pt"
+            android:orientation="horizontal">
 
 
-            <!--<EditTextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10pt"-->
-                <!--android:layout_marginRight="10pt"-->
-                <!--android:layout_marginTop="3pt"-->
-                <!--android:text="test"/>-->
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10pt"
+                android:layout_marginRight="10pt"
+                android:layout_marginTop="3pt"/>
 
-        <!--</LinearLayout>-->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/linearLayout4"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="10pt"-->
-            <!--android:layout_marginRight="10pt"-->
-            <!--android:layout_marginTop="3pt">-->
+        </LinearLayout>
 
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10pt"-->
-                <!--android:layout_marginRight="10pt"-->
-                <!--android:layout_marginTop="3pt"-->
-                <!--android:text="test"/>-->
-
-
-            <!--<EditTextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10pt"-->
-                <!--android:layout_marginRight="10pt"-->
-                <!--android:layout_marginTop="3pt"-->
-                <!--android:text="test"/>-->
-
-        <!--</LinearLayout>-->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/linearLayout5"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="10pt"-->
-            <!--android:layout_marginRight="10pt"-->
-            <!--android:layout_marginTop="3pt">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10pt"-->
-                <!--android:layout_marginRight="10pt"-->
-                <!--android:layout_marginTop="3pt"-->
-                <!--android:text="test"/>-->
-
-
-            <!--<EditTextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10pt"-->
-                <!--android:layout_marginRight="10pt"-->
-                <!--android:layout_marginTop="3pt"-->
-                <!--android:text="test"/>-->
-
-        <!--</LinearLayout>-->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/linearLayout6"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="10pt"-->
-            <!--android:layout_marginRight="10pt"-->
-            <!--android:layout_marginTop="3pt">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10pt"-->
-                <!--android:layout_marginRight="10pt"-->
-                <!--android:layout_marginTop="3pt"-->
-                <!--android:text="test"/>-->
-
-
-            <!--<EditTextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10pt"-->
-                <!--android:layout_marginRight="10pt"-->
-                <!--android:layout_marginTop="3pt"-->
-                <!--android:text="test"/>-->
-
-        <!--</LinearLayout>-->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/linearLayout7"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="10pt"-->
-            <!--android:layout_marginRight="10pt"-->
-            <!--android:layout_marginTop="3pt">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10pt"-->
-                <!--android:layout_marginRight="10pt"-->
-                <!--android:layout_marginTop="3pt"-->
-                <!--android:text="test"/>-->
-
-
-            <!--<EditTextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10pt"-->
-                <!--android:layout_marginRight="10pt"-->
-                <!--android:layout_marginTop="3pt"-->
-                <!--android:text="test"/>-->
-
-        <!--</LinearLayout>-->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/linearLayout8"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="10pt"-->
-            <!--android:layout_marginRight="10pt"-->
-            <!--android:layout_marginTop="3pt">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10pt"-->
-                <!--android:layout_marginRight="10pt"-->
-                <!--android:layout_marginTop="3pt"-->
-                <!--android:text="test"/>-->
-
-
-            <!--<EditTextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10pt"-->
-                <!--android:layout_marginRight="10pt"-->
-                <!--android:layout_marginTop="3pt"-->
-                <!--android:text="test"/>-->
-
-        <!--</LinearLayout>-->
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
