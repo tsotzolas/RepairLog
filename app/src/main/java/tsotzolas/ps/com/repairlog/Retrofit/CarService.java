@@ -15,6 +15,6 @@ import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
 public interface CarService {
 
     @GET("/api/0.3")
-    Call <List<Make>> getMake(@Query("cmd") String cmd, @Query("year") String year, @Query("sold_in_us") String soldInUS);
+    Call <Make> getMake(@Query("cmd") String cmd, @Query("year") String year, @Query("sold_in_us") String soldInUS);
 
     }

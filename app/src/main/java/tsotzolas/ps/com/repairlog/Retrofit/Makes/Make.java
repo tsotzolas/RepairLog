@@ -1,53 +1,26 @@
 
 package tsotzolas.ps.com.repairlog.Retrofit.Makes;
+
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Make {
 
-    @SerializedName("make_id")
+    @SerializedName("Makes")
     @Expose
-    private String makeId;
-    @SerializedName("make_display")
-    @Expose
-    private String makeDisplay;
-    @SerializedName("make_is_common")
-    @Expose
-    private String makeIsCommon;
-    @SerializedName("make_country")
-    @Expose
-    private String makeCountry;
+    private List<Make_> makes = null;
 
-    public String getMakeId() {
-        return makeId;
+    public Make(List<Make_> makes) {
+        this.makes = makes;
     }
 
-    public void setMakeId(String makeId) {
-        this.makeId = makeId;
+    public List<Make_> getMakes() {
+        return makes;
     }
 
-    public String getMakeDisplay() {
-        return makeDisplay;
-    }
-
-    public void setMakeDisplay(String makeDisplay) {
-        this.makeDisplay = makeDisplay;
-    }
-
-    public String getMakeIsCommon() {
-        return makeIsCommon;
-    }
-
-    public void setMakeIsCommon(String makeIsCommon) {
-        this.makeIsCommon = makeIsCommon;
-    }
-
-    public String getMakeCountry() {
-        return makeCountry;
-    }
-
-    public void setMakeCountry(String makeCountry) {
-        this.makeCountry = makeCountry;
+    public void setMakes(List<Make_> makes) {
+        this.makes = makes;
     }
 
 }

@@ -1,5 +1,7 @@
 package tsotzolas.ps.com.repairlog;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -7,9 +9,13 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,8 +35,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import tsotzolas.ps.com.repairlog.Retrofit.Car;
 import tsotzolas.ps.com.repairlog.Retrofit.CarService;
-import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
+//import tsotzolas.ps.com.repairlog.Retrofit.Makes.Example;
+//import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
+import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make_;
 
 /**
  * Created by tsotzolas on 3/4/2017.
@@ -43,11 +52,19 @@ public class InsertCarActivity extends AppCompatActivity {
     private EditText carmodel;
     private Button  photoButton;
     private ImageView mImageView;
+    private static Make_ selectedMake ;
+//    private Make makeList;
+    private Car car;
 
     public static final String BASE_URL = "https://www.carqueryapi.com/"+"?callback=?";
 
+    public static Make_ getSelectedMake() {
+        return selectedMake;
+    }
 
-
+    public static void setSelectedMake(Make_ selectedMake) {
+        InsertCarActivity.selectedMake = selectedMake;
+    }
 
 
     @Override
@@ -64,7 +81,12 @@ public class InsertCarActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (selectedMake!=null)
+        carBrand.setText(selectedMake.getMakeDisplay());
+    }
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     public void dispatchTakePictureIntent(View view) {
@@ -93,42 +115,8 @@ public class InsertCarActivity extends AppCompatActivity {
 
     public void loadMakes(View view) {
 
-//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//
-//        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-
-                .build();
-
-
-        CarService carService = retrofit.create(CarService.class);
-        carService.getMake("getMakes","2000","1").enqueue(new Callback<List<Make>>() {
-            @Override
-            public void onResponse(Call<List<Make>> call, Response<List<Make>> response) {
-                if (response.isSuccessful()) {
-                    List<Make> makeList = response.body();
-                    Log.i(TAG, "New Pet: " + makeList.size());
-                    Log.i(TAG,"-------->"+call.request().url());
-                } else {
-                    Log.e(TAG, "Failed. Status: " + response.code());
-                    Log.i(TAG,"-------->"+call.request().url());
-                }
-            }
-
-
-            @Override
-            public void onFailure(Call<List<Make>> call, Throwable t) {
-                Log.e(TAG, "Failed. Error: " + t.getMessage());
-            }
-        });
+        Intent kii = new Intent(this, SelectCarMakeActivity.class);
+        startActivity(kii);
     }
 
 
@@ -160,4 +148,12 @@ public class InsertCarActivity extends AppCompatActivity {
     }
 
 
+    public abstract class OnClickListener implements DialogInterface.OnClickListener {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+        }
+
+        public abstract void onClick(InsertCarActivity dialog, int which);
+    }
 }
