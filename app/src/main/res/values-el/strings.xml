@@ -19,4 +19,5 @@
     <string name="insert_vehicle_instructions">Συμπληρώστε τα στοιχεία του αυτοκινήτου σας</string>
     <string name="insert_vehicle_add_photo">Προσθέστε Φωτογραφία</string>
     <string name="insert_vehicle_select_car_make">Επέλεξε τη μάρκα του αυτοκινήτου σου</string>
+    <string name="insert_vehicle_year">Έτος</string>
 </resources>

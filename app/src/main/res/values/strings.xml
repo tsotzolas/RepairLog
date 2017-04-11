@@ -15,10 +15,11 @@
 
 
     <!--Car Insert-->
-    <string name="insert_vehicle_brand">Brand</string>
+    <string name="insert_vehicle_brand">Make</string>
     <string name="insert_vehicle_model">Model</string>
     <string name="insert_vehicle_instructions">Please fill your\'s car details</string>
     <string name="insert_vehicle_add_photo">Add Photo</string>
     <string name="insert_vehicle_select_car_make">Select your\'s cars make </string>
+    <string name="insert_vehicle_year">Year</string>
 
 </resources>
