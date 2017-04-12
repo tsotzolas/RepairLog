@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import tsotzolas.ps.com.repairlog.Retrofit.Car;
+//import tsotzolas.ps.com.repairlog.Retrofit.Car;
 //import tsotzolas.ps.com.repairlog.Retrofit.Makes.Example;
 //import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
 import tsotzolas.ps.com.repairlog.Retrofit.CarService;
@@ -70,7 +71,7 @@ public class InsertCarActivity extends AppCompatActivity {
     private List<String> modelListString1 = new ArrayList<>();
 
 
-    private Car car;
+//    private Car car;
 
 
     @Override
@@ -81,22 +82,16 @@ public class InsertCarActivity extends AppCompatActivity {
         carMakeSpinner = (Spinner) findViewById(R.id.carBrand);
         carmodelSpinner = (Spinner) findViewById(R.id.carModel);
         yearSpinner = (Spinner) findViewById(R.id.spinnerYear);
-
+        //Για να αλλάξεις το τριγωνάκι στον spinner
+        yearSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        carMakeSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        carmodelSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
 
         photoButton = (Button) findViewById(R.id.photoButton);
         mImageView = (ImageView) findViewById(R.id.imageView);
 
         addItemsOnSpinnerYear();
 
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-
-        Car car = realm.createObject(Car.class);
-        car.setMake("Test");
-        car.setModel("test");
-        car.setYear("2000");
-
-        realm.commitTransaction();
 
     }
 
@@ -115,8 +110,8 @@ public class InsertCarActivity extends AppCompatActivity {
 
 //        carMakeSpinner = (Spinner) findViewById(R.id.carBrand);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, yearList);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.layout.spinner_item, yearList);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         yearSpinner.setAdapter(dataAdapter);
 
         yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -175,7 +170,7 @@ public class InsertCarActivity extends AppCompatActivity {
 
                     makeListString1 = new ArrayList<String>();
                     //Βάζουμε αυτό στην αρχή για να ξέρουμε αν έχει επιλέξει κάτι ο χρήστης ή όχι
-                    if(!makeListString1.contains(".......")) {
+                    if (!makeListString1.contains(".......")) {
                         makeListString1.add(".......");
                     }
                     //Γεμίζουμε τη list με τα makes
@@ -257,8 +252,8 @@ public class InsertCarActivity extends AppCompatActivity {
 
     private void fillListMakes() {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, makeListString1);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.layout.spinner_item, makeListString1);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
         //Γεμίζουμε τον spinner
         carMakeSpinner.setAdapter(dataAdapter);
@@ -322,7 +317,7 @@ public class InsertCarActivity extends AppCompatActivity {
                     Log.i(TAG, "-------->" + modelList.getModels().get(0).getModelName());
 
                     modelListString1 = new ArrayList<String>();
-                    if(!modelListString1.contains(".......")) {
+                    if (!modelListString1.contains(".......")) {
                         modelListString1.add(".......");
                     }
                     for (int i = 0; i < modelList.getModels().size(); i++) {
@@ -345,14 +340,14 @@ public class InsertCarActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     private void fillListModels() {
         //Εδω είναι που γεμίζεις τον spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, modelListString1);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.layout.spinner_item, modelListString1);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+
         carmodelSpinner.setAdapter(dataAdapter);
 
         carmodelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -360,7 +355,7 @@ public class InsertCarActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 model = carmodelSpinner.getSelectedItem().toString();
-                Log.d(TAG+"____++++---->", model);
+                Log.d(TAG + "____++++---->", model);
 
             }
 
@@ -369,7 +364,6 @@ public class InsertCarActivity extends AppCompatActivity {
 //                Toast.makeText(Con, R.string.insert_vehicle_year, Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
     }
@@ -417,16 +411,6 @@ public class InsertCarActivity extends AppCompatActivity {
 
         public abstract void onClick(InsertCarActivity dialog, int which);
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }
