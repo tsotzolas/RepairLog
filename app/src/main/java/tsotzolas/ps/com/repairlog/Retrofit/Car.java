@@ -1,10 +1,13 @@
 package tsotzolas.ps.com.repairlog.Retrofit;
 
+import io.realm.Realm;
+import io.realm.RealmObject;
+
 /**
  * Created by tsotzo on 10/4/2017.
  */
 
-public class Car {
+public class Car extends RealmObject{
     private String make;
     private String year;
     private String model;

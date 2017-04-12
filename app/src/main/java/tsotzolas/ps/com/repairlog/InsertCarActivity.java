@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -87,6 +88,15 @@ public class InsertCarActivity extends AppCompatActivity {
 
         addItemsOnSpinnerYear();
 
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+
+        Car car = realm.createObject(Car.class);
+        car.setMake("Test");
+        car.setModel("test");
+        car.setYear("2000");
+
+        realm.commitTransaction();
 
     }
 
@@ -407,6 +417,17 @@ public class InsertCarActivity extends AppCompatActivity {
 
         public abstract void onClick(InsertCarActivity dialog, int which);
     }
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
