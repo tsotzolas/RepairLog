@@ -3,7 +3,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="general_information">This application is made for keep your reapair logs for your vehicles</string>
+    <string name="general_information">This application is made for keep your repair logs for your vehicles</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_chanhe_languange">UK/ΕΛ</string>
@@ -17,7 +17,8 @@
     <!--Car Insert-->
     <string name="insert_vehicle_brand">Make</string>
     <string name="insert_vehicle_model">Model</string>
-    <string name="insert_vehicle_instructions">Please fill your\'s car details</string>
+    <string name="insert_car_instructions">Please fill your\'s car details</string>
+    <string name="insert_moto_instructions">Please fill your\'s moto details</string>
     <string name="insert_vehicle_add_photo">Add Photo</string>
     <string name="insert_vehicle_select_car_make">Select your\'s cars make </string>
     <string name="insert_vehicle_year">Year</string>

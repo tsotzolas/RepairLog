@@ -44,6 +44,8 @@ public class ChooseToInsertActivity extends AppCompatActivity{
     public void selectMoto(View view){
 
         Toast.makeText(this, "Select Moto", Toast.LENGTH_SHORT).show();
+        Intent ki = new Intent(this, InsertMotoActivity.class);
+        startActivity(ki);
 
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -313,8 +314,8 @@ public class InsertCarActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     modelList = response.body();
                     Log.i(TAG, "New Pet: " + modelList.getModels().size());
-                    Log.i(TAG, "-------->" + call.request().url());
-                    Log.i(TAG, "-------->" + modelList.getModels().get(0).getModelName());
+//                    Log.i(TAG, "-------->" + call.request().url());
+//                    Log.i(TAG, "-------->" + modelList.getModels().get(0).getModelName());
 
                     modelListString1 = new ArrayList<String>();
                     if (!modelListString1.contains(".......")) {
@@ -413,6 +414,18 @@ public class InsertCarActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putAll(outState);
+        super.onSaveInstanceState(outState, outPersistentState);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+    }
 }
 
 
