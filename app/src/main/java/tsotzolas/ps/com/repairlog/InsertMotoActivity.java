@@ -3,8 +3,11 @@ package tsotzolas.ps.com.repairlog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -126,33 +129,9 @@ public class InsertMotoActivity extends AppCompatActivity {
 
 
 
-    /*****************************
-     * Για την φωτογραφία
-     */
-
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-
-    public void dispatchTakePictureIntent(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            mImageView.setImageBitmap(imageBitmap);
-        }
-    }
 
-    public void selectForPhoto(View view) {
-
-
-    }
 
 
     public abstract class OnClickListener implements DialogInterface.OnClickListener {
@@ -164,6 +143,64 @@ public class InsertMotoActivity extends AppCompatActivity {
         public abstract void onClick(InsertMotoActivity dialog, int which);
     }
 
+
+
+
+
+    /*****************************
+     * Για την φωτογραφία
+     */
+
+    int RESULT_LOAD_IMAGE = 346;
+
+    public void LoadImage(View view) {
+        Intent i = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+//            Bitmap resizedBitmap = Bitmap.createScaledBitmap(roughBitmap, (int) (roughBitmap.getWidth() * values[0]), (int) (roughBitmap.getHeight() * values[4]), true);
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inSampleSize = sampleSize;
+
+            final int maxSize = 960;
+            int outWidth;
+            int outHeight;
+            int inWidth = BitmapFactory.decodeFile(picturePath).getWidth();
+            int inHeight = BitmapFactory.decodeFile(picturePath).getHeight();
+            if (inWidth > inHeight) {
+                outWidth = maxSize;
+                outHeight = (inHeight * maxSize) / inWidth;
+            } else {
+                outHeight = maxSize;
+                outWidth = (inWidth * maxSize) / inHeight;
+            }
+
+            Bitmap t = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath), outWidth, outHeight, false);
+            mImageView.setImageBitmap(t);
+
+        }
+
+
+    }
 
 }
 
