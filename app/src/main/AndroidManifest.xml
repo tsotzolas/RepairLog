@@ -9,7 +9,7 @@
     <application
         android:allowBackup="true"
         android:configChanges="orientation|screenSize"
-        android:icon="@mipmap/ic_logo"
+        android:icon="@drawable/car_repair_blue_256"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
