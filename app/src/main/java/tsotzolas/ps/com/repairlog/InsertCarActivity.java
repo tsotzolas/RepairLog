@@ -1,5 +1,6 @@
 package tsotzolas.ps.com.repairlog;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -80,6 +82,8 @@ public class InsertCarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.insert_car);
 
+
+
         carMakeSpinner = (Spinner) findViewById(R.id.carBrand);
         carmodelSpinner = (Spinner) findViewById(R.id.carModel);
         yearSpinner = (Spinner) findViewById(R.id.spinnerYear);
@@ -139,13 +143,38 @@ public class InsertCarActivity extends AppCompatActivity {
      *********************************************/
 
 
+
+    @VisibleForTesting
+    public ProgressDialog mProgressDialog;
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage("loading");
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+
+
+
+
+
     /**************************************************
      *Για το Make*******************Start*************
      *************************************************/
 
 
     public void loadMakes() {
-
+        showProgressDialog();
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -183,6 +212,7 @@ public class InsertCarActivity extends AppCompatActivity {
 
                     //Καλούμε για να γεμίσουμε τις makes
                     fillListMakes();
+                    hideProgressDialog();
                 } else {
                     Log.e(TAG, "Failed. Status: " + response.code());
                     Log.i(TAG, "-------->" + call.request().url());
@@ -295,7 +325,7 @@ public class InsertCarActivity extends AppCompatActivity {
 
     // add items into spinner dynamically
     public void loadModels() {
-
+        showProgressDialog();
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -327,9 +357,11 @@ public class InsertCarActivity extends AppCompatActivity {
                     }
 
                     fillListModels();
+                    hideProgressDialog();
                 } else {
                     Log.e(TAG, "Failed. Status: " + response.code());
                     Log.i(TAG, "-------->" + call.request().url());
+                    hideProgressDialog();
                 }
             }
 
@@ -367,6 +399,11 @@ public class InsertCarActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
     }
 
 
