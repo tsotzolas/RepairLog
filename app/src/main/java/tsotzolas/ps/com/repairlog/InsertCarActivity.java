@@ -59,28 +59,36 @@ import tsotzolas.ps.com.repairlog.Retrofit.Model.Model_;
 public class InsertCarActivity extends AppCompatActivity {
     private static final String TAG = InsertCarActivity.class.getSimpleName();
 
-    private Spinner carMakeSpinner;
-    private Spinner carmodelSpinner;
-    private Spinner yearSpinner;
-    private Button photoButton;
-    private ImageView mImageView;
+
     private String year;
     private String carMake;
     private String carModel;
+    private String cc;
     private Bitmap bitmap;
     private Vehicle carVehicle;
     private boolean orientation=false;
 
+    public static final String BASE_URL = "https://www.carqueryapi.com/" + "?callback=?";
+
 
     private Realm realm;
 
+    private Spinner carMakeSpinner;
+    private Spinner carmodelSpinner;
+    private Spinner yearSpinner;
+    private Spinner ccSpinner;
+    private Button photoButton;
+    private ImageView mImageView;
 
-    public static final String BASE_URL = "https://www.carqueryapi.com/" + "?callback=?";
+
+
     //Για την εταιρία
     private Make makeList;
     private List<Make_> makeList1 = new ArrayList<>();
     private List<String> makeListString1 = new ArrayList<>();
+
     private MyAdapterMakes myadapter;
+
 
 
     private Model modelList;
@@ -104,17 +112,22 @@ public class InsertCarActivity extends AppCompatActivity {
         carMakeSpinner = (Spinner) findViewById(R.id.carBrand);
         carmodelSpinner = (Spinner) findViewById(R.id.carModel);
         yearSpinner = (Spinner) findViewById(R.id.spinnerYear);
+        ccSpinner = (Spinner)findViewById(R.id.carCC);
         //Για να αλλάξεις το τριγωνάκι στον spinner
         yearSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
         carMakeSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
         carmodelSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        ccSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
 
         photoButton = (Button) findViewById(R.id.photoButton);
         mImageView = (ImageView) findViewById(R.id.imageView);
 
-        if(!orientation) {
-            addItemsOnSpinnerYear();
-        }
+//        if(!orientation) {
+//            addItemsOnSpinnerYear();
+//        }
+        addItemsOnSpinnerYear();
+
+
 
     }
 
@@ -169,13 +182,19 @@ public class InsertCarActivity extends AppCompatActivity {
      *********************************************/
 
 
+
+    /*********************************************
+     * Για το pregress bar*********Start*******
+     *********************************************/
+
+
     @VisibleForTesting
     public ProgressDialog mProgressDialog;
 
     public void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("loading");
+            mProgressDialog.setMessage("Loading");
             mProgressDialog.setIndeterminate(true);
         }
 
@@ -187,6 +206,10 @@ public class InsertCarActivity extends AppCompatActivity {
             mProgressDialog.dismiss();
         }
     }
+
+    /*********************************************
+     * Για το pregress bar*********Finish*******
+     *********************************************/
 
 
     /**************************************************
@@ -406,6 +429,8 @@ public class InsertCarActivity extends AppCompatActivity {
 
         carmodelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+
+
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 carModel = carmodelSpinner.getSelectedItem().toString();
@@ -419,6 +444,8 @@ public class InsertCarActivity extends AppCompatActivity {
             }
         });
 
+        addItemsOnSpinnerCC();
+//
 
     }
 
@@ -431,6 +458,66 @@ public class InsertCarActivity extends AppCompatActivity {
     /**************************************************
      *Για το Models***************Finish***************
      *************************************************/
+
+
+
+
+
+
+    // add items into spinner dynamically
+    public void addItemsOnSpinnerCC() {
+
+        List<String> ccList = new ArrayList<String>();
+        ccList.add(".......");
+         int ccc = 900;
+        ccList.add("900");
+        ccList.add("1000");
+        ccList.add("1100");
+        ccList.add("1200");
+        ccList.add("1300");
+        ccList.add("1400");
+        ccList.add("1500");
+        ccList.add("1600");
+        ccList.add("1700");
+        ccList.add("1800");
+        ccList.add("1900");
+        ccList.add("2000");
+        ccList.add("2200");
+        ccList.add("2400");
+
+//        while (ccc <2500){
+//            int k = ccc;
+//            k = k+100;
+//            ccList.add(String.valueOf(k));
+//        }
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, ccList);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        ccSpinner.setAdapter(dataAdapter);
+
+        ccSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                 cc = ccSpinner.getSelectedItem().toString();
+                Log.d(TAG, year);
+//                if (!year.equals(".......")) {
+//                    loadMakes();
+//                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+//                Toast.makeText(Con, R.string.insert_vehicle_year, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+
+
+
 
 
     public abstract class OnClickListener implements DialogInterface.OnClickListener {
@@ -521,13 +608,17 @@ public class InsertCarActivity extends AppCompatActivity {
         carVehicle.setMake(carMake);
         carVehicle.setModel(carModel);
         carVehicle.setYear(year);
+        carVehicle.setCc(cc);
 
 
-        //Για να βάλω την φωτογραφία
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        carVehicle.setPhoto(stream.toByteArray());
-
+        if (bitmap !=null) {
+            //Για να βάλω την φωτογραφία
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            carVehicle.setPhoto(stream.toByteArray());
+        }else {
+            carVehicle.setPhoto(null);
+        }
 
         //Για να αποθυκεύσω το Realm Object
         realm.beginTransaction();

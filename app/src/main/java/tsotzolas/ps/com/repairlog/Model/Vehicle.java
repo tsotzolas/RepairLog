@@ -14,17 +14,19 @@ public class Vehicle extends RealmObject{
     private String make;
     private String year;
     private String model;
+    private String cc;
     private byte[] photo;
     private boolean isCar;
 
     public Vehicle() {
     }
 
-    public Vehicle(String id, String make, String year, String model, byte[] photo, boolean isCar) {
+    public Vehicle(String id, String make, String year, String model, String cc, byte[] photo, boolean isCar) {
         this.id = id;
         this.make = make;
         this.year = year;
         this.model = model;
+        this.cc = cc;
         this.photo = photo;
         this.isCar = isCar;
     }
@@ -33,7 +35,7 @@ public class Vehicle extends RealmObject{
         return id;
     }
 
-   public void setId(String id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -59,6 +61,14 @@ public class Vehicle extends RealmObject{
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public String getCc() {
+        return cc;
+    }
+
+    public void setCc(String cc) {
+        this.cc = cc;
     }
 
     public byte[] getPhoto() {
