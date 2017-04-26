@@ -22,5 +22,7 @@
     <string name="insert_vehicle_add_photo">Add Photo</string>
     <string name="insert_vehicle_select_car_make">Select your\'s cars make </string>
     <string name="insert_vehicle_year">Year</string>
+    <string name="insert_vehicle_car_saved">The new car has been saved</string>
+    <string name="insert_vehicle_car_save">Save</string>
 
 </resources>

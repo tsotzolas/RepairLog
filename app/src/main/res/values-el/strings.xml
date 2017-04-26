@@ -21,4 +21,6 @@
     <string name="insert_vehicle_select_car_make">Επέλεξε τη μάρκα του αυτοκινήτου σου</string>
     <string name="insert_vehicle_year">Έτος</string>
     <string name="insert_moto_instructions">Συμπληρώστε τα στοιχεία της μηχανής σας</string>
+    <string name="insert_vehicle_car_saved">Το νέο αυτοκίνητο έχει αποθηκευτεί</string>
+    <string name="insert_vehicle_car_save">Αποθήκευση</string>
 </resources>

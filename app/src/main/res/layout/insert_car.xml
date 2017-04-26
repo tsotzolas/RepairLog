@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/inserCarP"
     android:background="@color/colorBackgroung"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -163,6 +164,23 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerYear"
         app:layout_constraintVertical_bias="0.615" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="81dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="saveCar"
+        android:text="@string/insert_vehicle_car_save"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintLeft_toRightOf="@+id/photoButton"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carModel"
+        app:layout_constraintVertical_bias="0.382" />
 
     <!--<ImageView-->
         <!--android:id="@+id/imageView"-->

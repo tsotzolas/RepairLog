@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,13 +25,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import io.realm.Realm;
 import retrofit2.Call;
@@ -41,6 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 //import tsotzolas.ps.com.repairlog.Retrofit.Car;
 //import tsotzolas.ps.com.repairlog.Retrofit.Makes.Example;
 //import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
+import tsotzolas.ps.com.repairlog.Model.Vehicle;
 import tsotzolas.ps.com.repairlog.Retrofit.CarService;
 import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
 import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make_;
@@ -61,7 +66,13 @@ public class InsertCarActivity extends AppCompatActivity {
     private ImageView mImageView;
     private String year;
     private String carMake;
-    private String model;
+    private String carModel;
+    private Bitmap bitmap;
+    private Vehicle carVehicle;
+    private boolean orientation=false;
+
+
+    private Realm realm;
 
 
     public static final String BASE_URL = "https://www.carqueryapi.com/" + "?callback=?";
@@ -86,6 +97,9 @@ public class InsertCarActivity extends AppCompatActivity {
         setContentView(R.layout.insert_car);
 
 
+        //Αρχικοποίηση του Realm
+        realm = Realm.getDefaultInstance();
+
 
         carMakeSpinner = (Spinner) findViewById(R.id.carBrand);
         carmodelSpinner = (Spinner) findViewById(R.id.carModel);
@@ -98,10 +112,18 @@ public class InsertCarActivity extends AppCompatActivity {
         photoButton = (Button) findViewById(R.id.photoButton);
         mImageView = (ImageView) findViewById(R.id.imageView);
 
-        addItemsOnSpinnerYear();
-
+        if(!orientation) {
+            addItemsOnSpinnerYear();
+        }
 
     }
+
+
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        orientation = true;
+    }
+
 
     /*********************************************
      * Για το year*******************Start********
@@ -141,10 +163,10 @@ public class InsertCarActivity extends AppCompatActivity {
         });
 
     }
+
     /*********************************************
      * Για το year*******************Finish*******
      *********************************************/
-
 
 
     @VisibleForTesting
@@ -165,10 +187,6 @@ public class InsertCarActivity extends AppCompatActivity {
             mProgressDialog.dismiss();
         }
     }
-
-
-
-
 
 
     /**************************************************
@@ -390,8 +408,8 @@ public class InsertCarActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                model = carmodelSpinner.getSelectedItem().toString();
-                Log.d(TAG + "____++++---->", model);
+                carModel = carmodelSpinner.getSelectedItem().toString();
+                Log.d(TAG + "____++++---->", carModel);
 
             }
 
@@ -413,9 +431,6 @@ public class InsertCarActivity extends AppCompatActivity {
     /**************************************************
      *Για το Models***************Finish***************
      *************************************************/
-
-
-
 
 
     public abstract class OnClickListener implements DialogInterface.OnClickListener {
@@ -440,7 +455,6 @@ public class InsertCarActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
     }
-
 
 
     /*****************************
@@ -482,7 +496,7 @@ public class InsertCarActivity extends AppCompatActivity {
             int outHeight;
             int inWidth = BitmapFactory.decodeFile(picturePath).getWidth();
             int inHeight = BitmapFactory.decodeFile(picturePath).getHeight();
-            if(inWidth > inHeight){
+            if (inWidth > inHeight) {
                 outWidth = maxSize;
                 outHeight = (inHeight * maxSize) / inWidth;
             } else {
@@ -490,8 +504,8 @@ public class InsertCarActivity extends AppCompatActivity {
                 outWidth = (inWidth * maxSize) / inHeight;
             }
 
-            Bitmap t = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath),outWidth, outHeight, false);
-            mImageView.setImageBitmap(t);
+            bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath), outWidth, outHeight, false);
+            mImageView.setImageBitmap(bitmap);
 
         }
 
@@ -499,7 +513,32 @@ public class InsertCarActivity extends AppCompatActivity {
     }
 
 
+    public void saveCar(View view){
+        //Γεμίζω το Realm Object
+        carVehicle = new Vehicle();
+        carVehicle.setCar(true);
+        carVehicle.setId(UUID.randomUUID().toString());
+        carVehicle.setMake(carMake);
+        carVehicle.setModel(carModel);
+        carVehicle.setYear(year);
 
+
+        //Για να βάλω την φωτογραφία
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        carVehicle.setPhoto(stream.toByteArray());
+
+
+        //Για να αποθυκεύσω το Realm Object
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(carVehicle);
+        realm.commitTransaction();
+
+        Toast.makeText(this, R.string.insert_vehicle_car_saved, Toast.LENGTH_LONG).show();
+        Intent ki = new Intent(this, MainActivity.class);
+        startActivity(ki);
+
+    }
 
 
 }
