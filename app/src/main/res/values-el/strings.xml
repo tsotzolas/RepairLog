@@ -23,4 +23,6 @@
     <string name="insert_moto_instructions">Συμπληρώστε τα στοιχεία της μηχανής σας</string>
     <string name="insert_vehicle_car_saved">Το νέο αυτοκίνητο έχει αποθηκευτεί</string>
     <string name="insert_vehicle_car_save">Αποθήκευση</string>
+    <string name="CC">cc</string>
+    <string name="see_your_vehicles">Δες τα οχήματά σου</string>
 </resources>
