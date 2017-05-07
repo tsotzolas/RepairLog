@@ -1,10 +1,12 @@
 package tsotzolas.ps.com.repairlog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,14 +32,17 @@ public class VehicleView extends AppCompatActivity {
 
     private Realm realm;
     private RealmResults<Vehicle> vehicleList;
+    public static Vehicle selectedVehicles = new Vehicle();
 
     private MyAdapter1 myAdapter1;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.vehicle_center);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         //Αρχικοποίηση του Realm
         realm = Realm.getDefaultInstance();
@@ -73,14 +78,17 @@ public class VehicleView extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(VehicleView.this, "Clicked " + parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(VehicleView.this, "Clicked!! " + parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                selectedVehicles = (Vehicle) parent.getItemAtPosition(position);
+
+                System.out.println("----->" + selectedVehicles.toString());
+                goToVehicleCenter();
+
             }
         });
+
+
     }
-
-
-
-
 
 
 
@@ -115,7 +123,7 @@ public class VehicleView extends AppCompatActivity {
 
 //            BitmapFactory.decodeByteArray(getItem(position).getPhoto(), 0, getItem(position).getPhoto().length);
 
-            holder.imageView.setImageBitmap( BitmapFactory.decodeByteArray(getItem(position).getPhoto(), 0, getItem(position).getPhoto().length));
+            holder.imageView.setImageBitmap(BitmapFactory.decodeByteArray(getItem(position).getPhoto(), 0, getItem(position).getPhoto().length));
             return rowView;
         }
 
@@ -128,6 +136,14 @@ public class VehicleView extends AppCompatActivity {
         }
     }
 
+    /**
+     * Is the method for going to goToVehicleCenter page
+     */
+    private void goToVehicleCenter() {
+
+        Intent ki = new Intent(this, VehicleCenter.class);
+        startActivity(ki);
+    }
 
 
 }

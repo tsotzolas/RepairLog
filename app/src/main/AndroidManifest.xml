@@ -44,6 +44,10 @@
 
         </activity>
 
+        <activity android:name=".VehicleCenter">
+
+        </activity>
+
         <activity
             android:name=".InsertCarActivity"
 
