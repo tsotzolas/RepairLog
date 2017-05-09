@@ -25,4 +25,7 @@
     <string name="insert_vehicle_car_save">Αποθήκευση</string>
     <string name="CC">cc</string>
     <string name="see_your_vehicles">Δες τα οχήματά σου</string>
+    <string name="Date">Ημ/νια</string>
+    <string name="cost">Κόστος</string>
+    <string name="desc">Περιγραφή</string>
 </resources>

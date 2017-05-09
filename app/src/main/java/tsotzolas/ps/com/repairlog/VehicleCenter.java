@@ -1,23 +1,16 @@
 package tsotzolas.ps.com.repairlog;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -35,8 +28,10 @@ public class VehicleCenter extends AppCompatActivity {
     private static final String TAG = VehicleCenter.class.getSimpleName();
 
     private Realm realm;
-    private RealmResults<Repair> repairList;
+    private RealmResults<Repair> repairRealmList;
+    private List<Repair> repairList;
     private Repair repair;
+    private MyAdapter1 myAdapter1;
 
 
 //    private MyAdapter1 myAdapter1;
@@ -51,74 +46,76 @@ public class VehicleCenter extends AppCompatActivity {
         setSupportActionBar(toolbar1);
         //Αρχικοποίηση του Realm
         realm = Realm.getDefaultInstance();
-        repair = new Repair();
-        repair.setRepairCost("12");
-        repair.setRepairDate(new Date());
-        repair.setRepairDescription("Test");
+//        repair = new Repair();
+//        repair.setVehicleId(selectedVehicles.getId());
+//        repair.setRepairCost("11");
+//        repair.setRepairDate(new Date());
+//        repair.setRepairDescription("Test11");
 
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        realm.copyToRealm(repair);
-        realm.commitTransaction();
+//        Realm realm = Realm.getDefaultInstance();
+//        realm.beginTransaction();
+//        realm.copyToRealm(repair);
+//        realm.commitTransaction();
+
+        //Εκτελούμε το ερώτημα
+        repairRealmList = realm.where(Repair.class)
+                .equalTo("vehicleId", selectedVehicles.getId())
+                .findAll();
+        repairList = realm.copyFromRealm(repairRealmList);
+
+        System.out.println("-------------------->"+ repairRealmList.size());
+        System.out.println("---->"+ repairRealmList.get(1).getRepairCost());
+        System.out.println("---->"+ repairRealmList.get(1).getRepairDescription());
 
 
-        repairList = realm.where(Repair.class).findAll();
-        System.out.println("-------------------->"+repairList.size());
 
+        myAdapter1 = new MyAdapter1(this, R.layout.view_list_row, repairList);
+
+        ListView listView = (ListView) findViewById(R.id.vehicleList1);
+        listView.setAdapter(myAdapter1);
 
 
     }
 
 
 
+    private class MyAdapter1 extends ArrayAdapter<Repair> {
+        public MyAdapter1(Context context, int resource, List<Repair> objects) {
+            super(context, resource, objects);
+        }
 
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View rowView = convertView;
+            if (rowView == null) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                rowView = inflater.inflate(R.layout.view_repairs_list_row, parent, false);
 
+                Holder holder = new Holder();
+                holder.dateTextView = (TextView) rowView.findViewById(R.id.date_repair_log1);
+                holder.kmTextView = (TextView) rowView.findViewById(R.id.km_repair_log1);
+                holder.costTextView = (TextView) rowView.findViewById(R.id.cost_repair_log1);
+                holder.descTextView = (TextView) rowView.findViewById(R.id.desc_repair_log1);
+                rowView.setTag(holder);
+            }
 
-//
-//    private class MyAdapter1 extends ArrayAdapter<Vehicle> {
-//        public MyAdapter1(Context context, int resource, List<Vehicle> objects) {
-//            super(context, resource, objects);
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            View rowView = convertView;
-//            if (rowView == null) {
-//                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                rowView = inflater.inflate(R.layout.view_list_row, parent, false);
-//
-//                Holder holder = new Holder();
-//                holder.modelTextView = (TextView) rowView.findViewById(R.id.vehicleModelView);
-//                holder.makeTextView = (TextView) rowView.findViewById(R.id.vehicleMakeView);
-//                holder.yearlTextView = (TextView) rowView.findViewById(R.id.vehicleYearView);
-//                holder.ccTextView = (TextView) rowView.findViewById(R.id.vehicleCCView);
-//                holder.imageView = (ImageView) rowView.findViewById(R.id.imageVehicleView);
-//                rowView.setTag(holder);
-//            }
-//
-//            Holder holder = (Holder) rowView.getTag();
-//            holder.modelTextView.setText(getItem(position).getModel());
-//            holder.makeTextView.setText(getItem(position).getMake());
-//            holder.yearlTextView.setText(getItem(position).getYear());
-//            holder.ccTextView.setText(getItem(position).getCc());
-//
-////            Bitmap b = getItem(position).getPhoto();
-//
-////            BitmapFactory.decodeByteArray(getItem(position).getPhoto(), 0, getItem(position).getPhoto().length);
-//
-//            holder.imageView.setImageBitmap( BitmapFactory.decodeByteArray(getItem(position).getPhoto(), 0, getItem(position).getPhoto().length));
-//            return rowView;
-//        }
-//
-//        class Holder {
-//            TextView makeTextView;
-//            TextView modelTextView;
-//            TextView yearlTextView;
-//            TextView ccTextView;
-//            ImageView imageView;
-//        }
-//    }
-//
+            Holder holder = (Holder) rowView.getTag();
+            holder.kmTextView.setText(getItem(position).getVehicleKM());
+            holder.dateTextView.setText("test");
+            holder.costTextView.setText(getItem(position).getRepairCost());
+            holder.descTextView.setText(getItem(position).getRepairDescription());
+
+            return rowView;
+        }
+
+        class Holder {
+            TextView dateTextView;
+            TextView kmTextView;
+            TextView costTextView;
+            TextView descTextView;
+        }
+    }
+
 
 
     private void gotoInsert(View view){
