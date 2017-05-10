@@ -24,11 +24,13 @@
     <string name="insert_vehicle_add_photo">Add Photo</string>
     <string name="insert_vehicle_select_car_make">Select your\'s cars make </string>
     <string name="insert_vehicle_year">Year</string>
-    <string name="insert_vehicle_car_saved">The new car has been saved</string>
+    <string name="insert_vehicle_car_saved">The car has been saved</string>
     <string name="insert_vehicle_car_save">Save</string>
     <string name="CC">cc</string>
     <string name="Date">Date</string>
     <string name="cost">cost</string>
     <string name="desc">Description</string>
+    <string name="vehicles_list">Vehicle List View</string>
+    <string name="repair_list">Repair List View</string>
 
 </resources>

@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -30,6 +32,11 @@ public class NewRepair extends AppCompatActivity {
     private Realm realm;
     private Repair repair;
 
+    private EditText dateEditText;
+    private EditText costEditText;
+    private EditText kmEditText;
+    private EditText descEditText;
+
 
 //    private MyAdapter1 myAdapter1;
 
@@ -39,6 +46,17 @@ public class NewRepair extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_repair);
+
+        dateEditText = (EditText) findViewById(R.id.editDate);
+        costEditText = (EditText) findViewById(R.id.editCost);
+        kmEditText = (EditText) findViewById(R.id.editKm);
+        kmEditText = (EditText) findViewById(R.id.editKm);
+        descEditText= (EditText) findViewById(R.id.editDesc);
+
+
+
+
+
         //Αρχικοποίηση του Realm
         realm = Realm.getDefaultInstance();
 //        repair = new Repair();
@@ -71,10 +89,25 @@ public class NewRepair extends AppCompatActivity {
 
 
 
-    public void addNewRepair(View view) {
+    public void save(View view) {
+
+        repair = new Repair();
+        repair.setRepairCost(costEditText.getText().toString());
+        repair.setRepairDate(dateEditText.getText().toString());
+        repair.setRepairDescription(descEditText.getText().toString());
+        repair.setVehicleKM(kmEditText.getText().toString());
+        repair.setVehicleId(selectedVehicles.getId());
 
 
-        Intent ki = new Intent(this, VehicleView.class);
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealm(repair);
+        realm.commitTransaction();
+
+
+        Toast.makeText(this, R.string.insert_vehicle_car_saved, Toast.LENGTH_SHORT).show();
+
+        Intent ki = new Intent(this, VehicleCenter.class);
         startActivity(ki);
 
 

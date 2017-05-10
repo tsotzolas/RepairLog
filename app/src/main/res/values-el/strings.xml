@@ -21,11 +21,13 @@
     <string name="insert_vehicle_select_car_make">Επέλεξε τη μάρκα του αυτοκινήτου σου</string>
     <string name="insert_vehicle_year">Έτος</string>
     <string name="insert_moto_instructions">Συμπληρώστε τα στοιχεία της μηχανής σας</string>
-    <string name="insert_vehicle_car_saved">Το νέο αυτοκίνητο έχει αποθηκευτεί</string>
+    <string name="insert_vehicle_car_saved">Το αυτοκίνητο έχει αποθηκευτεί</string>
     <string name="insert_vehicle_car_save">Αποθήκευση</string>
     <string name="CC">cc</string>
     <string name="see_your_vehicles">Δες τα οχήματά σου</string>
     <string name="Date">Ημ/νια</string>
     <string name="cost">Κόστος</string>
     <string name="desc">Περιγραφή</string>
+    <string name="vehicles_list">Λίστα οχημάτων</string>
+    <string name="repair_list">Λίστα Εργσιών</string>
 </resources>
