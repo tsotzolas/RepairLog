@@ -1,6 +1,7 @@
 package tsotzolas.ps.com.repairlog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -63,9 +65,9 @@ public class VehicleCenter extends AppCompatActivity {
                 .findAll();
         repairList = realm.copyFromRealm(repairRealmList);
 
-        System.out.println("-------------------->"+ repairRealmList.size());
-        System.out.println("---->"+ repairRealmList.get(1).getRepairCost());
-        System.out.println("---->"+ repairRealmList.get(1).getRepairDescription());
+//        System.out.println("-------------------->"+ repairRealmList.size());
+//        System.out.println("---->"+ repairRealmList.get(1).getRepairCost());
+//        System.out.println("---->"+ repairRealmList.get(1).getRepairDescription());
 
 
 
@@ -101,7 +103,7 @@ public class VehicleCenter extends AppCompatActivity {
 
             Holder holder = (Holder) rowView.getTag();
             holder.kmTextView.setText(getItem(position).getVehicleKM());
-            holder.dateTextView.setText("test");
+            holder.dateTextView.setText(getItem(position).getRepairDate().toString());
             holder.costTextView.setText(getItem(position).getRepairCost());
             holder.descTextView.setText(getItem(position).getRepairDescription());
 
@@ -123,6 +125,19 @@ public class VehicleCenter extends AppCompatActivity {
 //        startActivity(ki);
         System.out.println("Test");
     }
+
+
+
+
+    public void addNewRepair(View view) {
+
+
+        Intent ki = new Intent(this, NewRepair.class);
+        startActivity(ki);
+
+
+    }
+
 
 
 

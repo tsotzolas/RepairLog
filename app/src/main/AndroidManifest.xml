@@ -43,6 +43,9 @@
         <activity android:name=".VehicleView">
 
         </activity>
+        <activity android:name=".NewRepair">
+
+        </activity>
 
         <activity android:name=".VehicleCenter">
 

@@ -11,7 +11,7 @@ import io.realm.RealmObject;
 public class Repair extends RealmObject {
 
     private String repairId;
-    private Date repairDate;
+    private String repairDate;
     private String vehicleKM;
     private String repairDescription;
     private String repairCost;
@@ -21,7 +21,7 @@ public class Repair extends RealmObject {
 
     }
 
-    public Repair(String repairId, Date repairDate, String vehicleKM, String repairDescription, String repairCost, String vehicleId) {
+    public Repair(String repairId, String repairDate, String vehicleKM, String repairDescription, String repairCost, String vehicleId) {
         this.repairId = repairId;
         this.repairDate = repairDate;
         this.vehicleKM = vehicleKM;
@@ -38,11 +38,11 @@ public class Repair extends RealmObject {
         this.repairId = repairId;
     }
 
-    public Date getRepairDate() {
+    public String getRepairDate() {
         return repairDate;
     }
 
-    public void setRepairDate(Date repairDate) {
+    public void setRepairDate(String repairDate) {
         this.repairDate = repairDate;
     }
 
