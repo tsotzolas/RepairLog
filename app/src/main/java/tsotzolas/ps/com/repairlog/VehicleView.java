@@ -1,12 +1,15 @@
 package tsotzolas.ps.com.repairlog;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import tsotzolas.ps.com.repairlog.Model.Repair;
 import tsotzolas.ps.com.repairlog.Model.Vehicle;
 
 /**
@@ -31,8 +35,11 @@ public class VehicleView extends AppCompatActivity {
     private static final String TAG = VehicleView.class.getSimpleName();
 
     private Realm realm;
-    private RealmResults<Vehicle> vehicleList;
+    private RealmResults<Vehicle> vehicleRealmList;
+    public static Repair selectedRepair = new Repair();
     public static Vehicle selectedVehicles = new Vehicle();
+    private List<Vehicle> vehiclesList;
+
 
     private MyAdapter1 myAdapter1;
 
@@ -48,7 +55,7 @@ public class VehicleView extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
 
         //Κάνουμε ερώτημα στη Βάση για να φέρουμε όλα τα Pets και τα βάζουμε σε μία RealmList
-        vehicleList = realm.where(Vehicle.class).findAll();
+        vehicleRealmList = realm.where(Vehicle.class).findAll();
 
         //Για να αποθηκέυσω το αντικείμενο pet
 //        Vehicle pet = new (1, "Bob");
@@ -71,21 +78,28 @@ public class VehicleView extends AppCompatActivity {
 //        pets.add(new Pet(2, "Foo"));
 //        pets.add(new Pet(3, "Bar"));
 
-        myAdapter1 = new MyAdapter1(this, R.layout.view_list_row, vehicleList);
+        myAdapter1 = new MyAdapter1(this, R.layout.view_list_row, vehicleRealmList);
 
         ListView listView = (ListView) findViewById(R.id.vehicleList);
         listView.setAdapter(myAdapter1);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(VehicleView.this, "Clicked!! " + parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
-                selectedVehicles = (Vehicle) parent.getItemAtPosition(position);
+//                Toast.makeText(VehicleView.this, "Clicked!! " + parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                selectedVehicles= (Vehicle) parent.getItemAtPosition(position);
 
                 System.out.println("----->" + selectedVehicles.toString());
                 goToVehicleCenter();
 
             }
         });
+
+
+
+
+
+
+
 
 
     }
@@ -141,9 +155,18 @@ public class VehicleView extends AppCompatActivity {
      */
     private void goToVehicleCenter() {
 
-        Intent ki = new Intent(this, VehicleCenter.class);
+        Intent ki = new Intent(this, VehicleRepairs.class);
         startActivity(ki);
     }
 
+
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("CDA", "onBackPressed Called");
+        Intent ki = new Intent(this, MainActivity.class);
+        startActivity(ki);
+    }
 
 }

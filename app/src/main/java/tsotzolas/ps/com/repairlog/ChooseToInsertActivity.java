@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -51,7 +52,12 @@ public class ChooseToInsertActivity extends AppCompatActivity{
 
 
 
-
+    @Override
+    public void onBackPressed() {
+        Log.d("CDA", "onBackPressed Called");
+        Intent ki = new Intent(this, MainActivity.class);
+        startActivity(ki);
+    }
 
 
 }

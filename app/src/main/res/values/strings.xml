@@ -33,4 +33,7 @@
     <string name="vehicles_list">Vehicle List View</string>
     <string name="repair_list">Repair List View</string>
 
+
+    <string name="Question_delete_entry">Are you sure you want to delete this entry?</string>
+
 </resources>
