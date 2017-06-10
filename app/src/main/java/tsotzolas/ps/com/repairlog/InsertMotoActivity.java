@@ -7,10 +7,14 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,19 +26,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import tsotzolas.ps.com.repairlog.Model.Vehicle;
 import tsotzolas.ps.com.repairlog.Retrofit.CarService;
 import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
 import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make_;
@@ -53,24 +62,32 @@ public class InsertMotoActivity extends AppCompatActivity {
 
     private EditText motoMakeEditText;
     private EditText motoModelEditText;
+    private EditText motoCCEditText;
     private Spinner yearSpinner;
     private Button photoButton;
     private ImageView mImageView;
     private String year;
     private String motoMake;
-    private String model;
+    private String motomodel;
+    private String motocc;
+    private Vehicle motoVehicle;
+    private Bitmap bitmap;
 
-
-
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.insert_moto);
 
+
+        //Αρχικοποίηση του Realm
+        realm = Realm.getDefaultInstance();
+
         motoMakeEditText = (EditText) findViewById(R.id.motoBrand);
         motoModelEditText = (EditText) findViewById(R.id.motoModel);
         yearSpinner = (Spinner) findViewById(R.id.spinnerYear);
+        motoCCEditText = (EditText) findViewById(R.id.motocc);
         //Για να αλλάξεις το τριγωνάκι στον spinner
         yearSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
 
@@ -117,14 +134,7 @@ public class InsertMotoActivity extends AppCompatActivity {
         });
 
     }
-    /*********************************************
-     * Για το year*******************Finish*******
-     *********************************************/
 
-
-    /**************************************************
-     *Για το Make*******************Start*************
-     *************************************************/
 
 
 
@@ -194,11 +204,56 @@ public class InsertMotoActivity extends AppCompatActivity {
                 outWidth = (inWidth * maxSize) / inHeight;
             }
 
-            Bitmap t = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath), outWidth, outHeight, false);
-            mImageView.setImageBitmap(t);
+            bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath), outWidth, outHeight, false);
+            mImageView.setImageBitmap(bitmap);
 
         }
 
+
+    }
+
+    public void saveMoto(View view){
+
+        motoMake = motoMakeEditText.getText().toString();
+        motomodel = motoModelEditText.getText().toString();
+        motocc = motoCCEditText.getText().toString();
+
+
+
+        //Γεμίζω το Realm Object
+        motoVehicle = new Vehicle();
+        motoVehicle.setCar(false);
+        motoVehicle.setId(UUID.randomUUID().toString());
+        motoVehicle.setMake(motoMake);
+        motoVehicle.setModel(motomodel);
+        motoVehicle.setYear(year);
+        motoVehicle.setCc(motocc);
+
+
+        if (bitmap !=null) {
+            //Για να βάλω την φωτογραφία
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            motoVehicle.setPhoto(stream.toByteArray());
+        }else {
+            //Αμα δεν έχει βάλει καμία φωτογραφία η χρήστης βάζουμε εμείς μία
+            Drawable d = ResourcesCompat.getDrawableForDensity(getResources(), R.mipmap.ic_moto, DisplayMetrics.DENSITY_XXHIGH, getTheme());
+            Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] bitmapdata = stream.toByteArray();
+
+            motoVehicle.setPhoto(bitmapdata);
+        }
+
+        //Για να αποθυκεύσω το Realm Object
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(motoVehicle);
+        realm.commitTransaction();
+
+        Toast.makeText(this, R.string.insert_vehicle_moto_saved, Toast.LENGTH_LONG).show();
+        Intent ki = new Intent(this, MainActivity.class);
+        startActivity(ki);
 
     }
 

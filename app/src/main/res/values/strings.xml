@@ -25,6 +25,7 @@
     <string name="insert_vehicle_select_car_make">Select your\'s cars make </string>
     <string name="insert_vehicle_year">Year</string>
     <string name="insert_vehicle_car_saved">The car has been saved</string>
+    <string name="insert_vehicle_moto_saved">The moto has been saved</string>
     <string name="insert_vehicle_car_save">Save</string>
     <string name="CC">cc</string>
     <string name="Date">Date</string>

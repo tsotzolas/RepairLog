@@ -31,4 +31,5 @@
     <string name="vehicles_list">Λίστα οχημάτων</string>
     <string name="repair_list">Λίστα Εργσιών</string>
     <string name="Question_delete_entry">Είσαι σίγουρος ότι θέλεις να διαράψεις αυτή την εγγραφή?</string>
+    <string name="insert_vehicle_moto_saved">Η μηχανή έχει αποθηκευτεί</string>
 </resources>

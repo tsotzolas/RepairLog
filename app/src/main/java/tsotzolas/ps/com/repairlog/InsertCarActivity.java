@@ -9,12 +9,16 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -617,7 +621,15 @@ public class InsertCarActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             carVehicle.setPhoto(stream.toByteArray());
         }else {
-            carVehicle.setPhoto(null);
+            //Αμα δεν έχει βάλει καμία φωτογραφία η χρήστης βάζουμε εμείς μία
+            Drawable d = ResourcesCompat.getDrawableForDensity(getResources(), R.mipmap.ic_car, DisplayMetrics.DENSITY_XXHIGH, getTheme());
+            ; // the drawable (Captain Obvious, to the rescue!!!)
+            Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] bitmapdata = stream.toByteArray();
+
+            carVehicle.setPhoto(bitmapdata);
         }
 
         //Για να αποθυκεύσω το Realm Object
