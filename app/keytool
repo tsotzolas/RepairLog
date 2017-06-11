@@ -1,0 +1,42 @@
+10:20:48 μμ: Executing external task 'signingReport'...
+Configuration on demand is an incubating feature.
+NDK is missing a "platforms" directory.
+If you are using NDK, verify the ndk.dir is set to a valid NDK directory.  It is currently set to C:\Users\tsotz\AppData\Local\Android\Sdk\ndk-bundle.
+If you are not using NDK, unset the NDK variable from ANDROID_NDK_HOME or local.properties to remove this warning.
+
+:app:signingReport
+Variant: debugAndroidTest
+Config: debug
+Store: C:\Users\tsotz\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 53:71:29:2D:68:FC:FC:C7:22:5D:9F:A1:9C:2D:CC:49
+SHA1: 84:F9:31:00:B7:E2:D2:CD:A3:7E:77:D7:65:0F:AD:78:5E:A1:71:EB
+Valid until: Monday, July 23, 2046
+----------
+Variant: release
+Config: none
+----------
+Variant: releaseUnitTest
+Config: none
+----------
+Variant: debug
+Config: debug
+Store: C:\Users\tsotz\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 53:71:29:2D:68:FC:FC:C7:22:5D:9F:A1:9C:2D:CC:49
+SHA1: 84:F9:31:00:B7:E2:D2:CD:A3:7E:77:D7:65:0F:AD:78:5E:A1:71:EB
+Valid until: Monday, July 23, 2046
+----------
+Variant: debugUnitTest
+Config: debug
+Store: C:\Users\tsotz\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 53:71:29:2D:68:FC:FC:C7:22:5D:9F:A1:9C:2D:CC:49
+SHA1: 84:F9:31:00:B7:E2:D2:CD:A3:7E:77:D7:65:0F:AD:78:5E:A1:71:EB
+Valid until: Monday, July 23, 2046
+----------
+
+BUILD SUCCESSFUL
+
+Total time: 2.683 secs
+10:20:51 μμ: External task execution finished 'signingReport'.

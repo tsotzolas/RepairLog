@@ -2,8 +2,8 @@ package tsotzolas.ps.com.repairlog;
 
 import android.app.Application;
 
-import com.facebook.stetho.Stetho;
-import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
+//import com.facebook.stetho.Stetho;
+//import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import java.util.regex.Pattern;
 
@@ -35,11 +35,11 @@ public class MyApplication extends Application {
         // Use the config
         Realm realm = Realm.getInstance(config);
 
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
-                        .build());
+//        Stetho.initialize(
+//                Stetho.newInitializerBuilder(this)
+//                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+//                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+//                        .build());
 
         realm.close();
 

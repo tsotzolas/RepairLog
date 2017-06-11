@@ -77,4 +77,10 @@
                 android:layout_marginLeft="88dp"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
+    <!--<com.google.android.gms.common.SignInButton-->
+        <!--android:id="@+id/sign_in_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" -->
+        <!--android:onClick=""/>-->
+
 </android.support.constraint.ConstraintLayout>

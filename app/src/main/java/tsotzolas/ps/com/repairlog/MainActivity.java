@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,15 +23,27 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    private static final String TAG = MainActivity.class.getSimpleName();
     private ImageButton carImageButton;
     private ImageButton motoImageButton;
-    private Locale locale ;
+    private FirebaseAuth mAuth;
+    private Locale locale;
 
 
     @Override
@@ -62,21 +75,20 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        mAuth = FirebaseAuth.getInstance();
+
+        login("tsotzolas@gmail.com", "123123123");
+
 
         carImageButton = (ImageButton) findViewById(R.id.imageButtonCar);
         motoImageButton = (ImageButton) findViewById(R.id.imageButtonMoto);
 
-        if (SettingActivity.locale==null){
+        if (SettingActivity.locale == null) {
             locale.setDefault(locale);
-        }
-        else {
+        } else {
             locale = new Locale(SettingActivity.locale.getDisplayLanguage());
-            Log.d("------------------>",locale.getDisplayCountry());
+            Log.d("------------------>", locale.getDisplayCountry());
         }
-
-
-
-
 
 
     }
@@ -88,8 +100,9 @@ public class MainActivity extends AppCompatActivity
         viewForLocale();
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void viewForLocale(){
+    private void viewForLocale() {
 
         Locale.setDefault(SettingActivity.locale);
 
@@ -129,7 +142,7 @@ public class MainActivity extends AppCompatActivity
             try {
                 Intent k = new Intent(this, SettingActivity.class);
                 startActivity(k);
-            } catch(Exception e) {
+            } catch (Exception e) {
             }
             return true;
         }
@@ -181,8 +194,42 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private void gotoInsert(View view){
+    private void gotoInsert(View view) {
         Intent ki = new Intent(this, ChooseToInsertActivity.class);
         startActivity(ki);
     }
+
+
+    private void login(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            Toast.makeText(MainActivity.this, "Sucesfull Login with user:" +user.getEmail(), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MainActivity.this, "Login Failed" , Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

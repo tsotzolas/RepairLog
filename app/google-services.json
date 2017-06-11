@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "377055783877",
+    "firebase_url": "https://repairlog-aa100.firebaseio.com",
+    "project_id": "repairlog-aa100",
+    "storage_bucket": "repairlog-aa100.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377055783877:android:bd86e90288b50614",
+        "android_client_info": {
+          "package_name": "gr.repairlog.tsotzolas.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "377055783877-pmvulmbsf3e2k9herkplqguqq1pskr19.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gr.repairlog.tsotzolas.android",
+            "certificate_hash": "84f93100b7e2d2cda37e77d7650fad785ea171eb"
+          }
+        },
+        {
+          "client_id": "377055783877-d91nj6dc7r6qtj4lhtp9r0fj49136j2p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeGdlcICdZc8pB92SXv1Rf5yS6VcT_Ntw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "377055783877-d91nj6dc7r6qtj4lhtp9r0fj49136j2p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

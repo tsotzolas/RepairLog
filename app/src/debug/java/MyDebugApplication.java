@@ -2,6 +2,8 @@ import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 
+//import com.facebook.stetho.Stetho;
+
 /**
  * Created by tsotzolas on 26/4/2017.
  */
