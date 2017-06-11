@@ -36,6 +36,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
+import tsotzolas.ps.com.repairlog.GoogleSignIn.SignInActivity;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -230,6 +232,15 @@ public class MainActivity extends AppCompatActivity
         } else {
             Toast.makeText(MainActivity.this, "Login Failed" , Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+
+
+    public void gotoGoogleSignIn(View view) {
+        Intent ki = new Intent(this, SignInActivity.class);
+        startActivity(ki);
+        System.out.println("---------------------");
     }
 
 }

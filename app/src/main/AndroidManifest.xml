@@ -61,6 +61,13 @@
 
         <activity android:name=".InsertMotoActivity"/>
 
+
+        <activity
+            android:name=".GoogleSignIn.SignInActivity"
+            android:label="@string/name_sign_in_activity"
+            android:theme="@style/ThemeOverlay.MyNoTitleActivity">
+        </activity>
+
     </application>
 
 </manifest>
