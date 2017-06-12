@@ -24,6 +24,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -35,21 +37,36 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import io.realm.ObjectServerError;
+import io.realm.Realm;
+import io.realm.RealmAsyncTask;
+import io.realm.SyncConfiguration;
+import io.realm.SyncCredentials;
+import io.realm.SyncUser;
 import tsotzolas.ps.com.repairlog.GoogleSignIn.SignInActivity;
+import tsotzolas.ps.com.repairlog.auth.google.GoogleAuth;
 
+import static io.realm.SyncUser.currentUser;
 import static tsotzolas.ps.com.repairlog.GoogleSignIn.SignInActivity.mGoogleApiClient;
+import static tsotzolas.ps.com.repairlog.RealmTasksApplication.AUTH_URL;
+import static tsotzolas.ps.com.repairlog.RealmTasksApplication.REALM_URL;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SyncUser.Callback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ImageButton carImageButton;
     private ImageButton motoImageButton;
     private FirebaseAuth mAuth;
     private Locale locale;
-
+    private GoogleAuth googleAuth;
+    public static GoogleSignInAccount acct;
+    private String username = "";
+    private String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,23 +96,31 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Έλεγχος για το αν έχει κάνει google sign in ο χρήστης
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            System.out.println("------------------>User is Sign in");
-        }
-        else{
+//        //Έλεγχος για το αν έχει κάνει google sign in ο χρήστης
+//        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+//            System.out.println("------------------>User is Sign in");
+//        }
+//        else{
+//            Intent ki = new Intent(this, SignInActivity.class);
+//            startActivity(ki);
+//
+//        }
+
+
+//        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient == null) {
             Intent ki = new Intent(this, SignInActivity.class);
             startActivity(ki);
 
+        } else {
+
+            System.out.println("------------------>User is Sign in");
+            Toast.makeText(this, "Login User:" + acct.getDisplayName(), Toast.LENGTH_SHORT).show();
         }
 
 
-
-
-
-
+        //Firebase Login
         mAuth = FirebaseAuth.getInstance();
-
         login("tsotzolas@gmail.com", "123123123");
 
 
@@ -117,6 +142,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         viewForLocale();
+
 
     }
 
@@ -245,13 +271,11 @@ public class MainActivity extends AppCompatActivity
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Toast.makeText(MainActivity.this, "Sucesfull Login with user:" +user.getEmail(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Sucesfull Login with user:" + user.getEmail(), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(MainActivity.this, "Login Failed" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
 
     public void gotoGoogleSignIn(View view) {
@@ -260,4 +284,117 @@ public class MainActivity extends AppCompatActivity
         System.out.println("---------------------");
     }
 
+
+    //TODO Θα πρεπει να δώ πώς θα κάνει login.θα πρεπει να διακρύνω τις περιπτώσεις του έχει δημουργηθεί βάση ή όχι
+    public void realmSync(View view) {
+
+        //Φτιαχνουμε το username και το password απο το google sign in
+        if (acct != null) {
+            if ("tsotzolas@gmail.com".equals(acct.getEmail())) {
+                username = "tsotzo1@gmail.com";
+            } else {
+                username = acct.getEmail();
+            }
+            password = acct.getId();
+        }
+
+
+//        String authURL = "http://83.212.105.36:9080/auth";
+        SyncCredentials myCredentials = null;
+        try {
+            myCredentials = SyncCredentials.usernamePassword(
+                    username, password, false); //user is in Realm database
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        //TODO Εδώ θα πρέπει να μπαίνει όταν υπάρχει χρήστης στον Realm Object Server
+        if (myCredentials != null) {
+            SyncUser.loginAsync(myCredentials, AUTH_URL, this);
+            Log.i("TINGLE", "credentials checked");
+
+            SyncConfiguration defaultConfig = new SyncConfiguration.Builder(
+                    currentUser(),
+                    REALM_URL).build();
+            Realm.setDefaultConfiguration(defaultConfig);
+        } else {
+            //TODO Εδώ θα πρέπει να μπαίνει όταν ΔΕΝ υπάρχει χρήστης στον Realm Object Server
+            //Φτιάχνουμε χρήστη στο Realm Object Server
+            SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, true), AUTH_URL, new SyncUser.Callback() {
+                @Override
+                public void onSuccess(SyncUser user) {
+                    registrationComplete(user);
+                }
+
+                @Override
+                public void onError(ObjectServerError error) {
+//                showProgress(false);
+                    String errorMsg;
+                    switch (error.getErrorCode()) {
+                        case EXISTING_ACCOUNT:
+                            errorMsg = "Account already exists";
+                            break;
+                        default:
+                            errorMsg = error.toString();
+                    }
+                    Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+//        String authURL = "http://83.212.105.36:9080/auth";
+//        SyncCredentials myCredentials = SyncCredentials.usernamePassword(
+//                username, password, false); //user is in Realm database
+//
+//        SyncUser.loginAsync(myCredentials, authURL, this);
+//        Log.i("TINGLE","credentials checked");
+//
+//        SyncConfiguration defaultConfig = new SyncConfiguration.Builder(
+//                currentUser(),
+//                "realm://83.212.105.36:9080/~/realmtasks").build();
+//        Realm.setDefaultConfiguration(defaultConfig);
+
+
+//
+//
+////        //Κάνουμε login
+//        SyncCredentials myCredentials = SyncCredentials.usernamePassword(username, password, false);
+//        Realm.getDefaultInstance();
+////        Realm.getInstance(syncConfiguration);
+////
+//        String authURL = "http://83.212.105.36" + ":9080/auth";
+//
+////
+//        SyncUser user = SyncUser.login(myCredentials, authURL);
+////
+//        String serverURL = "realm://http://83.212.105.36:9080/~/default";
+//        SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, serverURL).build();
+//        Realm.getInstance(syncConfiguration);
+
+
+//        SyncConfiguration config = new SyncConfiguration.Builder(user, authURL)
+//                               .build();
+//
+//        RealmAsyncTask task = (RealmAsyncTask) Realm.getInstance(config);
+
+//        user.logout();
+
+    }
+
+
+    private void registrationComplete(SyncUser user) {
+        UserManager.setActiveUser(user);
+        Intent intent = new Intent(this, SignInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onSuccess(SyncUser user) {
+
+    }
+
+    @Override
+    public void onError(ObjectServerError error) {
+
+    }
 }

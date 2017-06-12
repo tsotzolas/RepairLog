@@ -27,6 +27,9 @@ repositories {
         url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
     }
 }
+realm{
+    syncEnabled = true;
+}
 
 
 dependencies {

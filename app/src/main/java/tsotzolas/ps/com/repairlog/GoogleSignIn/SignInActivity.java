@@ -19,8 +19,21 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import io.realm.ObjectServerError;
+import io.realm.Realm;
+import io.realm.RealmAsyncTask;
+import io.realm.SyncConfiguration;
+import io.realm.SyncCredentials;
+import io.realm.SyncUser;
 import tsotzolas.ps.com.repairlog.MainActivity;
 import tsotzolas.ps.com.repairlog.R;
+import tsotzolas.ps.com.repairlog.UserManager;
+
+import static tsotzolas.ps.com.repairlog.MainActivity.acct;
+import static tsotzolas.ps.com.repairlog.RealmTasksApplication.AUTH_URL;
 
 /**
  * Activity to demonstrate basic retrieval of the Google user's ID, email address, and basic
@@ -28,7 +41,7 @@ import tsotzolas.ps.com.repairlog.R;
  */
 public class SignInActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener {
+        View.OnClickListener, SyncUser.Callback {
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -124,8 +137,56 @@ public class SignInActivity extends AppCompatActivity implements
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
+            acct = result.getSignInAccount();
+            System.out.println("----------------->" + acct.getIdToken());
             mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
+
+
+//Για το Realm Sync
+//            String token = " BndxUjWpDbRLgZicEI9hVpfYPtu1"; // a string representation of a token obtained by Google Login API
+//            SyncCredentials myCredentials = SyncCredentials.google(token);
+            // Setup Google Authentication
+//
+//            GoogleSignInAccount acct = result.getSignInAccount();
+//            SyncCredentials credentials = SyncCredentials.google(acct.getIdToken());
+//            SyncCredentials credentials = SyncCredentials.google(acct.getIdToken());
+//            SyncUser.loginAsync(credentials, AUTH_URL, SignInActivity.this);
+
+//            SyncCredentials myCredentials = SyncCredentials.usernamePassword("tsotzolas@gmail.com", "xan5412@realm", true);
+//            SyncUser user = SyncUser.currentUser();
+//            String serverURL = "realm://192.168.3.2:9080/~/default";
+//            SyncConfiguration configuration = new SyncConfiguration.Builder(user, serverURL).build();
+//
+////          SyncUser user = getUserFromLogin();
+//            String serverURL = "realm://my.realm-server.com:9080/~/default";
+//            SyncConfiguration configuration = new SyncConfiguration.Builder(user, serverURL).build();
+
+
+
+
+
+
+
+
+
+
+//            String serverURL = "realm://192.168.3.2:9080/~/default";
+//            String token = "dd9693a442c17e63d9f582d4a82964e3"; // a string representation of a token obtained from your authentication server
+//            Map<String, Object> customData = new HashMap<>();
+//            SyncCredentials myCredentials = SyncCredentials.custom(token,"myauth",customData);
+//
+////            SyncUser.loginAsync(creds, authUrl, callback);
+//            String authURL = "http://" + "192.168.3.2" + ":9080/auth";
+//            SyncUser user = SyncUser.login(myCredentials, authURL);
+//
+//            SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, serverURL).build();
+//
+//            Realm realm = Realm.getInstance(syncConfiguration);
+
+
+
+
+
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
@@ -234,4 +295,37 @@ public class SignInActivity extends AppCompatActivity implements
         System.out.println("---------------------");
     }
 
+
+//    private realmSync(){
+//
+//        String token = "..."; // a string representation of a token obtained by Google Login API
+//        SyncCredentials myCredentials = SyncCredentials.google(token);
+//        // Setup Google Authentication
+////        googleAuth = new GoogleAuth((SignInButton) findViewById(R.id.google_sign_in_button), this) {
+////            @Override
+////            public void onRegistrationComplete(GoogleSignInResult result) {
+//        UserManager.setAuthMode(UserManager.AUTH_MODE.GOOGLE);
+//        GoogleSignInAccount acct = result.getSignInAccount();
+//        SyncCredentials credentials = SyncCredentials.google(acct.getIdToken());
+//        SyncUser.loginAsync(credentials, AUTH_URL, MainActivity.this);
+////            }
+////
+////            @Override
+////            public void onError(String s) {
+////                super.onError(s);
+////            }
+////        };
+//
+//    }
+
+
+    @Override
+    public void onSuccess(SyncUser user) {
+
+    }
+
+    @Override
+    public void onError(ObjectServerError error) {
+
+    }
 }
