@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -37,6 +38,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Locale;
 
 import tsotzolas.ps.com.repairlog.GoogleSignIn.SignInActivity;
+
+import static tsotzolas.ps.com.repairlog.GoogleSignIn.SignInActivity.mGoogleApiClient;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -75,6 +78,20 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Έλεγχος για το αν έχει κάνει google sign in ο χρήστης
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            System.out.println("------------------>User is Sign in");
+        }
+        else{
+            Intent ki = new Intent(this, SignInActivity.class);
+            startActivity(ki);
+
+        }
+
+
+
+
 
 
         mAuth = FirebaseAuth.getInstance();

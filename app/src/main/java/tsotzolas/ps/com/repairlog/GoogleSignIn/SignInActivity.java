@@ -19,6 +19,7 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import tsotzolas.ps.com.repairlog.MainActivity;
 import tsotzolas.ps.com.repairlog.R;
 
 /**
@@ -32,7 +33,7 @@ public class SignInActivity extends AppCompatActivity implements
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
-    private GoogleApiClient mGoogleApiClient;
+    public static GoogleApiClient mGoogleApiClient;
     private TextView mStatusTextView;
     private ProgressDialog mProgressDialog;
 
@@ -225,4 +226,12 @@ public class SignInActivity extends AppCompatActivity implements
                 break;
         }
     }
+
+
+    public void gotoMain(View view) {
+        Intent ki = new Intent(this, MainActivity.class);
+        startActivity(ki);
+        System.out.println("---------------------");
+    }
+
 }
