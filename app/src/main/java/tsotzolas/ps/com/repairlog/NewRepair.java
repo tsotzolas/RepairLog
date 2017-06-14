@@ -9,6 +9,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -21,8 +25,8 @@ import static tsotzolas.ps.com.repairlog.VehicleView.selectedVehicles;
  * Created by tsotzolas on 27/4/2017.
  */
 
-public class NewRepair extends AppCompatActivity  implements
-        View.OnClickListener{
+public class NewRepair extends AppCompatActivity implements
+        View.OnClickListener {
     private static final String TAG = NewRepair.class.getSimpleName();
 
     private Realm realm;
@@ -35,9 +39,11 @@ public class NewRepair extends AppCompatActivity  implements
 
     private int mYear, mMonth, mDay, mHour, mMinute;
 
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseDatabase mFirebaseInstance;
+
 
 //    private MyAdapter1 myAdapter1;
-
 
 
     @Override
@@ -49,10 +55,7 @@ public class NewRepair extends AppCompatActivity  implements
         costEditText = (EditText) findViewById(R.id.editCost);
         kmEditText = (EditText) findViewById(R.id.editKm);
         kmEditText = (EditText) findViewById(R.id.editKm);
-        descEditText= (EditText) findViewById(R.id.editDesc);
-
-
-
+        descEditText = (EditText) findViewById(R.id.editDesc);
 
 
         //Αρχικοποίηση του Realm
@@ -71,20 +74,14 @@ public class NewRepair extends AppCompatActivity  implements
         //Εκτελούμε το ερώτημα
 
 
-
     }
 
 
-
-
-
-    private void gotoInsert(View view){
+    private void gotoInsert(View view) {
 //        Intent ki = new Intent(this, ChooseToInsertActivity.class);
 //        startActivity(ki);
         System.out.println("Test");
     }
-
-
 
 
     public void save(View view) {
@@ -106,6 +103,65 @@ public class NewRepair extends AppCompatActivity  implements
 
         Toast.makeText(this, R.string.insert_vehicle_car_saved, Toast.LENGTH_SHORT).show();
 
+
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+
+        // get reference to 'users' node
+//        mFirebaseDatabase = mFirebaseInstance.getReference("repair");
+        // store app title to 'app_title' node
+//        mFirebaseInstance.getReference("repair").setValue(repair);
+
+        Gson gson = new Gson();
+
+//        //Add Date
+//        mFirebaseInstance.getReference("user")
+//                .child("tsotzolas")
+//                .child("vehicle")
+//                .child(repair.getVehicleId())
+//                .child("repair")
+//                .child(repair.getRepairId())
+//                .child("repair_date").setValue(repair.getRepairDate());
+//        //Add Descreption
+//        mFirebaseInstance.getReference("user")
+//                .child("tsotzolas")
+//                .child("vehicle")
+//                .child(repair.getVehicleId())
+//                .child("repair")
+//                .child(repair.getRepairId())
+//                .child("repair_desc").setValue(repair.getRepairDescription());
+//
+//        //Add Cost
+//        mFirebaseInstance.getReference("user")
+//                .child("tsotzolas")
+//                .child("vehicle")
+//                .child(repair.getVehicleId())
+//                .child("repair")
+//                .child(repair.getRepairId())
+//                .child("repair_cost").setValue(repair.getRepairCost());
+//
+//        //Add Km
+//        mFirebaseInstance.getReference("user")
+//                .child("tsotzolas")
+//                .child("vehicle")
+//                .child(repair.getVehicleId())
+//                .child("repair")
+//                .child(repair.getRepairId())
+//                .child("vehicle_km").setValue(repair.getVehicleKM());
+
+
+        mFirebaseInstance.getReference("user")
+                .child("tsotzolas")
+                .child("vehicle")
+                .child(repair.getVehicleId())
+                .child("repair")
+                .setValue(repair);
+
+
+        String json = gson.toJson(repair);
+        System.out.println(json);
+        System.out.println(json);
+
+
         Intent ki = new Intent(this, VehicleRepairs.class);
         startActivity(ki);
 
@@ -113,32 +169,30 @@ public class NewRepair extends AppCompatActivity  implements
     }
 
 
-
-
     @Override
     public void onClick(View v) {
 
 //        if (v == btnDatePicker) {
 
-            // Get Current Date
-            final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                    new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
 
-                        @Override
-                        public void onDateSet(DatePicker view, int year,
-                                              int monthOfYear, int dayOfMonth) {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
 
-                            dateEditText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        dateEditText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
-                        }
-                    }, mYear, mMonth, mDay);
-            datePickerDialog.show();
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
 //        }
 //        if (v == btnTimePicker) {
 //
@@ -161,9 +215,6 @@ public class NewRepair extends AppCompatActivity  implements
 //            timePickerDialog.show();
 //        }
     }
-
-
-
 
 
 }

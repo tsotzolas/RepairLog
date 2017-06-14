@@ -18,6 +18,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 
 import io.realm.Realm;
@@ -40,6 +46,9 @@ public class VehicleRepairs extends AppCompatActivity {
     private List<Repair> repairList;
     private Repair repair;
     private MyAdapter1 myAdapter1;
+
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseDatabase mFirebaseInstance;
 
 
 //    private MyAdapter1 myAdapter1;
@@ -148,6 +157,54 @@ public class VehicleRepairs extends AppCompatActivity {
                 return false;
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Get a reference to our posts
+
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseDatabase =  mFirebaseInstance.getReference("repair");
+
+// Attach a listener to read the data at our posts reference
+        mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Repair repair = dataSnapshot.getValue(Repair.class);
+                System.out.println(repair.toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 

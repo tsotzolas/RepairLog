@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,13 +32,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import io.realm.Realm;
@@ -70,7 +79,9 @@ public class InsertCarActivity extends AppCompatActivity {
     private String cc;
     private Bitmap bitmap;
     private Vehicle carVehicle;
-    private boolean orientation=false;
+    private boolean orientation = false;
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseDatabase mFirebaseInstance;
 
     public static final String BASE_URL = "https://www.carqueryapi.com/" + "?callback=?";
 
@@ -85,14 +96,12 @@ public class InsertCarActivity extends AppCompatActivity {
     private ImageView mImageView;
 
 
-
     //Για την εταιρία
     private Make makeList;
     private List<Make_> makeList1 = new ArrayList<>();
     private List<String> makeListString1 = new ArrayList<>();
 
     private MyAdapterMakes myadapter;
-
 
 
     private Model modelList;
@@ -116,7 +125,7 @@ public class InsertCarActivity extends AppCompatActivity {
         carMakeSpinner = (Spinner) findViewById(R.id.carBrand);
         carmodelSpinner = (Spinner) findViewById(R.id.carModel);
         yearSpinner = (Spinner) findViewById(R.id.spinnerYear);
-        ccSpinner = (Spinner)findViewById(R.id.carCC);
+        ccSpinner = (Spinner) findViewById(R.id.carCC);
         //Για να αλλάξεις το τριγωνάκι στον spinner
         yearSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
         carMakeSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
@@ -130,7 +139,6 @@ public class InsertCarActivity extends AppCompatActivity {
 //            addItemsOnSpinnerYear();
 //        }
         addItemsOnSpinnerYear();
-
 
 
     }
@@ -184,7 +192,6 @@ public class InsertCarActivity extends AppCompatActivity {
     /*********************************************
      * Για το year*******************Finish*******
      *********************************************/
-
 
 
     /*********************************************
@@ -434,7 +441,6 @@ public class InsertCarActivity extends AppCompatActivity {
         carmodelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
 
-
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 carModel = carmodelSpinner.getSelectedItem().toString();
@@ -464,16 +470,12 @@ public class InsertCarActivity extends AppCompatActivity {
      *************************************************/
 
 
-
-
-
-
     // add items into spinner dynamically
     public void addItemsOnSpinnerCC() {
 
         List<String> ccList = new ArrayList<String>();
         ccList.add(".......");
-         int ccc = 900;
+        int ccc = 900;
         ccList.add("900");
         ccList.add("1000");
         ccList.add("1100");
@@ -495,7 +497,7 @@ public class InsertCarActivity extends AppCompatActivity {
 //            ccList.add(String.valueOf(k));
 //        }
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, ccList);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, ccList);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         ccSpinner.setAdapter(dataAdapter);
 
@@ -503,7 +505,7 @@ public class InsertCarActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                 cc = ccSpinner.getSelectedItem().toString();
+                cc = ccSpinner.getSelectedItem().toString();
                 Log.d(TAG, year);
 //                if (!year.equals(".......")) {
 //                    loadMakes();
@@ -517,11 +519,6 @@ public class InsertCarActivity extends AppCompatActivity {
         });
 
     }
-
-
-
-
-
 
 
     public abstract class OnClickListener implements DialogInterface.OnClickListener {
@@ -604,7 +601,7 @@ public class InsertCarActivity extends AppCompatActivity {
     }
 
 
-    public void saveCar(View view){
+    public void saveCar(View view) {
         //Γεμίζω το Realm Object
         carVehicle = new Vehicle();
         carVehicle.setCar(true);
@@ -615,16 +612,16 @@ public class InsertCarActivity extends AppCompatActivity {
         carVehicle.setCc(cc);
 
 
-        if (bitmap !=null) {
+        if (bitmap != null) {
             //Για να βάλω την φωτογραφία
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             carVehicle.setPhoto(stream.toByteArray());
-        }else {
+        } else {
             //Αμα δεν έχει βάλει καμία φωτογραφία η χρήστης βάζουμε εμείς μία
             Drawable d = ResourcesCompat.getDrawableForDensity(getResources(), R.mipmap.ic_car, DisplayMetrics.DENSITY_XXHIGH, getTheme());
             ; // the drawable (Captain Obvious, to the rescue!!!)
-            Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
+            Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] bitmapdata = stream.toByteArray();
@@ -636,6 +633,40 @@ public class InsertCarActivity extends AppCompatActivity {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(carVehicle);
         realm.commitTransaction();
+
+
+
+        if (carVehicle != null) {
+
+            mFirebaseInstance = FirebaseDatabase.getInstance();
+            //Add make
+            mFirebaseInstance.getReference("user")
+                    .child("tsotzolas")
+                    .child("vehicle")
+                    .child(carVehicle.getId())
+                    .child("make").setValue(carVehicle.getMake());
+
+            //Add model
+            mFirebaseInstance.getReference("user")
+                    .child("tsotzolas")
+                    .child("vehicle")
+                    .child(carVehicle.getId())
+                    .child("model").setValue(carVehicle.getModel());
+            //Add year
+            mFirebaseInstance.getReference("user")
+                    .child("tsotzolas")
+                    .child("vehicle")
+                    .child(carVehicle.getId())
+                    .child("year").setValue(carVehicle.getYear());
+            //Add model
+            mFirebaseInstance.getReference("user")
+                    .child("tsotzolas")
+                    .child("vehicle")
+                    .child(carVehicle.getId())
+                    .child("photo").setValue(Base64.encodeToString(carVehicle.getPhoto(), Base64.DEFAULT));
+
+        }
+
 
         Toast.makeText(this, R.string.insert_vehicle_car_saved, Toast.LENGTH_LONG).show();
         Intent ki = new Intent(this, MainActivity.class);

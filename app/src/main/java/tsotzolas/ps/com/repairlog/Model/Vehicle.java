@@ -10,13 +10,13 @@ import io.realm.annotations.PrimaryKey;
 public class Vehicle extends RealmObject{
 
     @PrimaryKey
-    private String id;
-    private String make;
-    private String year;
-    private String model;
-    private String cc;
+    private String id = "";
+    private String make= "";
+    private String year= "";
+    private String model= "";
+    private String cc= "";
     private byte[] photo;
-    private boolean isCar;
+    private boolean isCar=false;
 
     public Vehicle() {
     }

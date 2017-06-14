@@ -26,6 +26,7 @@ import io.realm.log.RealmLog;
 
 public class RealmTasksApplication extends Application {
 
+//    public static final String AUTH_URL = "http://" +"83.212.105.36" + ":9080/auth";
     public static final String AUTH_URL = "http://" +"83.212.105.36" + ":9080/auth";
     public static final String REALM_URL = "realm://" + "83.212.105.36" + ":9080/~/repairlog";
     public static final String DEFAULT_LIST_ID = "80EB1620-165B-4600-A1B1-D97032FDD9A0";

@@ -1,5 +1,6 @@
 package tsotzolas.ps.com.repairlog;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -50,6 +51,8 @@ import io.realm.SyncUser;
 import tsotzolas.ps.com.repairlog.GoogleSignIn.SignInActivity;
 import tsotzolas.ps.com.repairlog.auth.google.GoogleAuth;
 
+import static io.realm.ErrorCode.INVALID_CREDENTIALS;
+import static io.realm.ErrorCode.UNKNOWN_ACCOUNT;
 import static io.realm.SyncUser.currentUser;
 import static tsotzolas.ps.com.repairlog.GoogleSignIn.SignInActivity.mGoogleApiClient;
 import static tsotzolas.ps.com.repairlog.RealmTasksApplication.AUTH_URL;
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity
     public static GoogleSignInAccount acct;
     private String username = "";
     private String password = "";
+    private SyncUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +112,28 @@ public class MainActivity extends AppCompatActivity
 
 
 //        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-        if (mGoogleApiClient == null) {
+
+//        user = SyncUser.currentUser();
+//        if (user == null) {
+//            // Create a RealmConfiguration for our user
+//            SyncConfiguration config = new SyncConfiguration.Builder(currentUser(), REALM_URL)
+//                    .initialData(new Realm.Transaction() {
+//                        @Override
+//                        public void execute(Realm realm) {
+//
+//                        }
+//                    })
+//                    .build();
+
+            // This will automatically sync all changes in the background for as long as the Realm is open
+            Realm realm = Realm.getDefaultInstance();
+//        }
+
+
+
+
+
+        if (acct==null) {
             Intent ki = new Intent(this, SignInActivity.class);
             startActivity(ki);
 
@@ -116,12 +141,27 @@ public class MainActivity extends AppCompatActivity
 
             System.out.println("------------------>User is Sign in");
             Toast.makeText(this, "Login User:" + acct.getDisplayName(), Toast.LENGTH_SHORT).show();
+
         }
+
+
+
+
+
+
+
+
+
 
 
         //Firebase Login
         mAuth = FirebaseAuth.getInstance();
-        login("tsotzolas@gmail.com", "123123123");
+            login("tsotzolas@gmail.com", "123123123");
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+//        myRef.setValue("Hello, World!");
 
 
         carImageButton = (ImageButton) findViewById(R.id.imageButtonCar);
@@ -142,6 +182,8 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         viewForLocale();
+
+
 
 
     }
@@ -245,6 +287,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
+    //Firebase Login
     private void login(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -288,57 +332,106 @@ public class MainActivity extends AppCompatActivity
     //TODO Θα πρεπει να δώ πώς θα κάνει login.θα πρεπει να διακρύνω τις περιπτώσεις του έχει δημουργηθεί βάση ή όχι
     public void realmSync(View view) {
 
-        //Φτιαχνουμε το username και το password απο το google sign in
-        if (acct != null) {
-            if ("tsotzolas@gmail.com".equals(acct.getEmail())) {
-                username = "tsotzo1@gmail.com";
-            } else {
-                username = acct.getEmail();
-            }
-            password = acct.getId();
-        }
+
+        login(false);
 
 
+
+//        SyncCredentials myCredentials = SyncCredentials.usernamePassword("tsotzo1@gmail.com", "106425184769527005706", false);
+//
+//
 //        String authURL = "http://83.212.105.36:9080/auth";
-        SyncCredentials myCredentials = null;
-        try {
-            myCredentials = SyncCredentials.usernamePassword(
-                    username, password, false); //user is in Realm database
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        //TODO Εδώ θα πρέπει να μπαίνει όταν υπάρχει χρήστης στον Realm Object Server
-        if (myCredentials != null) {
-            SyncUser.loginAsync(myCredentials, AUTH_URL, this);
-            Log.i("TINGLE", "credentials checked");
+//        user = SyncUser.login(myCredentials, authURL);
 
-            SyncConfiguration defaultConfig = new SyncConfiguration.Builder(
-                    currentUser(),
-                    REALM_URL).build();
-            Realm.setDefaultConfiguration(defaultConfig);
-        } else {
-            //TODO Εδώ θα πρέπει να μπαίνει όταν ΔΕΝ υπάρχει χρήστης στον Realm Object Server
-            //Φτιάχνουμε χρήστη στο Realm Object Server
-            SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, true), AUTH_URL, new SyncUser.Callback() {
-                @Override
-                public void onSuccess(SyncUser user) {
-                    registrationComplete(user);
-                }
 
-                @Override
-                public void onError(ObjectServerError error) {
-//                showProgress(false);
-                    String errorMsg;
-                    switch (error.getErrorCode()) {
-                        case EXISTING_ACCOUNT:
-                            errorMsg = "Account already exists";
-                            break;
-                        default:
-                            errorMsg = error.toString();
-                    }
-                    Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_LONG).show();
-                }
-            });
+
+
+
+
+
+
+
+
+
+
+
+
+//        //Φτιαχνουμε το username και το password απο το google sign in
+//        if (acct != null) {
+//            if ("tsotzolas@gmail.com".equals(acct.getEmail())) {
+//                username = "tsotzo1@gmail.com";
+//            } else {
+//                username = acct.getEmail();
+//            }
+//            password = acct.getId();
+//        }
+//
+//
+////        String authURL = "http://83.212.105.36:9080/auth";
+//        SyncCredentials myCredentials = null;
+//        try {
+//            myCredentials = SyncCredentials.usernamePassword(
+//                    username, password, false); //user is in Realm database
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        //TODO Εδώ θα πρέπει να μπαίνει όταν υπάρχει χρήστης στον Realm Object Server
+//
+//
+//        if (myCredentials != null) {
+//            SyncUser.loginAsync(myCredentials, AUTH_URL, new SyncUser.Callback() {
+//                @Override
+//                public void onSuccess(SyncUser user) {
+//                    System.out.println("test");
+//                }
+//
+//                @Override
+//                public void onError(ObjectServerError error) {
+//                    //Άμα δεν υπάρχει ο χρήστης τον δημιουργούμε
+//                    SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, true), AUTH_URL, this);
+//                }
+//            });
+//            Log.i("TINGLE", "credentials checked");
+//            Realm.getDefaultInstance();
+//        }
+//        if(1==1) {
+//            SyncConfiguration defaultConfig = new SyncConfiguration.Builder(
+//                    currentUser(),
+//                    REALM_URL).build();
+//            Realm.setDefaultConfiguration(defaultConfig);
+//        }
+
+
+
+
+
+
+
+
+
+//        } else {
+//            //TODO Εδώ θα πρέπει να μπαίνει όταν ΔΕΝ υπάρχει χρήστης στον Realm Object Server
+//            //Φτιάχνουμε χρήστη στο Realm Object Server
+//            SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, true), AUTH_URL, new SyncUser.Callback() {
+//                @Override
+//                public void onSuccess(SyncUser user) {
+//                    registrationComplete(user);
+//                }
+//
+//                @Override
+//                public void onError(ObjectServerError error) {
+////                showProgress(false);
+//                    String errorMsg;
+//                    switch (error.getErrorCode()) {
+//                        case EXISTING_ACCOUNT:
+//                            errorMsg = "Account already exists";
+//                            break;
+//                        default:
+//                            errorMsg = error.toString();
+//                    }
+//                    Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+//                }
+//            });
         }
 
 //        String authURL = "http://83.212.105.36:9080/auth";
@@ -378,7 +471,7 @@ public class MainActivity extends AppCompatActivity
 
 //        user.logout();
 
-    }
+
 
 
     private void registrationComplete(SyncUser user) {
@@ -397,4 +490,65 @@ public class MainActivity extends AppCompatActivity
     public void onError(ObjectServerError error) {
 
     }
+
+
+
+
+
+
+
+
+    public void login(boolean createUser) {
+        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
+
+
+        if (acct != null) {
+            if ("tsotzolas@gmail.com".equals(acct.getEmail())) {
+                username = "tsotzo1@gmail.com";
+            } else {
+                username = acct.getEmail();
+            }
+            password = acct.getId();
+        }
+
+        SyncCredentials creds = SyncCredentials.usernamePassword(username,"123123123", createUser);
+        String authUrl = AUTH_URL;
+        SyncUser.Callback callback = new SyncUser.Callback() {
+            @Override
+            public void onSuccess(SyncUser user) {
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onError(ObjectServerError error) {
+                progressDialog.dismiss();
+                String errorMsg;
+                switch (error.getErrorCode()) {
+                    case UNKNOWN_ACCOUNT:
+                        errorMsg = "Account does not exists.";
+                        System.out.println(errorMsg);
+                        break;
+                    case INVALID_CREDENTIALS:
+                        errorMsg = "User name and password does not match";
+                        System.out.println(errorMsg);
+                        break;
+                    default:
+                        errorMsg = error.toString();
+                }
+            }
+        };
+
+        SyncUser.loginAsync(creds, authUrl, callback);
+    }
+
+
+
+
+
+
+
+
 }

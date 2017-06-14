@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.*;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -49,6 +50,8 @@ public class SignInActivity extends AppCompatActivity implements
     public static GoogleApiClient mGoogleApiClient;
     private TextView mStatusTextView;
     private ProgressDialog mProgressDialog;
+    private String username = "";
+    private String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,30 +141,42 @@ public class SignInActivity extends AppCompatActivity implements
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             acct = result.getSignInAccount();
-            System.out.println("----------------->" + acct.getIdToken());
+            System.out.println("----------------->" + acct.getId());
             mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
 
+            //Για να φτιάξει το χρήστη το Realm
+//            realmlogin(true);
 
-//Για το Realm Sync
-//            String token = " BndxUjWpDbRLgZicEI9hVpfYPtu1"; // a string representation of a token obtained by Google Login API
-//            SyncCredentials myCredentials = SyncCredentials.google(token);
-            // Setup Google Authentication
-//
-//            GoogleSignInAccount acct = result.getSignInAccount();
-//            SyncCredentials credentials = SyncCredentials.google(acct.getIdToken());
-//            SyncCredentials credentials = SyncCredentials.google(acct.getIdToken());
-//            SyncUser.loginAsync(credentials, AUTH_URL, SignInActivity.this);
-
-//            SyncCredentials myCredentials = SyncCredentials.usernamePassword("tsotzolas@gmail.com", "xan5412@realm", true);
-//            SyncUser user = SyncUser.currentUser();
-//            String serverURL = "realm://192.168.3.2:9080/~/default";
-//            SyncConfiguration configuration = new SyncConfiguration.Builder(user, serverURL).build();
-//
-////          SyncUser user = getUserFromLogin();
-//            String serverURL = "realm://my.realm-server.com:9080/~/default";
-//            SyncConfiguration configuration = new SyncConfiguration.Builder(user, serverURL).build();
+            if (acct != null) {
+                if ("tsotzolas@gmail.com".equals(acct.getEmail())) {
+                    username = "tsotzo1@gmail.com";
+                } else {
+                    username = acct.getEmail();
+                }
+                password = acct.getId();
+            }
 
 
+            SyncUser.loginAsync(SyncCredentials.usernamePassword(username,"123123123", true), AUTH_URL, new SyncUser.Callback() {
+                @Override
+                public void onSuccess(SyncUser user) {
+                    registrationComplete(user);
+                }
+
+                @Override
+                public void onError(ObjectServerError error) {
+//                showProgress(false);
+                    String errorMsg;
+                    switch (error.getErrorCode()) {
+                        case EXISTING_ACCOUNT:
+                            errorMsg = "Account already exists";
+                            break;
+                        default:
+                            errorMsg = error.toString();
+                    }
+                    Toast.makeText(SignInActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+                }
+            });
 
 
 
@@ -170,18 +185,6 @@ public class SignInActivity extends AppCompatActivity implements
 
 
 
-//            String serverURL = "realm://192.168.3.2:9080/~/default";
-//            String token = "dd9693a442c17e63d9f582d4a82964e3"; // a string representation of a token obtained from your authentication server
-//            Map<String, Object> customData = new HashMap<>();
-//            SyncCredentials myCredentials = SyncCredentials.custom(token,"myauth",customData);
-//
-////            SyncUser.loginAsync(creds, authUrl, callback);
-//            String authURL = "http://" + "192.168.3.2" + ":9080/auth";
-//            SyncUser user = SyncUser.login(myCredentials, authURL);
-//
-//            SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, serverURL).build();
-//
-//            Realm realm = Realm.getInstance(syncConfiguration);
 
 
 
@@ -296,36 +299,91 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
 
-//    private realmSync(){
-//
-//        String token = "..."; // a string representation of a token obtained by Google Login API
-//        SyncCredentials myCredentials = SyncCredentials.google(token);
-//        // Setup Google Authentication
-////        googleAuth = new GoogleAuth((SignInButton) findViewById(R.id.google_sign_in_button), this) {
-////            @Override
-////            public void onRegistrationComplete(GoogleSignInResult result) {
-//        UserManager.setAuthMode(UserManager.AUTH_MODE.GOOGLE);
-//        GoogleSignInAccount acct = result.getSignInAccount();
-//        SyncCredentials credentials = SyncCredentials.google(acct.getIdToken());
-//        SyncUser.loginAsync(credentials, AUTH_URL, MainActivity.this);
-////            }
-////
-////            @Override
-////            public void onError(String s) {
-////                super.onError(s);
-////            }
-////        };
-//
-//    }
+    public void realmlogin(boolean createUser) {
+        final ProgressDialog progressDialog = new ProgressDialog(SignInActivity.this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
 
+        String username = acct.getEmail();
+        String password = acct.getId();
+
+        SyncCredentials creds = SyncCredentials.usernamePassword(username, password, createUser);
+        String authUrl = AUTH_URL;
+
+        SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, true), AUTH_URL, new SyncUser.Callback() {
+            @Override
+            public void onSuccess(SyncUser user) {
+//                    registrationComplete(user);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onError(ObjectServerError error) {
+//                showProgress(false);
+                progressDialog.dismiss();
+                String errorMsg;
+                switch (error.getErrorCode()) {
+                    case EXISTING_ACCOUNT:
+                        errorMsg = "Account already exists";
+                        break;
+                    default:
+                        errorMsg = error.toString();
+                }
+//                    Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
+
+
+
+
+
+//        SyncUser.Callback callback = new SyncUser.Callback() {
+//            @Override
+//            public void onSuccess(SyncUser user) {
+//                progressDialog.dismiss();
+//            }
+//
+//            @Override
+//            public void onError(ObjectServerError error) {
+//                progressDialog.dismiss();
+//                String errorMsg;
+//                switch (error.getErrorCode()) {
+//                    case UNKNOWN_ACCOUNT:
+//                        errorMsg = "Account does not exists.";
+//                        break;
+//                    case INVALID_CREDENTIALS:
+//                        errorMsg = "User name and password does not match";
+//                        break;
+//                    default:
+//                        errorMsg = error.toString();
+//                }
+//            }
+//        };
+//
+//        SyncUser.loginAsync(creds, authUrl, callback);
+//    }
 
     @Override
     public void onSuccess(SyncUser user) {
-
+        System.out.println("--------------OK-------------------");
     }
 
     @Override
     public void onError(ObjectServerError error) {
+        System.out.println("------------------------ERROR---------------------");
+    }
 
+
+
+    private void registrationComplete(SyncUser user) {
+        UserManager.setActiveUser(user);
+        Intent intent = new Intent(this, SignInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }
