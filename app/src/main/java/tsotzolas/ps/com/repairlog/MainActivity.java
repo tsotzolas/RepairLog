@@ -65,8 +65,9 @@ public class MainActivity extends AppCompatActivity
     private Locale locale;
     private GoogleAuth googleAuth;
     public static GoogleSignInAccount acct;
-    private String username = "";
-    private String password = "";
+    private final String username = "tsotzo1@gmail.com";
+    private final String password = "123456";
+    private volatile Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -286,60 +287,87 @@ public class MainActivity extends AppCompatActivity
 
 
     //TODO Θα πρεπει να δώ πώς θα κάνει login.θα πρεπει να διακρύνω τις περιπτώσεις του έχει δημουργηθεί βάση ή όχι
-    public void realmSync(View view) {
+//    public void realmSync(View view) {
+//
+//        //Φτιαχνουμε το username και το password απο το google sign in
+//        if (acct != null) {
+//            if ("tsotzolas@gmail.com".equals(acct.getEmail())) {
+//                username = "tsotzo1@gmail.com";
+//            } else {
+//                username = acct.getEmail();
+//            }
+//            password = acct.getId();
+//        }
+//
+//
+////        String authURL = "http://83.212.105.36:9080/auth";
+//        SyncCredentials myCredentials = null;
+//        try {
+//            myCredentials = SyncCredentials.usernamePassword(
+//                    username, password, false); //user is in Realm database
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        //TODO Εδώ θα πρέπει να μπαίνει όταν υπάρχει χρήστης στον Realm Object Server
+//        if (myCredentials != null) {
+////            SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, false), RealmTasksApplication.AUTH_URL, this);
+//            final SyncCredentials syncCredentials = SyncCredentials.usernamePassword(username, password, false);
+//            SyncUser.loginAsync(syncCredentials, AUTH_URL, new SyncUser.Callback() {
+//                @Override
+//                public void onSuccess(SyncUser user) {
+//                    final SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, REALM_URL).build();
+//                    Realm.setDefaultConfiguration(syncConfiguration);
+//                    realm = Realm.getDefaultInstance();
+////                    Realm.setDefaultConfiguration(defaultConfig);
+//                }
+//
+//                @Override
+//                public void onError(ObjectServerError error) {
+//                }
+//            });
 
-        //Φτιαχνουμε το username και το password απο το google sign in
-        if (acct != null) {
-            if ("tsotzolas@gmail.com".equals(acct.getEmail())) {
-                username = "tsotzo1@gmail.com";
-            } else {
-                username = acct.getEmail();
-            }
-            password = acct.getId();
-        }
 
 
-//        String authURL = "http://83.212.105.36:9080/auth";
-        SyncCredentials myCredentials = null;
-        try {
-            myCredentials = SyncCredentials.usernamePassword(
-                    username, password, false); //user is in Realm database
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        //TODO Εδώ θα πρέπει να μπαίνει όταν υπάρχει χρήστης στον Realm Object Server
-        if (myCredentials != null) {
-            SyncUser.loginAsync(myCredentials, AUTH_URL, this);
-            Log.i("TINGLE", "credentials checked");
 
-            SyncConfiguration defaultConfig = new SyncConfiguration.Builder(
-                    currentUser(),
-                    REALM_URL).build();
-            Realm.setDefaultConfiguration(defaultConfig);
-        } else {
-            //TODO Εδώ θα πρέπει να μπαίνει όταν ΔΕΝ υπάρχει χρήστης στον Realm Object Server
-            //Φτιάχνουμε χρήστη στο Realm Object Server
-            SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, true), AUTH_URL, new SyncUser.Callback() {
-                @Override
-                public void onSuccess(SyncUser user) {
-                    registrationComplete(user);
-                }
 
-                @Override
-                public void onError(ObjectServerError error) {
-//                showProgress(false);
-                    String errorMsg;
-                    switch (error.getErrorCode()) {
-                        case EXISTING_ACCOUNT:
-                            errorMsg = "Account already exists";
-                            break;
-                        default:
-                            errorMsg = error.toString();
-                    }
-                    Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_LONG).show();
-                }
-            });
-        }
+
+
+
+
+
+
+
+//            Log.i("TINGLE", "credentials checked");
+//
+//            SyncConfiguration defaultConfig = new SyncConfiguration.Builder(
+//                    currentUser(),
+//                    REALM_URL).build();
+//            Realm.setDefaultConfiguration(defaultConfig);
+//        }
+//        else {
+//            //TODO Εδώ θα πρέπει να μπαίνει όταν ΔΕΝ υπάρχει χρήστης στον Realm Object Server
+//            //Φτιάχνουμε χρήστη στο Realm Object Server
+//            SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, true), AUTH_URL, new SyncUser.Callback() {
+//                @Override
+//                public void onSuccess(SyncUser user) {
+//                    registrationComplete(user);
+//                }
+//
+//                @Override
+//                public void onError(ObjectServerError error) {
+////                showProgress(false);
+//                    String errorMsg;
+//                    switch (error.getErrorCode()) {
+//                        case EXISTING_ACCOUNT:
+//                            errorMsg = "Account already exists";
+//                            break;
+//                        default:
+//                            errorMsg = error.toString();
+//                    }
+//                    Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        }
 
 //        String authURL = "http://83.212.105.36:9080/auth";
 //        SyncCredentials myCredentials = SyncCredentials.usernamePassword(
@@ -378,7 +406,7 @@ public class MainActivity extends AppCompatActivity
 
 //        user.logout();
 
-    }
+//    }
 
 
     private void registrationComplete(SyncUser user) {
@@ -390,11 +418,43 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSuccess(SyncUser user) {
-
+//        loginComplete(user);
+        System.out.println("-------SUCCESS-------");
     }
 
     @Override
     public void onError(ObjectServerError error) {
+        String errorMsg;
+        switch (error.getErrorCode()) {
+            case UNKNOWN_ACCOUNT:
+                errorMsg = "Account does not exists.";
+                break;
+            case INVALID_CREDENTIALS:
+                errorMsg = "The provided credentials are invalid!"; // This message covers also expired account token
+                break;
+            default:
+                errorMsg = error.toString();
+        }
+        Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+    }
+
+    private void loginComplete(SyncUser user) {
+        UserManager.setActiveUser(user);
+
+//        createInitialDataIfNeeded();
+//
+//        Intent listActivity = new Intent(this, TaskListActivity.class);
+//        Intent tasksActivity = new Intent(this, TaskActivity.class);
+//        tasksActivity.putExtra(TaskActivity.EXTRA_LIST_ID, RealmTasksApplication.DEFAULT_LIST_ID);
+//        startActivities(new Intent[] { listActivity, tasksActivity} );
+        finish();
+    }
+
+    public final void endApp(){
+        finishAndRemoveTask ();
+
 
     }
+
+
 }
