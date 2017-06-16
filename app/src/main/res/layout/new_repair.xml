@@ -22,7 +22,7 @@
         android:textColor="@color/colorWhite"
         android:textAppearance="?android:attr/textAppearanceLarge"
         app:layout_constraintBottom_toTopOf="@+id/textView9"
-        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintHorizontal_bias="0.296"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/editKm"
         app:layout_constraintTop_toTopOf="parent"
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="8dp"
         android:textColor="@color/colorWhite"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -70,7 +70,7 @@
         app:layout_constraintVertical_bias="0.748"
         app:layout_constraintLeft_toRightOf="@+id/textView9"
         android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="1.0" />
+        app:layout_constraintHorizontal_bias="0.463" />
 
     <EditText
         android:id="@+id/editCost"
@@ -105,8 +105,8 @@
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="111dp"
+        android:layout_height="26dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:gravity="center_vertical|center_horizontal"
@@ -115,11 +115,11 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:textColor="@color/colorWhite"
-        android:layout_marginTop="285dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/editDesc"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.434"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <EditText
         android:id="@+id/editDesc"
@@ -134,9 +134,11 @@
         android:textColor="@color/colorWhite"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="89dp"
         app:layout_constraintHorizontal_bias="0.489"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="0.963" />
 
     <Button
         android:id="@+id/button3"

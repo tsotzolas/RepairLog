@@ -25,31 +25,37 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="72dp"
+        android:layout_width="95dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="122dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/insert_vehicle_brand"
         android:textAlignment="gravity"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/colorWhite"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22"
+        tools:layout_editor_absoluteX="16dp" />
 
 
     <Spinner
         android:id="@+id/spinnerYear"
         android:layout_width="240dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginRight="41dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="60dp"
         android:gravity="center_vertical|center_horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/carModel"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.864"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.0" />
 
     <!--android:onClick="loadMakes-->
@@ -57,66 +63,70 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="72dp"
+        android:layout_width="95dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="214dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/insert_vehicle_model"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.062" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="16dp" />
 
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="72dp"
+        android:layout_width="95dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="CC"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.243" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.475"
+        tools:layout_editor_absoluteX="16dp" />
 
     <Spinner
         android:id="@+id/carCC"
         android:layout_width="240dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="26dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:gravity="center_vertical|center_horizontal"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/photoButton"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintLeft_toRightOf="@+id/textView3"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/carModel"
+        app:layout_constraintVertical_bias="0.057" />
 
     <Spinner
         android:id="@+id/carModel"
         android:layout_width="240dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="93dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:gravity="center_vertical|center_horizontal"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/photoButton"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintLeft_toRightOf="@+id/textView3"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="74dp"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerYear"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.071" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -128,8 +138,8 @@
 
     <Button
         android:id="@+id/photoButton"
-        android:layout_width="81dp"
-        android:layout_height="62dp"
+        android:layout_width="130dp"
+        android:layout_height="64dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="26dp"
         android:layout_marginRight="8dp"
@@ -141,7 +151,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintVertical_bias="0.63" />
+        app:layout_constraintVertical_bias="0.652" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -161,22 +171,18 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="72dp"
+        android:layout_width="95dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/insert_vehicle_year"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/spinnerYear"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintVertical_bias="0.087"
+        tools:layout_editor_absoluteX="16dp" />
 
     <Spinner
 
@@ -193,25 +199,24 @@
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintLeft_toRightOf="@+id/textView2"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerYear"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerYear" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="81dp"
-        android:layout_height="62dp"
+        android:layout_width="163dp"
+        android:layout_height="64dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:onClick="saveCar"
         android:text="@string/insert_vehicle_car_save"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.304"
+        app:layout_constraintHorizontal_bias="0.355"
         app:layout_constraintLeft_toRightOf="@+id/photoButton"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/carModel"
-        app:layout_constraintVertical_bias="0.752" />
+        app:layout_constraintVertical_bias="0.651"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <!--<ImageView-->
         <!--android:id="@+id/imageView"-->
