@@ -49,9 +49,9 @@ import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
 import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make_;
 import tsotzolas.ps.com.repairlog.Retrofit.Model.Model;
 
-//import tsotzolas.ps.com.repairlog.Retrofit.Car;
-//import tsotzolas.ps.com.repairlog.Retrofit.Makes.Example;
-//import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
+//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Car;
+//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Makes.Example;
+//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Makes.Make;
 
 /**
  * Created by tsotzolas on 3/4/2017.
@@ -72,7 +72,6 @@ public class InsertMotoActivity extends AppCompatActivity {
     private String motocc;
     private Vehicle motoVehicle;
     private Bitmap bitmap;
-
     private Realm realm;
 
     @Override
@@ -80,10 +79,9 @@ public class InsertMotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.insert_moto);
 
-
         //Αρχικοποίηση του Realm
         realm = Realm.getDefaultInstance();
-
+        //Αρχικοποίηση των
         motoMakeEditText = (EditText) findViewById(R.id.motoBrand);
         motoModelEditText = (EditText) findViewById(R.id.motoModel);
         yearSpinner = (Spinner) findViewById(R.id.spinnerYear);
@@ -94,15 +92,13 @@ public class InsertMotoActivity extends AppCompatActivity {
         photoButton = (Button) findViewById(R.id.photoButton);
         mImageView = (ImageView) findViewById(R.id.imageView);
 
+        //Γεμιζουμε τον spinner με τα year
         addItemsOnSpinnerYear();
-
-
     }
 
     /*********************************************
      * Για το year*******************Start********
      *********************************************/
-
     // add items into spinner dynamically
     public void addItemsOnSpinnerYear() {
 
@@ -111,20 +107,15 @@ public class InsertMotoActivity extends AppCompatActivity {
         for (int i = 1974; i <= Calendar.getInstance().get(Calendar.YEAR); i++) {
             yearList.add(String.valueOf(i));
         }
-
-//        carMakeSpinner = (Spinner) findViewById(R.id.carBrand);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 R.layout.spinner_item, yearList);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         yearSpinner.setAdapter(dataAdapter);
-
         yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 year = yearSpinner.getSelectedItem().toString();
                 Log.d(TAG, year);
-                //Για να φορτώσει τις μάρκες
             }
 
             @Override
@@ -132,24 +123,13 @@ public class InsertMotoActivity extends AppCompatActivity {
 //                Toast.makeText(Con, R.string.insert_vehicle_year, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
-
-
-
-
-
-
-
-
-
 
     public abstract class OnClickListener implements DialogInterface.OnClickListener {
         @Override
         public void onClick(DialogInterface dialog, int which) {
 
         }
-
         public abstract void onClick(InsertMotoActivity dialog, int which);
     }
 
@@ -159,7 +139,7 @@ public class InsertMotoActivity extends AppCompatActivity {
 
     /*****************************
      * Για την φωτογραφία
-     */
+    /*****************************/
 
     int RESULT_LOAD_IMAGE = 346;
 
@@ -178,7 +158,6 @@ public class InsertMotoActivity extends AppCompatActivity {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
             Cursor cursor = getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
             cursor.moveToFirst();
@@ -187,9 +166,6 @@ public class InsertMotoActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-//            Bitmap resizedBitmap = Bitmap.createScaledBitmap(roughBitmap, (int) (roughBitmap.getWidth() * values[0]), (int) (roughBitmap.getHeight() * values[4]), true);
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inSampleSize = sampleSize;
 
             final int maxSize = 960;
             int outWidth;
@@ -206,19 +182,14 @@ public class InsertMotoActivity extends AppCompatActivity {
 
             bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath), outWidth, outHeight, false);
             mImageView.setImageBitmap(bitmap);
-
         }
-
-
     }
 
+    //Για να κάνει την εισαγωγή της μηχανής
     public void saveMoto(View view){
-
         motoMake = motoMakeEditText.getText().toString();
         motomodel = motoModelEditText.getText().toString();
         motocc = motoCCEditText.getText().toString();
-
-
 
         //Γεμίζω το Realm Object
         motoVehicle = new Vehicle();
@@ -254,13 +225,5 @@ public class InsertMotoActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.insert_vehicle_moto_saved, Toast.LENGTH_LONG).show();
         Intent ki = new Intent(this, MainActivity.class);
         startActivity(ki);
-
     }
-
 }
-
-
-
-
-
-

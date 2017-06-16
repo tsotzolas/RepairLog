@@ -1,17 +1,15 @@
+package tsotzolas.ps.com.repairlog;
+
 import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 
-//import com.facebook.stetho.Stetho;
 
 /**
  * Created by tsotzolas on 26/4/2017.
  */
 
 public class MyDebugApplication extends Application {
-
-
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -21,8 +19,4 @@ public class MyDebugApplication extends Application {
                         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                         .build());
     }
-
-
-
-
 }

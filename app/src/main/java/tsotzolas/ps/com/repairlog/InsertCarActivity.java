@@ -33,12 +33,14 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import io.realm.Realm;
 import retrofit2.Call;
@@ -46,9 +48,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-//import tsotzolas.ps.com.repairlog.Retrofit.Car;
-//import tsotzolas.ps.com.repairlog.Retrofit.Makes.Example;
-//import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
+//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Car;
+//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Makes.Example;
+//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Makes.Make;
 import tsotzolas.ps.com.repairlog.Model.Vehicle;
 import tsotzolas.ps.com.repairlog.Retrofit.CarService;
 import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
@@ -62,57 +64,42 @@ import tsotzolas.ps.com.repairlog.Retrofit.Model.Model_;
 
 public class InsertCarActivity extends AppCompatActivity {
     private static final String TAG = InsertCarActivity.class.getSimpleName();
-
-
+    public static final String BASE_URL = "https://www.carqueryapi.com/" + "?callback=?";
     private String year;
     private String carMake;
     private String carModel;
     private String cc;
     private Bitmap bitmap;
     private Vehicle carVehicle;
-    private boolean orientation=false;
-
-    public static final String BASE_URL = "https://www.carqueryapi.com/" + "?callback=?";
-
-
     private Realm realm;
-
     private Spinner carMakeSpinner;
     private Spinner carmodelSpinner;
     private Spinner yearSpinner;
     private Spinner ccSpinner;
     private Button photoButton;
     private ImageView mImageView;
-
-
+    private boolean orientation=false;
 
     //Για την εταιρία
     private Make makeList;
     private List<Make_> makeList1 = new ArrayList<>();
     private List<String> makeListString1 = new ArrayList<>();
-
     private MyAdapterMakes myadapter;
-
-
-
     private Model modelList;
     private List<Model_> modelList1 = new ArrayList<>();
     private List<String> modelListString1 = new ArrayList<>();
 
-
-//    private Car car;
-
+    @VisibleForTesting
+    public ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.insert_car);
 
-
         //Αρχικοποίηση του Realm
         realm = Realm.getDefaultInstance();
-
-
+        //Αρχικοποίηση των spinner
         carMakeSpinner = (Spinner) findViewById(R.id.carBrand);
         carmodelSpinner = (Spinner) findViewById(R.id.carModel);
         yearSpinner = (Spinner) findViewById(R.id.spinnerYear);
@@ -126,41 +113,39 @@ public class InsertCarActivity extends AppCompatActivity {
         photoButton = (Button) findViewById(R.id.photoButton);
         mImageView = (ImageView) findViewById(R.id.imageView);
 
-//        if(!orientation) {
-//            addItemsOnSpinnerYear();
-//        }
         addItemsOnSpinnerYear();
 
 
 
+        RealmInspectorModulesProvider.builder(this)
+                .withFolder(getCacheDir())
+                .withMetaTables()
+                .withDescendingOrder()
+                .withLimit(1000)
+                .databaseNamePattern(Pattern.compile(".+\\.realm"))
+                .build();
     }
+
 
 
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         orientation = true;
     }
-
-
     /*********************************************
      * Για το year*******************Start********
      *********************************************/
-
     // add items into spinner dynamically
     public void addItemsOnSpinnerYear() {
-
         List<String> yearList = new ArrayList<String>();
         yearList.add(".......");
         for (int i = 1974; i <= Calendar.getInstance().get(Calendar.YEAR); i++) {
             yearList.add(String.valueOf(i));
         }
-
-//        carMakeSpinner = (Spinner) findViewById(R.id.carBrand);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 R.layout.spinner_item, yearList);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         yearSpinner.setAdapter(dataAdapter);
-
         yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -172,15 +157,12 @@ public class InsertCarActivity extends AppCompatActivity {
                     loadMakes();
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 //                Toast.makeText(Con, R.string.insert_vehicle_year, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
-
     /*********************************************
      * Για το year*******************Finish*******
      *********************************************/
@@ -192,16 +174,12 @@ public class InsertCarActivity extends AppCompatActivity {
      *********************************************/
 
 
-    @VisibleForTesting
-    public ProgressDialog mProgressDialog;
-
     public void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage("Loading");
             mProgressDialog.setIndeterminate(true);
         }
-
         mProgressDialog.show();
     }
 

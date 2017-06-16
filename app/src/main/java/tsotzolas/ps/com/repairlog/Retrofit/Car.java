@@ -1,4 +1,4 @@
-//package tsotzolas.ps.com.repairlog.Retrofit;
+//package tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit;
 //
 //import io.realm.Realm;
 //import io.realm.RealmObject;

@@ -1,4 +1,4 @@
-//package tsotzolas.ps.com.repairlog.Retrofit;
+//package tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit;
 //
 //import com.google.gson.annotations.SerializedName;
 //

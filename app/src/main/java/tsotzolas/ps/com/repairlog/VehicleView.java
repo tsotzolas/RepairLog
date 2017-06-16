@@ -33,23 +33,18 @@ import tsotzolas.ps.com.repairlog.Model.Vehicle;
 
 public class VehicleView extends AppCompatActivity {
     private static final String TAG = VehicleView.class.getSimpleName();
-
     private Realm realm;
     private RealmResults<Vehicle> vehicleRealmList;
     public static Repair selectedRepair = new Repair();
     public static Vehicle selectedVehicles = new Vehicle();
     private List<Vehicle> vehiclesList;
-
-
     private MyAdapter1 myAdapter1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vehicle_center);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
         //Αρχικοποίηση του Realm
         realm = Realm.getDefaultInstance();
@@ -57,26 +52,7 @@ public class VehicleView extends AppCompatActivity {
         //Κάνουμε ερώτημα στη Βάση για να φέρουμε όλα τα Pets και τα βάζουμε σε μία RealmList
         vehicleRealmList = realm.where(Vehicle.class).findAll();
 
-        //Για να αποθηκέυσω το αντικείμενο pet
-//        Vehicle pet = new (1, "Bob");
-//        realm.beginTransaction();
-//        realm.copyToRealmOrUpdate(pet);
-//        realm.commitTransaction();
-
-
-        //Try with resources
-//        try(Realm r = Realm.getDefaultInstance()){
-//            r.where();
-//        }
-
-
-//        i = 4;
         setContentView(R.layout.vehicle_view);
-
-//        pets = new ArrayList<>();
-//        pets.add(new Pet(1, "Andreas"));
-//        pets.add(new Pet(2, "Foo"));
-//        pets.add(new Pet(3, "Bar"));
 
         myAdapter1 = new MyAdapter1(this, R.layout.view_list_row, vehicleRealmList);
 
@@ -85,26 +61,12 @@ public class VehicleView extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(VehicleView.this, "Clicked!! " + parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
                 selectedVehicles= (Vehicle) parent.getItemAtPosition(position);
-
                 System.out.println("----->" + selectedVehicles.toString());
                 goToVehicleCenter();
-
             }
         });
-
-
-
-
-
-
-
-
-
     }
-
-
 
     private class MyAdapter1 extends ArrayAdapter<Vehicle> {
         public MyAdapter1(Context context, int resource, List<Vehicle> objects) {
@@ -132,15 +94,9 @@ public class VehicleView extends AppCompatActivity {
             holder.makeTextView.setText(getItem(position).getMake());
             holder.yearlTextView.setText(getItem(position).getYear());
             holder.ccTextView.setText(getItem(position).getCc());
-
-//            Bitmap b = getItem(position).getPhoto();
-
-//            BitmapFactory.decodeByteArray(getItem(position).getPhoto(), 0, getItem(position).getPhoto().length);
-
             holder.imageView.setImageBitmap(BitmapFactory.decodeByteArray(getItem(position).getPhoto(), 0, getItem(position).getPhoto().length));
             return rowView;
         }
-
         class Holder {
             TextView makeTextView;
             TextView modelTextView;
@@ -154,13 +110,9 @@ public class VehicleView extends AppCompatActivity {
      * Is the method for going to goToVehicleCenter page
      */
     private void goToVehicleCenter() {
-
         Intent ki = new Intent(this, VehicleRepairs.class);
         startActivity(ki);
     }
-
-
-
 
     @Override
     public void onBackPressed() {
@@ -168,5 +120,4 @@ public class VehicleView extends AppCompatActivity {
         Intent ki = new Intent(this, MainActivity.class);
         startActivity(ki);
     }
-
 }

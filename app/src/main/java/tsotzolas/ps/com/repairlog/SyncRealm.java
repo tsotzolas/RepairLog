@@ -23,9 +23,7 @@ import static tsotzolas.ps.com.repairlog.RealmTasksApplication.REALM_URL;
 
 public class SyncRealm {
 
-//    public static GoogleSignInAccount acct;
-//    private static final String username = "tsotzo1@gmail.com";
-//    private static final String password = "123456";
+
     private static volatile Realm realm;
 
 
@@ -42,9 +40,6 @@ public class SyncRealm {
             password = acct.getId();
         }
 
-
-//        String authURL = "http://83.212.105.36:9080/auth";
-
         SyncCredentials myCredentials = null;
         try {
             myCredentials = SyncCredentials.usernamePassword(
@@ -52,9 +47,8 @@ public class SyncRealm {
         } catch (Exception e) {
             System.out.println(e);
         }
-        //TODO Εδώ θα πρέπει να μπαίνει όταν υπάρχει χρήστης στον Realm Object Server
+        //Κάνει login στον Realm Object Server για να κάνει τον συγχρονισμό
         if (myCredentials != null) {
-//            SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, false), RealmTasksApplication.AUTH_URL, this);
             final SyncCredentials syncCredentials = SyncCredentials.usernamePassword(username, password, false);
             SyncUser.loginAsync(syncCredentials, AUTH_URL, new SyncUser.Callback() {
                 @Override
@@ -62,7 +56,7 @@ public class SyncRealm {
                     final SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, REALM_URL).build();
                     Realm.setDefaultConfiguration(syncConfiguration);
                     realm = Realm.getDefaultInstance();
-//                    Realm.setDefaultConfiguration(defaultConfig);
+//                  Realm.setDefaultConfiguration(defaultConfig);
                 }
 
                 @Override
@@ -70,10 +64,6 @@ public class SyncRealm {
                     System.out.println("---------------------Not Valid User-------------------");
                 }
             });
-
-
         }
-
     }
-
 }

@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity
     private Locale locale;
     private GoogleAuth googleAuth;
     public static GoogleSignInAccount acct;
-    private final String username = "tsotzo1@gmail.com";
-    private final String password = "123456";
+    private final String FIREBASE_USERNAME = "tsotzolas@gmail.com";
+    private final String FIREBASE_PASSWORD = "123123123";
     private volatile Realm realm;
 
     @Override
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
 
         //Firebase Login
         mAuth = FirebaseAuth.getInstance();
-        login("tsotzolas@gmail.com", "123123123");
+        login(FIREBASE_USERNAME, FIREBASE_PASSWORD);
 
 
         carImageButton = (ImageButton) findViewById(R.id.imageButtonCar);
@@ -143,15 +143,11 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         viewForLocale();
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void viewForLocale() {
-
         Locale.setDefault(SettingActivity.locale);
-
         Resources resources = getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         Configuration configuration = resources.getConfiguration();
@@ -223,29 +219,22 @@ public class MainActivity extends AppCompatActivity
 
 
     public void carSelected(View view) {
-
         Toast.makeText(this, "Select Car", Toast.LENGTH_SHORT).show();
-
         Intent ki = new Intent(this, VehicleView.class);
         startActivity(ki);
-
-
     }
 
     public void motoSelected(View view) {
-
         Toast.makeText(this, "Select Moto", Toast.LENGTH_SHORT).show();
-
-
     }
 
-
+    // Μέθοδος που σε πάώ για να κάνεις insert
     private void gotoInsert(View view) {
         Intent ki = new Intent(this, ChooseToInsertActivity.class);
         startActivity(ki);
     }
 
-
+    // Είναι για το Firebase Login Δεν το ζρησιμοποιώ πουθενά απλά το έχω βάλει για να υπάρχει
     private void login(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -286,127 +275,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    //TODO Θα πρεπει να δώ πώς θα κάνει login.θα πρεπει να διακρύνω τις περιπτώσεις του έχει δημουργηθεί βάση ή όχι
-//    public void realmSync(View view) {
-//
-//        //Φτιαχνουμε το username και το password απο το google sign in
-//        if (acct != null) {
-//            if ("tsotzolas@gmail.com".equals(acct.getEmail())) {
-//                username = "tsotzo1@gmail.com";
-//            } else {
-//                username = acct.getEmail();
-//            }
-//            password = acct.getId();
-//        }
-//
-//
-////        String authURL = "http://83.212.105.36:9080/auth";
-//        SyncCredentials myCredentials = null;
-//        try {
-//            myCredentials = SyncCredentials.usernamePassword(
-//                    username, password, false); //user is in Realm database
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        //TODO Εδώ θα πρέπει να μπαίνει όταν υπάρχει χρήστης στον Realm Object Server
-//        if (myCredentials != null) {
-////            SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, false), RealmTasksApplication.AUTH_URL, this);
-//            final SyncCredentials syncCredentials = SyncCredentials.usernamePassword(username, password, false);
-//            SyncUser.loginAsync(syncCredentials, AUTH_URL, new SyncUser.Callback() {
-//                @Override
-//                public void onSuccess(SyncUser user) {
-//                    final SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, REALM_URL).build();
-//                    Realm.setDefaultConfiguration(syncConfiguration);
-//                    realm = Realm.getDefaultInstance();
-////                    Realm.setDefaultConfiguration(defaultConfig);
-//                }
-//
-//                @Override
-//                public void onError(ObjectServerError error) {
-//                }
-//            });
-
-
-
-
-
-
-
-
-
-
-
-
-//            Log.i("TINGLE", "credentials checked");
-//
-//            SyncConfiguration defaultConfig = new SyncConfiguration.Builder(
-//                    currentUser(),
-//                    REALM_URL).build();
-//            Realm.setDefaultConfiguration(defaultConfig);
-//        }
-//        else {
-//            //TODO Εδώ θα πρέπει να μπαίνει όταν ΔΕΝ υπάρχει χρήστης στον Realm Object Server
-//            //Φτιάχνουμε χρήστη στο Realm Object Server
-//            SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, true), AUTH_URL, new SyncUser.Callback() {
-//                @Override
-//                public void onSuccess(SyncUser user) {
-//                    registrationComplete(user);
-//                }
-//
-//                @Override
-//                public void onError(ObjectServerError error) {
-////                showProgress(false);
-//                    String errorMsg;
-//                    switch (error.getErrorCode()) {
-//                        case EXISTING_ACCOUNT:
-//                            errorMsg = "Account already exists";
-//                            break;
-//                        default:
-//                            errorMsg = error.toString();
-//                    }
-//                    Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_LONG).show();
-//                }
-//            });
-//        }
-
-//        String authURL = "http://83.212.105.36:9080/auth";
-//        SyncCredentials myCredentials = SyncCredentials.usernamePassword(
-//                username, password, false); //user is in Realm database
-//
-//        SyncUser.loginAsync(myCredentials, authURL, this);
-//        Log.i("TINGLE","credentials checked");
-//
-//        SyncConfiguration defaultConfig = new SyncConfiguration.Builder(
-//                currentUser(),
-//                "realm://83.212.105.36:9080/~/realmtasks").build();
-//        Realm.setDefaultConfiguration(defaultConfig);
-
-
-//
-//
-////        //Κάνουμε login
-//        SyncCredentials myCredentials = SyncCredentials.usernamePassword(username, password, false);
-//        Realm.getDefaultInstance();
-////        Realm.getInstance(syncConfiguration);
-////
-//        String authURL = "http://83.212.105.36" + ":9080/auth";
-//
-////
-//        SyncUser user = SyncUser.login(myCredentials, authURL);
-////
-//        String serverURL = "realm://http://83.212.105.36:9080/~/default";
-//        SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, serverURL).build();
-//        Realm.getInstance(syncConfiguration);
-
-
-//        SyncConfiguration config = new SyncConfiguration.Builder(user, authURL)
-//                               .build();
-//
-//        RealmAsyncTask task = (RealmAsyncTask) Realm.getInstance(config);
-
-//        user.logout();
-
-//    }
 
 
     private void registrationComplete(SyncUser user) {

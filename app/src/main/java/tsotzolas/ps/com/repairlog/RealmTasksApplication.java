@@ -24,10 +24,14 @@ import io.realm.Realm;
 import io.realm.log.LogLevel;
 import io.realm.log.RealmLog;
 
+/**
+ * Είναι το αρχείο το οποίο του λές που είναι ο Realm Object Server σου
+ * για να κάνει τον συγχρονισμό
+ */
 public class RealmTasksApplication extends Application {
 
     public static final String AUTH_URL = "http://" +"83.212.105.36" + ":9080/auth";
-    public static final String REALM_URL = "realm://" + "83.212.105.36" + ":9080/~/repairlog";
+    public static final String REALM_URL = "realm://" + "83.212.105.36" + ":9080/~/gr.repairlog.tsotzolas.android";
     public static final String DEFAULT_LIST_ID = "80EB1620-165B-4600-A1B1-D97032FDD9A0";
     public static String DEFAULT_LIST_NAME = "My Tasks";
 

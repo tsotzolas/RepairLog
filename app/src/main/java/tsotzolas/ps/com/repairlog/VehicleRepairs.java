@@ -38,13 +38,7 @@ public class VehicleRepairs extends AppCompatActivity {
     private Realm realm;
     private RealmResults<Repair> repairRealmList;
     private List<Repair> repairList;
-    private Repair repair;
     private MyAdapter1 myAdapter1;
-
-
-//    private MyAdapter1 myAdapter1;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +48,6 @@ public class VehicleRepairs extends AppCompatActivity {
         setSupportActionBar(toolbar1);
         //Αρχικοποίηση του Realm
         realm = Realm.getDefaultInstance();
-//        repair = new Repair();
-//        repair.setVehicleId(selectedVehicles.getId());
-//        repair.setRepairCost("11");
-//        repair.setRepairDate(new Date());
-//        repair.setRepairDescription("Test11");
-
-//        Realm realm = Realm.getDefaultInstance();
-//        realm.beginTransaction();
-//        realm.copyToRealm(repair);
-//        realm.commitTransaction();
 
         //Εκτελούμε το ερώτημα
         repairRealmList = realm.where(Repair.class)
@@ -71,27 +55,10 @@ public class VehicleRepairs extends AppCompatActivity {
                 .findAll();
         repairList = realm.copyFromRealm(repairRealmList);
 
-//        System.out.println("-------------------->"+ repairRealmList.size());
-//        System.out.println("---->"+ repairRealmList.get(1).getRepairCost());
-//        System.out.println("---->"+ repairRealmList.get(1).getRepairDescription());
-
-
-
         myAdapter1 = new MyAdapter1(this, R.layout.view_list_row, repairList);
 
         ListView listView = (ListView) findViewById(R.id.vehicleList1);
         listView.setAdapter(myAdapter1);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-////                Toast.makeText(VehicleView.this, "Clicked!! " + parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
-//                selectedRepair = (Repair) parent.getItemAtPosition(position);
-//
-//                System.out.println("----->" + selectedRepair.toString());
-//
-//            }
-//        });
-
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -148,11 +115,7 @@ public class VehicleRepairs extends AppCompatActivity {
                 return false;
             }
         });
-
     }
-
-
-
 
     private class MyAdapter1 extends ArrayAdapter<Repair> {
         public MyAdapter1(Context context, int resource, List<Repair> objects) {
@@ -173,16 +136,13 @@ public class VehicleRepairs extends AppCompatActivity {
                 holder.descTextView = (TextView) rowView.findViewById(R.id.desc_repair_log1);
                 rowView.setTag(holder);
             }
-
             Holder holder = (Holder) rowView.getTag();
             holder.kmTextView.setText(getItem(position).getVehicleKM());
             holder.dateTextView.setText(getItem(position).getRepairDate().toString());
             holder.costTextView.setText(getItem(position).getRepairCost());
             holder.descTextView.setText(getItem(position).getRepairDescription());
-
             return rowView;
         }
-
         class Holder {
             TextView dateTextView;
             TextView kmTextView;
@@ -192,31 +152,13 @@ public class VehicleRepairs extends AppCompatActivity {
     }
 
 
-
-    private void gotoInsert(View view){
-//        Intent ki = new Intent(this, ChooseToInsertActivity.class);
-//        startActivity(ki);
-        System.out.println("Test");
-    }
-
-
-
-
     public void addNewRepair(View view) {
-
-
         Intent ki = new Intent(this, NewRepair.class);
         startActivity(ki);
-
-
     }
 
-
-
-
-
+    //Για να διαγράψουμε μια εγγραφή
     public void deleteVehicle(View view) {
-
                 AlertDialog.Builder builder;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     builder = new AlertDialog.Builder(VehicleRepairs.this, android.R.style.Theme_Material_Dialog_Alert);
@@ -252,17 +194,13 @@ public class VehicleRepairs extends AppCompatActivity {
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
-
     }
 
-
-
-
+    //Αλλάζουμε την λειτουργία του BackPress για να μας πηγαίνει στην MainActivity
     @Override
     public void onBackPressed() {
         Log.d("CDA", "onBackPressed Called");
         Intent ki = new Intent(this, MainActivity.class);
         startActivity(ki);
     }
-
 }

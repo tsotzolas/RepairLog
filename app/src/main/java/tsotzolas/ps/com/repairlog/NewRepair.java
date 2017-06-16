@@ -24,21 +24,13 @@ import static tsotzolas.ps.com.repairlog.VehicleView.selectedVehicles;
 public class NewRepair extends AppCompatActivity  implements
         View.OnClickListener{
     private static final String TAG = NewRepair.class.getSimpleName();
-
     private Realm realm;
     private Repair repair;
-
     private EditText dateEditText;
     private EditText costEditText;
     private EditText kmEditText;
     private EditText descEditText;
-
     private int mYear, mMonth, mDay, mHour, mMinute;
-
-
-//    private MyAdapter1 myAdapter1;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,32 +43,9 @@ public class NewRepair extends AppCompatActivity  implements
         kmEditText = (EditText) findViewById(R.id.editKm);
         descEditText= (EditText) findViewById(R.id.editDesc);
 
-
-
-
-
         //Αρχικοποίηση του Realm
         realm = Realm.getDefaultInstance();
-//        repair = new Repair();
-//        repair.setVehicleId(selectedVehicles.getId());
-//        repair.setRepairCost("11");
-//        repair.setRepairDate(new Date());
-//        repair.setRepairDescription("Test11");
-
-//        Realm realm = Realm.getDefaultInstance();
-//        realm.beginTransaction();
-//        realm.copyToRealm(repair);
-//        realm.commitTransaction();
-
-        //Εκτελούμε το ερώτημα
-
-
-
     }
-
-
-
-
 
     private void gotoInsert(View view){
 //        Intent ki = new Intent(this, ChooseToInsertActivity.class);
@@ -84,12 +53,10 @@ public class NewRepair extends AppCompatActivity  implements
         System.out.println("Test");
     }
 
-
-
-
+    //Για να κάνουμε save το Repair
     public void save(View view) {
-
         repair = new Repair();
+        //Γεμίζουμε το αντικείμενο
         repair.setRepairCost(costEditText.getText().toString());
         repair.setRepairDate(dateEditText.getText().toString());
         repair.setRepairDescription(descEditText.getText().toString());
@@ -97,35 +64,27 @@ public class NewRepair extends AppCompatActivity  implements
         repair.setVehicleId(selectedVehicles.getId());
         repair.setRepairId(String.valueOf(UUID.randomUUID()));
 
-
+        //Κάνουμε save το αντικείμενο
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealm(repair);
         realm.commitTransaction();
 
-
         Toast.makeText(this, R.string.insert_vehicle_car_saved, Toast.LENGTH_SHORT).show();
 
         Intent ki = new Intent(this, VehicleRepairs.class);
         startActivity(ki);
-
-
     }
 
 
-
-
+    //Για το ημερολόγιο
     @Override
     public void onClick(View v) {
-
-//        if (v == btnDatePicker) {
-
             // Get Current Date
             final Calendar c = Calendar.getInstance();
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
-
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
@@ -133,37 +92,9 @@ public class NewRepair extends AppCompatActivity  implements
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
-
                             dateEditText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-
                         }
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
-//        }
-//        if (v == btnTimePicker) {
-//
-//            // Get Current Time
-//            final Calendar c = Calendar.getInstance();
-//            mHour = c.get(Calendar.HOUR_OF_DAY);
-//            mMinute = c.get(Calendar.MINUTE);
-
-//            // Launch Time Picker Dialog
-//            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-//                    new TimePickerDialog.OnTimeSetListener() {
-//
-//                        @Override
-//                        public void onTimeSet(TimePicker view, int hourOfDay,
-//                                              int minute) {
-//
-//                            txtTime.setText(hourOfDay + ":" + minute);
-//                        }
-//                    }, mHour, mMinute, false);
-//            timePickerDialog.show();
-//        }
     }
-
-
-
-
-
 }

@@ -3,6 +3,7 @@ package tsotzolas.ps.com.repairlog.GoogleSignIn;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 import io.realm.ObjectServerError;
+import io.realm.Realm;
 import io.realm.SyncCredentials;
 import io.realm.SyncUser;
 import tsotzolas.ps.com.repairlog.MainActivity;
@@ -42,7 +44,10 @@ public class SignInActivity extends AppCompatActivity implements
 
     public static GoogleApiClient mGoogleApiClient;
     private TextView mStatusTextView;
+    @VisibleForTesting
     private ProgressDialog mProgressDialog;
+    @VisibleForTesting
+    private ProgressDialog mProgressDialog1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,9 +149,8 @@ public class SignInActivity extends AppCompatActivity implements
             }
 
             mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
-
-            //TODO Εδώ θα πρέπει να μπαίνει όταν ΔΕΝ υπάρχει χρήστης στον Realm Object Server
-            //Φτιάχνουμε χρήστη στο Realm Object Server
+            Realm.init(getApplicationContext());
+            //Αφού ο χρήστης κάνει google Sign In μετα φτιάχνουμε χρήστη στο Realm Object Server
             SyncUser.loginAsync(SyncCredentials.usernamePassword(username, password, true), AUTH_URL, new SyncUser.Callback() {
                 @Override
                 public void onSuccess(SyncUser user) {
@@ -169,36 +173,24 @@ public class SignInActivity extends AppCompatActivity implements
                 }
             });
 
-
-
-
-
-
-
-
-//            String serverURL = "realm://192.168.3.2:9080/~/default";
-//            String token = "dd9693a442c17e63d9f582d4a82964e3"; // a string representation of a token obtained from your authentication server
-//            Map<String, Object> customData = new HashMap<>();
-//            SyncCredentials myCredentials = SyncCredentials.custom(token,"myauth",customData);
-//
-////            SyncUser.loginAsync(creds, authUrl, callback);
-//            String authURL = "http://" + "192.168.3.2" + ":9080/auth";
-//            SyncUser user = SyncUser.login(myCredentials, authURL);
-//
-//            SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, serverURL).build();
-//
-//            Realm realm = Realm.getInstance(syncConfiguration);
-
-
-
-
-
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
             updateUI(false);
         }
     }
+
+
+    @Override
+    public void onSuccess(SyncUser user) {
+
+    }
+
+    @Override
+    public void onError(ObjectServerError error) {
+
+    }
+
     // [END handleSignInResult]
 
     // [START signIn]
@@ -270,18 +262,18 @@ public class SignInActivity extends AppCompatActivity implements
 
 
     private void showProgressDialog1() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("Authenticating with Realm Object Server");
-            mProgressDialog.setIndeterminate(true);
+        if (mProgressDialog1 == null) {
+            mProgressDialog1 = new ProgressDialog(this);
+            mProgressDialog1.setMessage("Authenticating with Realm Object Server");
+            mProgressDialog1.setIndeterminate(true);
         }
 
-        mProgressDialog.show();
+        mProgressDialog1.show();
     }
 
     private void hideProgressDialog1() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.hide();
+        if (mProgressDialog1 != null && mProgressDialog1.isShowing()) {
+            mProgressDialog1.hide();
         }
     }
 
@@ -320,20 +312,6 @@ public class SignInActivity extends AppCompatActivity implements
         hideProgressDialog1();
         Intent ki = new Intent(this, MainActivity.class);
         startActivity(ki);
-
-    }
-
-
-
-
-
-    @Override
-    public void onSuccess(SyncUser user) {
-
-    }
-
-    @Override
-    public void onError(ObjectServerError error) {
 
     }
 

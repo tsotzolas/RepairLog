@@ -1,4 +1,4 @@
-//package tsotzolas.ps.com.repairlog;
+//package tsotzolas.ps.com.tsotzolas.ps.repairlog;
 //
 //import android.content.Context;
 //import android.content.DialogInterface;
@@ -32,10 +32,10 @@
 //import retrofit2.Response;
 //import retrofit2.Retrofit;
 //import retrofit2.converter.gson.GsonConverterFactory;
-//import tsotzolas.ps.com.repairlog.Retrofit.Car;
-//import tsotzolas.ps.com.repairlog.Retrofit.CarService;
-//import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
-//import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make_;
+//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Car;
+//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.CarService;
+//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Makes.Make;
+//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Makes.Make_;
 //
 ///**
 // * Created by tsotzolas on 3/4/2017.

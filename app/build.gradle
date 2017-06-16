@@ -6,6 +6,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
+//        applicationId "gr.tsotzolas.ps.repairlog.tsotzolas.android"
         applicationId "gr.repairlog.tsotzolas.android"
         minSdkVersion 21
         targetSdkVersion 25

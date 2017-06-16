@@ -31,13 +31,7 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.setting_main);
         System.out.println("Test");
         changeLanguageButton = (Button) findViewById(R.id.chabgeLangbutton);
-
-
     }
-
-
-
-
 
     /**
      * Changes the {@link Locale} of the application and updates the {@link Configuration}
@@ -51,7 +45,6 @@ public class SettingActivity extends AppCompatActivity {
         }
 
         Locale.setDefault(locale);
-
         Resources resources = getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         Configuration configuration = resources.getConfiguration();
@@ -68,6 +61,4 @@ public class SettingActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-
-
 }
