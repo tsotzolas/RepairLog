@@ -56,24 +56,35 @@ public class NewRepair extends AppCompatActivity  implements
     //Για να κάνουμε save το Repair
     public void save(View view) {
         repair = new Repair();
-        //Γεμίζουμε το αντικείμενο
-        repair.setRepairCost(costEditText.getText().toString());
-        repair.setRepairDate(dateEditText.getText().toString());
-        repair.setRepairDescription(descEditText.getText().toString());
-        repair.setVehicleKM(kmEditText.getText().toString());
-        repair.setVehicleId(selectedVehicles.getId());
-        repair.setRepairId(String.valueOf(UUID.randomUUID()));
+        //Κάνουμε έλεγχο ότι έχει συμπληρώσει όλα τα πεδία
+        if ("".equals(dateEditText.getText().toString())){
+            Toast.makeText(this, R.string.add_date, Toast.LENGTH_SHORT).show();
+        }else if ("".equals(kmEditText.getText().toString())){
+            Toast.makeText(this, R.string.add_km, Toast.LENGTH_SHORT).show();
+        }else  if ("".equals(costEditText.getText().toString())){
+            Toast.makeText(this, R.string.add_cost, Toast.LENGTH_SHORT).show();
+        }else if ("".equals(descEditText.getText().toString())){
+            Toast.makeText(this, R.string.add_desc, Toast.LENGTH_SHORT).show();
+        }else {
+            //Γεμίζουμε το αντικείμενο
+            repair.setRepairCost(costEditText.getText().toString());
+            repair.setRepairDate(dateEditText.getText().toString());
+            repair.setRepairDescription(descEditText.getText().toString());
+            repair.setVehicleKM(kmEditText.getText().toString());
+            repair.setVehicleId(selectedVehicles.getId());
+            repair.setRepairId(String.valueOf(UUID.randomUUID()));
 
-        //Κάνουμε save το αντικείμενο
-        realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        realm.copyToRealm(repair);
-        realm.commitTransaction();
+            //Κάνουμε save το αντικείμενο
+            realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            realm.copyToRealm(repair);
+            realm.commitTransaction();
 
-        Toast.makeText(this, R.string.insert_vehicle_car_saved, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.insert_repair_ok, Toast.LENGTH_SHORT).show();
 
-        Intent ki = new Intent(this, VehicleRepairs.class);
-        startActivity(ki);
+            Intent ki = new Intent(this, VehicleRepairs.class);
+            startActivity(ki);
+        }
     }
 
 

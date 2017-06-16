@@ -30,14 +30,14 @@ public class ChooseToInsertActivity extends AppCompatActivity{
     }
 
     public void selectCar(View view){
-        Toast.makeText(this, "Select Car", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Select Car", Toast.LENGTH_SHORT).show();
         Intent ki = new Intent(this, InsertCarActivity.class);
         startActivity(ki);
     }
 
 
     public void selectMoto(View view){
-        Toast.makeText(this, "Select Moto", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Select Moto", Toast.LENGTH_SHORT).show();
         Intent ki = new Intent(this, InsertMotoActivity.class);
         startActivity(ki);
     }

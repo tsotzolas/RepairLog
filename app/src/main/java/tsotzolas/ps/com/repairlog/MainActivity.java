@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         login(FIREBASE_USERNAME, FIREBASE_PASSWORD);
 
-
         carImageButton = (ImageButton) findViewById(R.id.imageButtonCar);
         motoImageButton = (ImageButton) findViewById(R.id.imageButtonMoto);
 
@@ -132,10 +131,7 @@ public class MainActivity extends AppCompatActivity
             locale.setDefault(locale);
         } else {
             locale = new Locale(SettingActivity.locale.getDisplayLanguage());
-            Log.d("------------------>", locale.getDisplayCountry());
         }
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -219,14 +215,11 @@ public class MainActivity extends AppCompatActivity
 
 
     public void carSelected(View view) {
-        Toast.makeText(this, "Select Car", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Select Car", Toast.LENGTH_SHORT).show();
         Intent ki = new Intent(this, VehicleView.class);
         startActivity(ki);
     }
 
-    public void motoSelected(View view) {
-        Toast.makeText(this, "Select Moto", Toast.LENGTH_SHORT).show();
-    }
 
     // Μέθοδος που σε πάώ για να κάνεις insert
     private void gotoInsert(View view) {
@@ -234,7 +227,7 @@ public class MainActivity extends AppCompatActivity
         startActivity(ki);
     }
 
-    // Είναι για το Firebase Login Δεν το ζρησιμοποιώ πουθενά απλά το έχω βάλει για να υπάρχει
+    // Είναι για το Firebase Login Δεν το χρησιμοποιώ πουθενά απλά το έχω βάλει για να υπάρχει
     private void login(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -261,9 +254,9 @@ public class MainActivity extends AppCompatActivity
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Toast.makeText(MainActivity.this, "Sucesfull Login with user:" + user.getEmail(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getText(R.string.firebase_succes_login) + user.getEmail(), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,  getText(R.string.firebase_fail_login), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -273,8 +266,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(ki);
         System.out.println("---------------------");
     }
-
-
 
 
     private void registrationComplete(SyncUser user) {
@@ -318,8 +309,8 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
-    public final void endApp(){
-        finishAndRemoveTask ();
+    public final void endApp() {
+        finishAndRemoveTask();
 
 
     }

@@ -30,27 +30,21 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
-
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
-
 import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Car;
-//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Makes.Example;
-//import tsotzolas.ps.com.tsotzolas.ps.repairlog.Retrofit.Makes.Make;
 import tsotzolas.ps.com.repairlog.Model.Vehicle;
 import tsotzolas.ps.com.repairlog.Retrofit.CarService;
 import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
@@ -80,11 +74,8 @@ public class InsertCarActivity extends AppCompatActivity {
     private ImageView mImageView;
     private boolean orientation=false;
 
-    //Για την εταιρία
     private Make makeList;
-    private List<Make_> makeList1 = new ArrayList<>();
     private List<String> makeListString1 = new ArrayList<>();
-    private MyAdapterMakes myadapter;
     private Model modelList;
     private List<Model_> modelList1 = new ArrayList<>();
     private List<String> modelListString1 = new ArrayList<>();
@@ -115,8 +106,6 @@ public class InsertCarActivity extends AppCompatActivity {
 
         addItemsOnSpinnerYear();
 
-
-
         RealmInspectorModulesProvider.builder(this)
                 .withFolder(getCacheDir())
                 .withMetaTables()
@@ -125,8 +114,6 @@ public class InsertCarActivity extends AppCompatActivity {
                 .databaseNamePattern(Pattern.compile(".+\\.realm"))
                 .build();
     }
-
-
 
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -159,22 +146,13 @@ public class InsertCarActivity extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-//                Toast.makeText(Con, R.string.insert_vehicle_year, Toast.LENGTH_SHORT).show();
             }
         });
     }
     /*********************************************
      * Για το year*******************Finish*******
      *********************************************/
-
-
-
-    /*********************************************
-     * Για το pregress bar*********Start*******
-     *********************************************/
-
-
-    public void showProgressDialog() {
+     public void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage("Loading");
@@ -189,16 +167,9 @@ public class InsertCarActivity extends AppCompatActivity {
         }
     }
 
-    /*********************************************
-     * Για το pregress bar*********Finish*******
-     *********************************************/
-
-
     /**************************************************
      *Για το Make*******************Start*************
      *************************************************/
-
-
     public void loadMakes() {
         showProgressDialog();
         Gson gson = new GsonBuilder()
@@ -208,9 +179,7 @@ public class InsertCarActivity extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-
                 .build();
-
 
         //Καλεί για να πάρει απο το API τα δεδομένα σύμφωνα με το έτος που έχουμε επιλέξει
         CarService carService = retrofit.create(CarService.class);
@@ -219,11 +188,6 @@ public class InsertCarActivity extends AppCompatActivity {
             public void onResponse(Call<Make> call, Response<Make> response) {
                 if (response.isSuccessful()) {
                     makeList = response.body();
-                    Log.i(TAG, "New Pet: " + makeList.getMakes().size());
-                    Log.i(TAG, "-------->" + call.request().url());
-//                    Log.i(TAG, "-------->" + makeList.getMakes().get(0).getMakeDisplay());
-//                    Log.i(TAG, "-------->" + makeList.getMakes().get(0).getMakeIsCommon());
-
                     makeListString1 = new ArrayList<String>();
                     //Βάζουμε αυτό στην αρχή για να ξέρουμε αν έχει επιλέξει κάτι ο χρήστης ή όχι
                     if (!makeListString1.contains(".......")) {
@@ -231,8 +195,6 @@ public class InsertCarActivity extends AppCompatActivity {
                     }
                     //Γεμίζουμε τη list με τα makes
                     for (int i = 0; i < makeList.getMakes().size(); i++) {
-//                        makeList1.add(makeList.getMakes().get(i));
-
                         makeListString1.add(makeList.getMakes().get(i).getMakeDisplay());
                     }
 
@@ -262,48 +224,10 @@ public class InsertCarActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View rowView = inflater.inflate(R.layout.sample_list_row, parent, false);
-//            TextView idTextView = (TextView) rowView.findViewById(R.id.txt_list_row_id);
             TextView nameTextView = (TextView) rowView.findViewById(R.id.txt_list_row_name);
-
-//            idTextView.setText(getItem(position).getMakeId());
             nameTextView.setText(getItem(position).getMakeDisplay());
             return rowView;
         }
-
-
-        // Έιναι ο adapter για τα μοντέλα
-
-
-//        private class MyAdapter1 extends ArrayAdapter<Make_> {
-//            public MyAdapter1(Context context, int resource, List<Make_> objects) {
-//                super(context, resource, objects);
-//            }
-//
-//
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                View rowView = convertView;
-//                if (rowView == null) {
-//                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                    rowView = inflater.inflate(R.layout.select_car_make, parent, false);
-//
-//                    InsertCarActivity.MyAdapter1.Holder holder = new SelectCarMakeActivity.MyAdapter1.Holder();
-////                holder.idTextView = (TextView) rowView.findViewById(R.id.txt_list_row_id);
-//                    holder.nameTextView = (TextView) rowView.findViewById(R.id.txt_list_row_name);
-//                    rowView.setTag(holder);
-//                }
-//
-//                SelectCarMakeActivity.MyAdapter1.Holder holder = (SelectCarMakeActivity.MyAdapter1.Holder) rowView.getTag();
-//                holder.idTextView.setText(getItem(position).getMakeId());
-//                holder.nameTextView.setText(getItem(position).getMakeDisplay());
-//                return rowView;
-//            }
-//
-//            class Holder {
-//                TextView idTextView;
-//                TextView nameTextView;
-//            }
-//        }
     }
 
 
@@ -314,7 +238,6 @@ public class InsertCarActivity extends AppCompatActivity {
 
         //Γεμίζουμε τον spinner
         carMakeSpinner.setAdapter(dataAdapter);
-
         carMakeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -335,8 +258,6 @@ public class InsertCarActivity extends AppCompatActivity {
 //                Toast.makeText(Con, R.string.insert_vehicle_year, Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
 
@@ -344,9 +265,9 @@ public class InsertCarActivity extends AppCompatActivity {
  *Για το Make*******************Finish*************
  *************************************************/
 
-    /**************************************************
-     *Για το Models***************Srart****************
-     *************************************************/
+/**************************************************
+*Για το Models***************Srart****************
+*************************************************/
 
 
     // add items into spinner dynamically
@@ -370,8 +291,6 @@ public class InsertCarActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     modelList = response.body();
                     Log.i(TAG, "New Pet: " + modelList.getModels().size());
-//                    Log.i(TAG, "-------->" + call.request().url());
-//                    Log.i(TAG, "-------->" + modelList.getModels().get(0).getModelName());
 
                     modelListString1 = new ArrayList<String>();
                     if (!modelListString1.contains(".......")) {
@@ -391,7 +310,6 @@ public class InsertCarActivity extends AppCompatActivity {
                 }
             }
 
-
             @Override
             public void onFailure(Call<Model> call, Throwable t) {
                 Log.e(TAG, "Failed. Error: " + t.getMessage());
@@ -406,29 +324,21 @@ public class InsertCarActivity extends AppCompatActivity {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 R.layout.spinner_item, modelListString1);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-
         carmodelSpinner.setAdapter(dataAdapter);
-
         carmodelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 carModel = carmodelSpinner.getSelectedItem().toString();
-                Log.d(TAG + "____++++---->", carModel);
-
-            }
+}
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 //                Toast.makeText(Con, R.string.insert_vehicle_year, Toast.LENGTH_SHORT).show();
             }
         });
-
+        //Γεμίζουμε τον spinnet με τα cc
         addItemsOnSpinnerCC();
-//
-
     }
 
     @Override
@@ -440,38 +350,16 @@ public class InsertCarActivity extends AppCompatActivity {
     /**************************************************
      *Για το Models***************Finish***************
      *************************************************/
-
-
-
-
-
-
-    // add items into spinner dynamically
+// add items into spinner dynamically
     public void addItemsOnSpinnerCC() {
 
+        //Φτιάχνουμε την λιστα με τα cc
         List<String> ccList = new ArrayList<String>();
         ccList.add(".......");
-         int ccc = 900;
-        ccList.add("900");
-        ccList.add("1000");
-        ccList.add("1100");
-        ccList.add("1200");
-        ccList.add("1300");
-        ccList.add("1400");
-        ccList.add("1500");
-        ccList.add("1600");
-        ccList.add("1700");
-        ccList.add("1800");
-        ccList.add("1900");
-        ccList.add("2000");
-        ccList.add("2200");
-        ccList.add("2400");
+        for(int ccc = 900;ccc<=3000;ccc=ccc+100) {
+            ccList.add(String.valueOf(ccc));
+        }
 
-//        while (ccc <2500){
-//            int k = ccc;
-//            k = k+100;
-//            ccList.add(String.valueOf(k));
-//        }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, ccList);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -483,24 +371,14 @@ public class InsertCarActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                  cc = ccSpinner.getSelectedItem().toString();
                 Log.d(TAG, year);
-//                if (!year.equals(".......")) {
-//                    loadMakes();
-//                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-//                Toast.makeText(Con, R.string.insert_vehicle_year, Toast.LENGTH_SHORT).show();
             }
         });
 
     }
-
-
-
-
-
-
 
     public abstract class OnClickListener implements DialogInterface.OnClickListener {
         @Override
@@ -528,7 +406,7 @@ public class InsertCarActivity extends AppCompatActivity {
 
     /*****************************
      * Για την φωτογραφία
-     */
+     *****************************/
 
     int RESULT_LOAD_IMAGE = 346;
 
@@ -575,60 +453,68 @@ public class InsertCarActivity extends AppCompatActivity {
 
             bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath), outWidth, outHeight, false);
             mImageView.setImageBitmap(bitmap);
-
         }
-
-
     }
 
-
+    //Μέθοδος που κάνει save το αυτοκίνητο
     public void saveCar(View view){
-        //Γεμίζω το Realm Object
-        carVehicle = new Vehicle();
-        carVehicle.setCar(true);
-        carVehicle.setId(UUID.randomUUID().toString());
-        carVehicle.setMake(carMake);
-        carVehicle.setModel(carModel);
-        carVehicle.setYear(year);
-        carVehicle.setCc(cc);
+        //Κάνουμε έλεγχο ότι έχει γεμίσει τα πεδία
+        if (".......".equals(year)) {
+            Toast.makeText(this, R.string.add_year, Toast.LENGTH_SHORT).show();
+        }else if (".......".equals(carMake)) {
+            Toast.makeText(this, R.string.add_make, Toast.LENGTH_SHORT).show();
+        } else if (".......".equals(carModel)) {
+            Toast.makeText(this, R.string.add_model, Toast.LENGTH_SHORT).show();
+        } else if ("".equals(cc)) {
+            Toast.makeText(this, R.string.add_cc, Toast.LENGTH_SHORT).show();
+        } else {
+            //Και άμα τα έχει γεμήσει
+            //Γεμίζω το Realm Object
+            carVehicle = new Vehicle();
+            carVehicle.setCar(true);
+            carVehicle.setId(UUID.randomUUID().toString());
+            carVehicle.setMake(carMake);
+            carVehicle.setModel(carModel);
+            carVehicle.setYear(year);
+            carVehicle.setCc(cc);
 
+            //Κάνουμε έλεγχο άμα έχει βάλει φωτογραφία
+            if (bitmap != null) {
+                //Για να βάλω την φωτογραφία
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                carVehicle.setPhoto(stream.toByteArray());
+            } else {
+                //Αμα δεν έχει βάλει καμία φωτογραφία η χρήστης βάζουμε εμείς μία
+                Drawable d = ResourcesCompat.getDrawableForDensity(getResources(), R.mipmap.ic_car, DisplayMetrics.DENSITY_XXHIGH, getTheme());
+                ; // the drawable (Captain Obvious, to the rescue!!!)
+                Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] bitmapdata = stream.toByteArray();
 
-        if (bitmap !=null) {
-            //Για να βάλω την φωτογραφία
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            carVehicle.setPhoto(stream.toByteArray());
-        }else {
-            //Αμα δεν έχει βάλει καμία φωτογραφία η χρήστης βάζουμε εμείς μία
-            Drawable d = ResourcesCompat.getDrawableForDensity(getResources(), R.mipmap.ic_car, DisplayMetrics.DENSITY_XXHIGH, getTheme());
-            ; // the drawable (Captain Obvious, to the rescue!!!)
-            Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] bitmapdata = stream.toByteArray();
+                carVehicle.setPhoto(bitmapdata);
+            }
+                //Για να αποθυκεύσω το Realm Object
+                realm.beginTransaction();
+                realm.copyToRealmOrUpdate(carVehicle);
+                realm.commitTransaction();
 
-            carVehicle.setPhoto(bitmapdata);
+                Toast.makeText(this, R.string.insert_vehicle_car_saved, Toast.LENGTH_LONG).show();
+                Intent ki = new Intent(this, MainActivity.class);
+                startActivity(ki);
+            }
         }
 
-        //Για να αποθυκεύσω το Realm Object
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(carVehicle);
-        realm.commitTransaction();
 
-        Toast.makeText(this, R.string.insert_vehicle_car_saved, Toast.LENGTH_LONG).show();
-        Intent ki = new Intent(this, MainActivity.class);
-        startActivity(ki);
 
-    }
-
+    //Αλλάζουμε τη λειτουργία του Back press button για να μας πηγαίνει στην αρχική οθόνη
     @Override
     public void onBackPressed() {
         Log.d("CDA", "onBackPressed Called");
         Intent ki = new Intent(this, MainActivity.class);
         startActivity(ki);
     }
-
-
 }
 
 

@@ -186,44 +186,56 @@ public class InsertMotoActivity extends AppCompatActivity {
     }
 
     //Για να κάνει την εισαγωγή της μηχανής
-    public void saveMoto(View view){
+    public void saveMoto(View view) {
         motoMake = motoMakeEditText.getText().toString();
         motomodel = motoModelEditText.getText().toString();
         motocc = motoCCEditText.getText().toString();
 
-        //Γεμίζω το Realm Object
-        motoVehicle = new Vehicle();
-        motoVehicle.setCar(false);
-        motoVehicle.setId(UUID.randomUUID().toString());
-        motoVehicle.setMake(motoMake);
-        motoVehicle.setModel(motomodel);
-        motoVehicle.setYear(year);
-        motoVehicle.setCc(motocc);
+        //Κάνουμε έλεγχο ότι έχει γεμίσει τα πεδία
+        if (".......".equals(year)) {
+            Toast.makeText(this, R.string.add_year, Toast.LENGTH_SHORT).show();
+        }else if ("".equals(motoMakeEditText.getText().toString())) {
+            Toast.makeText(this, R.string.add_make, Toast.LENGTH_SHORT).show();
+        } else if ("".equals(motoModelEditText.getText().toString())) {
+            Toast.makeText(this, R.string.add_model, Toast.LENGTH_SHORT).show();
+        } else if ("".equals(motoCCEditText.getText().toString())) {
+            Toast.makeText(this, R.string.add_cc, Toast.LENGTH_SHORT).show();
+        } else {
+            //Και άμα τα έχει γεμήσει
+            //Γεμίζω το Realm Object
+            motoVehicle = new Vehicle();
+            motoVehicle.setCar(false);
+            motoVehicle.setId(UUID.randomUUID().toString());
+            motoVehicle.setMake(motoMake);
+            motoVehicle.setModel(motomodel);
+            motoVehicle.setYear(year);
+            motoVehicle.setCc(motocc);
 
 
-        if (bitmap !=null) {
-            //Για να βάλω την φωτογραφία
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            motoVehicle.setPhoto(stream.toByteArray());
-        }else {
-            //Αμα δεν έχει βάλει καμία φωτογραφία η χρήστης βάζουμε εμείς μία
-            Drawable d = ResourcesCompat.getDrawableForDensity(getResources(), R.mipmap.ic_moto, DisplayMetrics.DENSITY_XXHIGH, getTheme());
-            Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] bitmapdata = stream.toByteArray();
+            if (bitmap != null) {
+                //Για να βάλω την φωτογραφία
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                motoVehicle.setPhoto(stream.toByteArray());
+            } else {
+                //Αμα δεν έχει βάλει καμία φωτογραφία η χρήστης βάζουμε εμείς μία
+                Drawable d = ResourcesCompat.getDrawableForDensity(getResources(), R.mipmap.ic_moto, DisplayMetrics.DENSITY_XXHIGH, getTheme());
+                Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] bitmapdata = stream.toByteArray();
 
-            motoVehicle.setPhoto(bitmapdata);
+                motoVehicle.setPhoto(bitmapdata);
+            }
+
+            //Για να αποθυκεύσω το Realm Object
+            realm.beginTransaction();
+            realm.copyToRealmOrUpdate(motoVehicle);
+            realm.commitTransaction();
+
+            Toast.makeText(this, R.string.insert_vehicle_moto_saved, Toast.LENGTH_LONG).show();
+            Intent ki = new Intent(this, MainActivity.class);
+            startActivity(ki);
         }
-
-        //Για να αποθυκεύσω το Realm Object
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(motoVehicle);
-        realm.commitTransaction();
-
-        Toast.makeText(this, R.string.insert_vehicle_moto_saved, Toast.LENGTH_LONG).show();
-        Intent ki = new Intent(this, MainActivity.class);
-        startActivity(ki);
     }
 }

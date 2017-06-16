@@ -74,7 +74,7 @@ public class VehicleRepairs extends AppCompatActivity {
                 } else {
                     builder = new AlertDialog.Builder(VehicleRepairs.this);
                 }
-                builder.setTitle("Delete entry")
+                builder.setTitle(R.string.delete_entry)
                         .setMessage(R.string.Question_delete_entry)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -165,7 +165,7 @@ public class VehicleRepairs extends AppCompatActivity {
                 } else {
                     builder = new AlertDialog.Builder(VehicleRepairs.this);
                 }
-                builder.setTitle("Delete entry")
+                builder.setTitle(R.string.delete_entry)
                         .setMessage(R.string.Question_delete_entry)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

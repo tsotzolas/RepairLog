@@ -3,6 +3,7 @@ package tsotzolas.ps.com.repairlog.GoogleSignIn;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -102,6 +103,7 @@ public class SignInActivity extends AppCompatActivity implements
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
             showProgressDialog();
+
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(GoogleSignInResult googleSignInResult) {
@@ -160,7 +162,6 @@ public class SignInActivity extends AppCompatActivity implements
 
                 @Override
                 public void onError(ObjectServerError error) {
-//                showProgress(false);
                     String errorMsg;
                     switch (error.getErrorCode()) {
                         case EXISTING_ACCOUNT:
@@ -169,7 +170,6 @@ public class SignInActivity extends AppCompatActivity implements
                         default:
                             errorMsg = error.toString();
                     }
-                    Toast.makeText(SignInActivity.this, errorMsg, Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -197,6 +197,7 @@ public class SignInActivity extends AppCompatActivity implements
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
     // [END signIn]
 
@@ -241,6 +242,9 @@ public class SignInActivity extends AppCompatActivity implements
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
+        if (mProgressDialog1 != null) {
+            mProgressDialog1.dismiss();
+        }
     }
 
     private void showProgressDialog() {
@@ -264,7 +268,7 @@ public class SignInActivity extends AppCompatActivity implements
     private void showProgressDialog1() {
         if (mProgressDialog1 == null) {
             mProgressDialog1 = new ProgressDialog(this);
-            mProgressDialog1.setMessage("Authenticating with Realm Object Server");
+            mProgressDialog1.setMessage(getString(R.string.login_to_Realm));
             mProgressDialog1.setIndeterminate(true);
         }
 
@@ -282,9 +286,11 @@ public class SignInActivity extends AppCompatActivity implements
         if (signedIn) {
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            findViewById(R.id.go_to_main).setVisibility(View.VISIBLE);
+//            showProgressDialog1();
         } else {
             mStatusTextView.setText(R.string.signed_out);
-
+            findViewById(R.id.go_to_main).setVisibility(View.GONE);
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
         }
@@ -309,9 +315,24 @@ public class SignInActivity extends AppCompatActivity implements
     public void gotoMain(View view) {
         showProgressDialog1();
         SyncRealm.realmSync();
-        hideProgressDialog1();
-        Intent ki = new Intent(this, MainActivity.class);
-        startActivity(ki);
+
+
+        //Καθηστερούμε την όλη διαδικασία για να προλαβει να κάνει συγχρονισμο το Realm
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                hideProgressDialog1();
+                Intent ki = new Intent(SignInActivity.this, MainActivity.class);
+                startActivity(ki);
+
+            }
+
+        }, 5000); // 5000ms delay
+
+
+
 
     }
 

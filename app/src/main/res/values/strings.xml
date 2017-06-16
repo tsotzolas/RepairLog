@@ -96,6 +96,20 @@
     <string name="server_client_id">YOUR_SERVER_CLIENT_ID</string>
     <string name="add_new_repair">Add New Repair</string>
     <string name="delete_vehicle">Delete Vehicle</string>
+    <string name="add_cost">Add Cost</string>
+    <string name="add_date">Add Date</string>
+    <string name="add_desc">Add Description</string>
+    <string name="add_km">Add Km</string>
+    <string name="insert_repair_ok">The repair has been saved</string>
+    <string name="delete_entry">Delete entry</string>
+    <string name="go_to_main">Go to main page</string>
+    <string name="login_to_Realm">Authenticating with Realm Object Server</string>
+    <string name="add_make">Add Make</string>
+    <string name="add_model">Add Model</string>
+    <string name="add_cc">Add CC</string>
+    <string name="add_year">Add Year</string>
+    <string name="firebase_succes_login">Sucesfull Login in Firebase with user:</string>
+    <string name="firebase_fail_login">Login in Firebase Failed</string>
 
 
 </resources>

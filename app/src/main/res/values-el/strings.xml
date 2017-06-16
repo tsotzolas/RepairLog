@@ -13,11 +13,11 @@
     <string name="main_language_changed_message">Η γλώσσα άλλαξε σε Ελληνικά</string>
     <string name="choose_what_to_insert_message">Επέλεξε τι θες να εισάγεις αυτοκίνητο/μηχανή</string>
 
-    <!--Car Insert-->
+
     <string name="insert_vehicle_brand">Μάρκα</string>
     <string name="insert_vehicle_model">Μοντέλο</string>
     <string name="insert_car_instructions">Συμπληρώστε τα στοιχεία του αυτοκινήτου σας</string>
-    <string name="insert_vehicle_add_photo">Προσθέστε Φωτογραφία</string>
+    <string name="insert_vehicle_add_photo">Προσθήκη Φωτογραφίασ</string>
     <string name="insert_vehicle_select_car_make">Επέλεξε τη μάρκα του αυτοκινήτου σου</string>
     <string name="insert_vehicle_year">Έτος</string>
     <string name="insert_moto_instructions">Συμπληρώστε τα στοιχεία της μηχανής σας</string>
@@ -30,9 +30,9 @@
     <string name="desc">Περιγραφή</string>
     <string name="vehicles_list">Λίστα οχημάτων</string>
     <string name="repair_list">Λίστα Εργασιών</string>
-    <string name="Question_delete_entry">Είσαι σίγουρος ότι θέλεις να διαράψεις αυτή την εγγραφή?</string>
+    <string name="Question_delete_entry">Είσαι σίγουρος ότι θέλεις να διαγράψεις αυτή την καταχώρηση?</string>
     <string name="insert_vehicle_moto_saved">Η μηχανή έχει αποθηκευτεί</string>
-    <string name="loading">Loading…</string>
+    <string name="loading">Φόρτωση…</string>
     <string name="msg_contacts_failed">Get contacts failed.</string>
     <string name="name_auth_code_activity">ServerAuthCodeActivity</string>
     <string name="name_id_token_activity">IdTokenActivity</string>
@@ -44,7 +44,7 @@
     <string name="sign_out">Sign Out</string>
     <string name="signed_in">Signed in</string>
     <string name="signed_in_err">\"Error: please check logs.\"</string>
-    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="signed_in_fmt">Σύνδεση ως: %s</string>
     <string name="signed_out">Signed out</string>
     <string name="signing_in">Signing in…</string>
     <string name="title_text">Google Sign-In</string>
@@ -61,4 +61,18 @@
     <string name="id_token_fmt">ID Token: %s</string>
     <string name="add_new_repair">Προσθήκη Επισκευής</string>
     <string name="delete_vehicle">Διαγραφή Οχήματος</string>
+    <string name="add_cost">Πρόσθεσε κόστος</string>
+    <string name="add_date">Πρόσθεσε ημερομηνία</string>
+    <string name="add_desc">Πρόσθεσε Περιγραφή</string>
+    <string name="add_km">Πρόσθεσε Km</string>
+    <string name="insert_repair_ok">Η επισκυή αποθηκεύτηκε</string>
+    <string name="delete_entry">Διαγραφή Καταχώρησης</string>
+    <string name="go_to_main">Μετάβαση στην αρχική σελίδα</string>
+    <string name="login_to_Realm">Σύνδεση στον Realm Object Server</string>
+    <string name="add_make">Πρόσθεσε μάρκα</string>
+    <string name="add_model">Πρόσθεσε μοντέλο</string>
+    <string name="add_cc">Πρόσθεσε CC</string>
+    <string name="add_year">Add Year</string>
+    <string name="firebase_succes_login">Επιτυχημένη σύνδεση με το Firebase με τον χρήστη:</string>
+    <string name="firebase_fail_login">Αποτυχημένη σύνδεση στο Firebase</string>
 </resources>
