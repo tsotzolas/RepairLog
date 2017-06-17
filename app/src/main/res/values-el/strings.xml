@@ -75,4 +75,5 @@
     <string name="add_year">Add Year</string>
     <string name="firebase_succes_login">Επιτυχημένη σύνδεση με το Firebase με τον χρήστη:</string>
     <string name="firebase_fail_login">Αποτυχημένη σύνδεση στο Firebase</string>
+    <string name="find_your_location">Βρες την τοποθεσία σου</string>
 </resources>

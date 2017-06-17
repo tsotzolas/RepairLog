@@ -24,36 +24,20 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import io.realm.ObjectServerError;
 import io.realm.Realm;
-import io.realm.RealmAsyncTask;
-import io.realm.SyncConfiguration;
-import io.realm.SyncCredentials;
 import io.realm.SyncUser;
 import tsotzolas.ps.com.repairlog.GoogleSignIn.SignInActivity;
 import tsotzolas.ps.com.repairlog.auth.google.GoogleAuth;
 
-import static io.realm.SyncUser.currentUser;
 import static tsotzolas.ps.com.repairlog.GoogleSignIn.SignInActivity.mGoogleApiClient;
-import static tsotzolas.ps.com.repairlog.RealmTasksApplication.AUTH_URL;
-import static tsotzolas.ps.com.repairlog.RealmTasksApplication.REALM_URL;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SyncUser.Callback {
@@ -219,6 +203,13 @@ public class MainActivity extends AppCompatActivity
         Intent ki = new Intent(this, VehicleView.class);
         startActivity(ki);
     }
+
+    public void startMapActivity(View view) {
+//        Toast.makeText(this, "Select Car", Toast.LENGTH_SHORT).show();
+        Intent ki = new Intent(this, MapsActivity.class);
+        startActivity(ki);
+    }
+
 
 
     // Μέθοδος που σε πάώ για να κάνεις insert

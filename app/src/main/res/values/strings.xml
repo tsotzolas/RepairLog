@@ -38,11 +38,6 @@
     <string name="Question_delete_entry">Are you sure you want to delete this entry?</string>
 
 
-
-
-
-
-
     <string name="title_text">Google Sign-In</string>
     <string name="signed_in_fmt">Signed in as: %s</string>
     <string name="signed_in">Signed in</string>
@@ -110,6 +105,8 @@
     <string name="add_year">Add Year</string>
     <string name="firebase_succes_login">Sucesfull Login in Firebase with user:</string>
     <string name="firebase_fail_login">Login in Firebase Failed</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="find_your_location">FInd your Location</string>
 
 
 </resources>
