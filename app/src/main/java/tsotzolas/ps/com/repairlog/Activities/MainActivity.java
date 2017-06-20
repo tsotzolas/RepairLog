@@ -1,4 +1,4 @@
-package tsotzolas.ps.com.repairlog;
+package tsotzolas.ps.com.repairlog.Activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -34,10 +33,11 @@ import java.util.Locale;
 import io.realm.ObjectServerError;
 import io.realm.Realm;
 import io.realm.SyncUser;
-import tsotzolas.ps.com.repairlog.GoogleSignIn.SignInActivity;
-import tsotzolas.ps.com.repairlog.auth.google.GoogleAuth;
+import tsotzolas.ps.com.repairlog.GooglePachages.GoogleSignIn.SignInActivity;
+import tsotzolas.ps.com.repairlog.GooglePachages.google.GoogleAuth;
+import tsotzolas.ps.com.repairlog.R;
 
-import static tsotzolas.ps.com.repairlog.GoogleSignIn.SignInActivity.mGoogleApiClient;
+import static tsotzolas.ps.com.repairlog.GooglePachages.GoogleSignIn.SignInActivity.mGoogleApiClient;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SyncUser.Callback {

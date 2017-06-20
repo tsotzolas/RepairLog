@@ -1,12 +1,9 @@
-package tsotzolas.ps.com.repairlog;
+package tsotzolas.ps.com.repairlog.Activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -26,6 +22,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import tsotzolas.ps.com.repairlog.Model.Repair;
 import tsotzolas.ps.com.repairlog.Model.Vehicle;
+import tsotzolas.ps.com.repairlog.R;
 
 /**
  * Created by tsotzolas on 27/4/2017.

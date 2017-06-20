@@ -1,4 +1,4 @@
-package tsotzolas.ps.com.repairlog;
+package tsotzolas.ps.com.repairlog.Activities;
 
 import android.app.Application;
 

@@ -1,4 +1,4 @@
-package tsotzolas.ps.com.repairlog;
+package tsotzolas.ps.com.repairlog.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -46,6 +46,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import tsotzolas.ps.com.repairlog.Model.Vehicle;
+import tsotzolas.ps.com.repairlog.R;
 import tsotzolas.ps.com.repairlog.Retrofit.CarService;
 import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make;
 import tsotzolas.ps.com.repairlog.Retrofit.Makes.Make_;

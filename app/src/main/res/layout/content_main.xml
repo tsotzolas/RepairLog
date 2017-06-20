@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackgroung"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="tsotzolas.ps.com.repairlog.MainActivity"
+    tools:context="tsotzolas.ps.com.repairlog.Activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
 

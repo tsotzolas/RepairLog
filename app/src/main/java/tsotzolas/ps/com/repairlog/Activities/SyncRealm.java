@@ -1,11 +1,4 @@
-package tsotzolas.ps.com.repairlog;
-
-import android.app.Dialog;
-import android.content.Intent;
-import android.view.View;
-import android.widget.Toast;
-
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+package tsotzolas.ps.com.repairlog.Activities;
 
 import io.realm.ObjectServerError;
 import io.realm.Realm;
@@ -13,12 +6,9 @@ import io.realm.SyncConfiguration;
 import io.realm.SyncCredentials;
 import io.realm.SyncUser;
 
-import static tsotzolas.ps.com.repairlog.MainActivity.acct;
-import static tsotzolas.ps.com.repairlog.RealmTasksApplication.AUTH_URL;
-import static tsotzolas.ps.com.repairlog.RealmTasksApplication.REALM_URL;
-
 /**
  * Created by tsotzolas on 15/6/2017.
+ * This class is used for Realm Sync
  */
 
 public class SyncRealm {
@@ -31,13 +21,13 @@ public class SyncRealm {
         String username = "";
         String password = "";
         //Φτιαχνουμε το username και το password απο το google sign in
-        if (acct != null) {
-            if ("tsotzolas@gmail.com".equals(acct.getEmail())) {
+        if (MainActivity.acct != null) {
+            if ("tsotzolas@gmail.com".equals(MainActivity.acct.getEmail())) {
                 username = "tsotzo1@gmail.com";
             } else {
-                username = acct.getEmail();
+                username = MainActivity.acct.getEmail();
             }
-            password = acct.getId();
+            password = MainActivity.acct.getId();
         }
 
         SyncCredentials myCredentials = null;
@@ -50,10 +40,10 @@ public class SyncRealm {
         //Κάνει login στον Realm Object Server για να κάνει τον συγχρονισμό
         if (myCredentials != null) {
             final SyncCredentials syncCredentials = SyncCredentials.usernamePassword(username, password, false);
-            SyncUser.loginAsync(syncCredentials, AUTH_URL, new SyncUser.Callback() {
+            SyncUser.loginAsync(syncCredentials, RealmTasksApplication.AUTH_URL, new SyncUser.Callback() {
                 @Override
                 public void onSuccess(SyncUser user) {
-                    final SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, REALM_URL).build();
+                    final SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, RealmTasksApplication.REALM_URL).build();
                     Realm.setDefaultConfiguration(syncConfiguration);
                     realm = Realm.getDefaultInstance();
 //                  Realm.setDefaultConfiguration(defaultConfig);

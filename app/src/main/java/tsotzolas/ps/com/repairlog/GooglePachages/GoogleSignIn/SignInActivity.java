@@ -1,4 +1,4 @@
-package tsotzolas.ps.com.repairlog.GoogleSignIn;
+package tsotzolas.ps.com.repairlog.GooglePachages.GoogleSignIn;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -25,12 +25,12 @@ import io.realm.ObjectServerError;
 import io.realm.Realm;
 import io.realm.SyncCredentials;
 import io.realm.SyncUser;
-import tsotzolas.ps.com.repairlog.MainActivity;
+import tsotzolas.ps.com.repairlog.Activities.MainActivity;
 import tsotzolas.ps.com.repairlog.R;
-import tsotzolas.ps.com.repairlog.SyncRealm;
+import tsotzolas.ps.com.repairlog.Activities.SyncRealm;
 
-import static tsotzolas.ps.com.repairlog.MainActivity.acct;
-import static tsotzolas.ps.com.repairlog.RealmTasksApplication.AUTH_URL;
+import static tsotzolas.ps.com.repairlog.Activities.MainActivity.acct;
+import static tsotzolas.ps.com.repairlog.Activities.RealmTasksApplication.AUTH_URL;
 
 /**
  * Activity to demonstrate basic retrieval of the Google user's ID, email address, and basic

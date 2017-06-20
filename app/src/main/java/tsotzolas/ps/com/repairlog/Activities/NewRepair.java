@@ -1,4 +1,4 @@
-package tsotzolas.ps.com.repairlog;
+package tsotzolas.ps.com.repairlog.Activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -14,8 +14,7 @@ import java.util.UUID;
 
 import io.realm.Realm;
 import tsotzolas.ps.com.repairlog.Model.Repair;
-
-import static tsotzolas.ps.com.repairlog.VehicleView.selectedVehicles;
+import tsotzolas.ps.com.repairlog.R;
 
 /**
  * Created by tsotzolas on 27/4/2017.
@@ -71,7 +70,7 @@ public class NewRepair extends AppCompatActivity  implements
             repair.setRepairDate(dateEditText.getText().toString());
             repair.setRepairDescription(descEditText.getText().toString());
             repair.setVehicleKM(kmEditText.getText().toString());
-            repair.setVehicleId(selectedVehicles.getId());
+            repair.setVehicleId(VehicleView.selectedVehicles.getId());
             repair.setRepairId(String.valueOf(UUID.randomUUID()));
 
             //Κάνουμε save το αντικείμενο

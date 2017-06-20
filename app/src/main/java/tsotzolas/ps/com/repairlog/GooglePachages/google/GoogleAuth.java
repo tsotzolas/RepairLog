@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tsotzolas.ps.com.repairlog.auth.google;
+package tsotzolas.ps.com.repairlog.GooglePachages.google;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;

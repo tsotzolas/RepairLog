@@ -1,4 +1,4 @@
-package tsotzolas.ps.com.repairlog;
+package tsotzolas.ps.com.repairlog.Activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,9 +24,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import tsotzolas.ps.com.repairlog.Model.Repair;
 import tsotzolas.ps.com.repairlog.Model.Vehicle;
-
-import static tsotzolas.ps.com.repairlog.VehicleView.selectedRepair;
-import static tsotzolas.ps.com.repairlog.VehicleView.selectedVehicles;
+import tsotzolas.ps.com.repairlog.R;
 
 /**
  * Created by tsotzolas on 27/4/2017.
@@ -51,7 +49,7 @@ public class VehicleRepairs extends AppCompatActivity {
 
         //Εκτελούμε το ερώτημα
         repairRealmList = realm.where(Repair.class)
-                .equalTo("vehicleId", selectedVehicles.getId())
+                .equalTo("vehicleId", VehicleView.selectedVehicles.getId())
                 .findAll();
         repairList = realm.copyFromRealm(repairRealmList);
 
@@ -65,7 +63,7 @@ public class VehicleRepairs extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int arg2, long arg3) {
 
-                selectedRepair = (Repair) parent.getItemAtPosition(arg2);
+                VehicleView.selectedRepair = (Repair) parent.getItemAtPosition(arg2);
                 Toast.makeText(VehicleRepairs.this, "Clicked!! " + parent.getItemAtPosition(arg2), Toast.LENGTH_SHORT).show();
                 // Can't manage to remove an item here
                 AlertDialog.Builder builder;
@@ -84,13 +82,13 @@ public class VehicleRepairs extends AppCompatActivity {
                                         @Override
                                         public void execute(Realm realm) {
                                             RealmResults<Repair> result1 = realm.where(Repair.class)
-                                                    .equalTo("repairId", selectedRepair.getRepairId())
+                                                    .equalTo("repairId", VehicleView.selectedRepair.getRepairId())
                                                     .findAll();
                                             result1.deleteAllFromRealm();
 
 
                                             repairRealmList = realm.where(Repair.class)
-                                                    .equalTo("vehicleId", selectedVehicles.getId())
+                                                    .equalTo("vehicleId", VehicleView.selectedVehicles.getId())
                                                     .findAll();
                                             repairList = realm.copyFromRealm(repairRealmList);
 //                                            realm.commitTransaction();
@@ -175,7 +173,7 @@ public class VehicleRepairs extends AppCompatActivity {
                                     @Override
                                     public void execute(Realm realm) {
                                         RealmResults<Vehicle> result1 = realm.where(Vehicle.class)
-                                                .equalTo("id", selectedVehicles.getId())
+                                                .equalTo("id", VehicleView.selectedVehicles.getId())
                                                 .findAll();
                                         result1.deleteAllFromRealm();
 

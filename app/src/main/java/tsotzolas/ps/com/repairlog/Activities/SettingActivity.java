@@ -1,4 +1,4 @@
-package tsotzolas.ps.com.repairlog;
+package tsotzolas.ps.com.repairlog.Activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.Locale;
+
+import tsotzolas.ps.com.repairlog.R;
 
 /**
  * Created by tsotzolas on 3/4/2017.
