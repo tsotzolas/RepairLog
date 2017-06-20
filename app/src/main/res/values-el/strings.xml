@@ -76,4 +76,7 @@
     <string name="firebase_succes_login">Επιτυχημένη σύνδεση με το Firebase με τον χρήστη:</string>
     <string name="firebase_fail_login">Αποτυχημένη σύνδεση στο Firebase</string>
     <string name="find_your_location">Βρες την τοποθεσία σου</string>
+    <string name="error_null_person">Error</string>
+    <string name="google_maps_key" translatable="false">Maps Api</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
