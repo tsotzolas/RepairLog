@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -39,11 +40,11 @@
         </activity>
         <activity
             android:name=".SettingActivity"
-            android:configChanges="orientation|screenSize"></activity>
-        <activity android:name=".ChooseToInsertActivity"></activity>
-        <activity android:name=".VehicleView"></activity>
-        <activity android:name=".NewRepair"></activity>
-        <activity android:name=".VehicleRepairs"></activity>
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".ChooseToInsertActivity"/>
+        <activity android:name=".VehicleView"/>
+        <activity android:name=".NewRepair"/>
+        <activity android:name=".VehicleRepairs"/>
         <activity
             android:name=".InsertCarActivity"
             android:screenOrientation="user" />
@@ -53,7 +54,7 @@
         <activity
             android:name=".GoogleSignIn.SignInActivity"
             android:label="@string/name_sign_in_activity"
-            android:theme="@style/ThemeOverlay.MyNoTitleActivity"></activity>
+            android:theme="@style/ThemeOverlay.MyNoTitleActivity"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

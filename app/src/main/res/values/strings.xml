@@ -106,7 +106,7 @@
     <string name="firebase_succes_login">Sucesfull Login in Firebase with user:</string>
     <string name="firebase_fail_login">Login in Firebase Failed</string>
     <string name="title_activity_maps">Map</string>
-    <string name="find_your_location">FInd your Location</string>
+    <string name="find_your_location">Find your Location</string>
 
 
 </resources>
