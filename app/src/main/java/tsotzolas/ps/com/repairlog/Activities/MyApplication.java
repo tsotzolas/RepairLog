@@ -26,7 +26,10 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+
+
         Realm.init(this);
+//
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("RepairLog.realm")
 //                .schemaVersion(0)
@@ -45,6 +48,5 @@ public class MyApplication extends Application {
                         .build());
 
         realm.close();
-        Stetho.initializeWithDefaults(this);
     }
 }

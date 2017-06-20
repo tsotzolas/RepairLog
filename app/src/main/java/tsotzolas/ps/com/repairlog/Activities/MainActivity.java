@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.facebook.stetho.Stetho;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,7 +41,7 @@ import tsotzolas.ps.com.repairlog.R;
 import static tsotzolas.ps.com.repairlog.GooglePachages.GoogleSignIn.SignInActivity.mGoogleApiClient;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, SyncUser.Callback {
+        implements SyncUser.Callback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ImageButton carImageButton;
@@ -60,6 +61,10 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,14 +77,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.setDrawerListener(toggle);
+//        toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
 
 //        //Έλεγχος για το αν έχει κάνει google sign in ο χρήστης
 //        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
@@ -135,15 +140,15 @@ public class MainActivity extends AppCompatActivity
         resources.updateConfiguration(configuration, displayMetrics);
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -172,30 +177,30 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
+//    @SuppressWarnings("StatementWithEmptyBody")
+//    @Override
+//    public boolean onNavigationItemSelected(MenuItem item) {
+//        // Handle navigation view item clicks here.
+//        int id = item.getItemId();
+//
+//        if (id == R.id.nav_camera) {
+//            // Handle the camera action
+//        } else if (id == R.id.nav_gallery) {
+//
+//        } else if (id == R.id.nav_slideshow) {
+//
+//        } else if (id == R.id.nav_manage) {
+//
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
+//
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
 
 
     public void carSelected(View view) {

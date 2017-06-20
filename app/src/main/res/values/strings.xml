@@ -3,7 +3,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="general_information">This application is made for keep your repair logs for your vehicles</string>
+    <string name="general_information">This application is keeping your repair logs for your vehicles</string>
 
     <string name="see_your_vehicles">See your Vehicles</string>
 

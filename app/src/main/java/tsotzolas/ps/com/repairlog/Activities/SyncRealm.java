@@ -1,10 +1,15 @@
 package tsotzolas.ps.com.repairlog.Activities;
 
+import com.facebook.stetho.Stetho;
+
 import io.realm.ObjectServerError;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.SyncConfiguration;
 import io.realm.SyncCredentials;
 import io.realm.SyncUser;
+
+import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
 /**
  * Created by tsotzolas on 15/6/2017.
@@ -47,6 +52,9 @@ public class SyncRealm {
                     Realm.setDefaultConfiguration(syncConfiguration);
                     realm = Realm.getDefaultInstance();
 //                  Realm.setDefaultConfiguration(defaultConfig);
+
+
+
                 }
 
                 @Override
@@ -54,6 +62,13 @@ public class SyncRealm {
                     System.out.println("---------------------Not Valid User-------------------");
                 }
             });
+
+
+
         }
     }
+
+
+
+
 }
