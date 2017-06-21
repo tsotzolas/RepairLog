@@ -52,7 +52,7 @@
 
         <activity android:name=".Activities.InsertMotoActivity" />
         <activity
-            android:name=".GooglePacκages.GoogleSignIn.SignInActivity"
+            android:name=".GooglePackages.GoogleSignIn.SignInActivity"
             android:label="@string/name_sign_in_activity"
             android:theme="@style/ThemeOverlay.MyNoTitleActivity"/>
 

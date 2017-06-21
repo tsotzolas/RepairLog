@@ -1,4 +1,4 @@
-package tsotzolas.ps.com.repairlog.GooglePacκages.GoogleSignIn;
+package tsotzolas.ps.com.repairlog.GooglePackages.GoogleSignIn;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

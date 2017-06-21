@@ -34,10 +34,10 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Locale;
 
 import io.realm.Realm;
-import tsotzolas.ps.com.repairlog.GooglePacκages.GoogleSignIn.SignInActivity;
+import tsotzolas.ps.com.repairlog.GooglePackages.GoogleSignIn.SignInActivity;
 import tsotzolas.ps.com.repairlog.R;
 
-import static tsotzolas.ps.com.repairlog.GooglePacκages.GoogleSignIn.SignInActivity.mGoogleApiClient;
+import static tsotzolas.ps.com.repairlog.GooglePackages.GoogleSignIn.SignInActivity.mGoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
 
