@@ -176,6 +176,7 @@ public class InsertMotoActivity extends AppCompatActivity {
         motomodel = motoModelEditText.getText().toString();
         motocc = motoCCEditText.getText().toString();
 
+
         //Κάνουμε έλεγχο ότι έχει γεμίσει τα πεδία
         if (".......".equals(year)) {
             Toast.makeText(this, R.string.add_year, Toast.LENGTH_SHORT).show();
