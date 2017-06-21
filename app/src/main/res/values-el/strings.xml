@@ -79,4 +79,6 @@
     <string name="error_null_person">Error</string>
     <string name="google_maps_key" translatable="false">Maps Api</string>
     <string name="title_activity_maps">Map</string>
+    <string name="exit">Είσαι σίγουρος??Θές να φύγεις??</string>
+    <string name="exitHeader">Έξοδος απο το RepairLog</string>
 </resources>

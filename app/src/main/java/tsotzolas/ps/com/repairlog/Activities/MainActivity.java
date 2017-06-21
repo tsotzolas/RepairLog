@@ -1,15 +1,20 @@
 package tsotzolas.ps.com.repairlog.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +24,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
@@ -305,8 +313,80 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
-    public final void endApp() {
-        finishAndRemoveTask();
+
+
+    //Αλλάζουμε τη λειτουργία του Back press button για να μας πηγαίνει στην αρχική οθόνη
+    @Override
+    public void onBackPressed() {
+        Log.d("CDA", "onBackPressed Called");
+
+
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+//
+//        dialog.setTitle( R.string.exitHeader )
+//                .setIcon(R.mipmap.ic_minion)
+//                .setMessage(R.string.exit)
+//  .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//      public void onClick(DialogInterface dialoginterface, int i) {
+//          dialoginterface.cancel();
+//          }})
+//                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialoginterface, int i) {
+//                        System.exit(0);
+//                    }
+//                }).show();
+
+
+
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle( R.string.exitHeader )
+                .setMessage(R.string.exit);        builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                System.exit(0);
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        final AlertDialog dialog = builder.create();
+                LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.exit_layout, null);
+        dialog.setView(dialogLayout);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.show();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface d) {
+                ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
+                Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                        R.drawable.minion);
+                float imageWidthInPX = (float)image.getWidth();
+
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(Math.round(imageWidthInPX),
+                        Math.round(imageWidthInPX * (float)icon.getHeight() / (float)icon.getWidth()));
+                image.setLayoutParams(layoutParams);
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }

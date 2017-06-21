@@ -107,6 +107,8 @@
     <string name="firebase_fail_login">Login in Firebase Failed</string>
     <string name="title_activity_maps">Map</string>
     <string name="find_your_location">Find your Location</string>
+    <string name="exit">Are you sure??Do you want to exit??</string>
+    <string name="exitHeader">Exit from RepairLog</string>
 
 
 </resources>
