@@ -155,18 +155,25 @@ public class InsertMotoActivity extends AppCompatActivity {
             final int maxSize = 960;
             int outWidth;
             int outHeight;
-            int inWidth = BitmapFactory.decodeFile(picturePath).getWidth();
-            int inHeight = BitmapFactory.decodeFile(picturePath).getHeight();
-            if (inWidth > inHeight) {
-                outWidth = maxSize;
-                outHeight = (inHeight * maxSize) / inWidth;
-            } else {
-                outHeight = maxSize;
-                outWidth = (inWidth * maxSize) / inHeight;
-            }
+            int inWidth = 0;
+            int inHeight=0;
+            try {
+                inWidth = BitmapFactory.decodeFile(picturePath).getWidth();
+                inHeight = BitmapFactory.decodeFile(picturePath).getHeight();
+                if (inWidth > inHeight) {
+                    outWidth = maxSize;
+                    outHeight = (inHeight * maxSize) / inWidth;
+                } else {
+                    outHeight = maxSize;
+                    outWidth = (inWidth * maxSize) / inHeight;
+                }
 
-            bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath), outWidth, outHeight, false);
-            mImageView.setImageBitmap(bitmap);
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath), outWidth, outHeight, false);
+                mImageView.setImageBitmap(bitmap);
+            }catch (Exception e){
+                System.out.println(e);
+                Toast.makeText(this, R.string.add_other_photo, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

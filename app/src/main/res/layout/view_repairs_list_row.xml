@@ -99,7 +99,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="83dp"
+            android:layout_height="170dp"
             android:orientation="vertical"
             android:weightSum="2">
 
@@ -107,7 +107,7 @@
                 android:id="@+id/desc_repair_log"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:layout_weight="1"
+                android:layout_weight="0.32"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="@string/desc"
                 android:textAlignment="center"
@@ -117,11 +117,11 @@
             <TextView
                 android:id="@+id/desc_repair_log1"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_weight="1"
+                android:layout_height="136dp"
                 android:gravity="center_vertical|center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:layout_weight="0.34" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -13,16 +13,16 @@
     <string name="motoString">Moto</string>
     <string name="change_Language_String">Change Language</string>
     <string name="main_language_changed_message">Language changed to English</string>
-    <string name="choose_what_to_insert_message">Choose what do yοu want to insert car/Moto</string>
+    <string name="choose_what_to_insert_message">Choose what do yοu want to insert Car/Moto</string>
 
 
     <!--Car Insert-->
     <string name="insert_vehicle_brand">Make</string>
     <string name="insert_vehicle_model">Model</string>
-    <string name="insert_car_instructions">Please fill your\'s car details</string>
-    <string name="insert_moto_instructions">Please fill your\'s moto details</string>
+    <string name="insert_car_instructions">Please fill your car\'s details</string>
+    <string name="insert_moto_instructions">Please fill your moto\'s details</string>
     <string name="insert_vehicle_add_photo">Add Photo</string>
-    <string name="insert_vehicle_select_car_make">Select your\'s cars make </string>
+    <string name="insert_vehicle_select_car_make">Select your cars\'s make </string>
     <string name="insert_vehicle_year">Year</string>
     <string name="insert_vehicle_car_saved">The car has been saved</string>
     <string name="insert_vehicle_moto_saved">The moto has been saved</string>
@@ -103,12 +103,13 @@
     <string name="add_model">Add Model</string>
     <string name="add_cc">Add CC</string>
     <string name="add_year">Add Year</string>
-    <string name="firebase_succes_login">Sucesfull Login in Firebase with user:</string>
+    <string name="firebase_succes_login">Successful Login in Firebase with user:</string>
     <string name="firebase_fail_login">Login in Firebase Failed</string>
     <string name="title_activity_maps">Map</string>
     <string name="find_your_location">Find your Location</string>
     <string name="exit">Are you sure??Do you want to exit??</string>
     <string name="exitHeader">Exit from RepairLog</string>
+    <string name="add_other_photo">Please add other photo</string>
 
 
 </resources>
