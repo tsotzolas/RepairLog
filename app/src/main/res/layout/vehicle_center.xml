@@ -13,7 +13,7 @@
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="405dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:textColor="@color/colorWhite"
         android:text="@string/repair_list"
@@ -26,19 +26,21 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:weightSum="2">
+
     <Button
         android:id="@+id/button2"
-        android:layout_width="233dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_weight="1"
         android:onClick="addNewRepair"
-        android:text="@string/add_new_repair"
-        android:layout_weight="2.20" />
+        android:text="@string/add_new_repair" />
 
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="164dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_weight="1"
         android:ellipsize="none"
         android:onClick="deleteVehicle"
         android:text="@string/delete_vehicle" />

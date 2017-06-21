@@ -196,7 +196,7 @@ public class VehicleRepairs extends AppCompatActivity {
     //Αλλάζουμε την λειτουργία του BackPress για να μας πηγαίνει στην MainActivity
     @Override
     public void onBackPressed() {
-        Intent ki = new Intent(this, MainActivity.class);
+        Intent ki = new Intent(this, VehicleView.class);
         startActivity(ki);
     }
 }

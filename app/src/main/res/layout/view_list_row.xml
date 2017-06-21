@@ -93,13 +93,13 @@
 
                 <TextView
                     android:id="@+id/model"
-                    android:layout_width="56dp"
-                    android:textColor="@color/colorAccent"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="@string/insert_vehicle_model"
                     android:textAlignment="center"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorAccent" />
 
                 <TextView
                     android:id="@+id/vehicleModelView"

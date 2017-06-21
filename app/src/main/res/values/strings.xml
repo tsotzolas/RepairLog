@@ -29,7 +29,7 @@
     <string name="insert_vehicle_car_save">Save</string>
     <string name="CC">cc</string>
     <string name="Date">Date</string>
-    <string name="cost">cost</string>
+    <string name="cost">Cost</string>
     <string name="desc">Description</string>
     <string name="vehicles_list">Vehicle List View</string>
     <string name="repair_list">Repair List View</string>

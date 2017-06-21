@@ -10,20 +10,21 @@
 
     <Button
         android:id="@+id/chabgeLangbutton"
-        android:layout_width="182dp"
-        android:layout_height="51dp"
+        android:layout_width="245dp"
+        android:layout_height="83dp"
         android:layout_marginBottom="9dp"
         android:layout_marginEnd="-3dp"
         android:layout_marginRight="125dp"
         android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
         android:onClick="changeLocale"
+        android:gravity="center_vertical|center_horizontal"
         android:text="@string/change_Language_String"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13"
+        app:layout_constraintVertical_bias="0.171"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.515" />
 
 </android.support.constraint.ConstraintLayout>
