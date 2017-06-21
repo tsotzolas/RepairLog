@@ -16,21 +16,15 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.facebook.stetho.Stetho;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,14 +33,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import java.util.Locale;
 
-import io.realm.ObjectServerError;
 import io.realm.Realm;
-import io.realm.SyncUser;
-import tsotzolas.ps.com.repairlog.GooglePachages.GoogleSignIn.SignInActivity;
-import tsotzolas.ps.com.repairlog.GooglePachages.google.GoogleAuth;
+import tsotzolas.ps.com.repairlog.GooglePacκages.GoogleSignIn.SignInActivity;
 import tsotzolas.ps.com.repairlog.R;
 
-import static tsotzolas.ps.com.repairlog.GooglePachages.GoogleSignIn.SignInActivity.mGoogleApiClient;
+import static tsotzolas.ps.com.repairlog.GooglePacκages.GoogleSignIn.SignInActivity.mGoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
 
