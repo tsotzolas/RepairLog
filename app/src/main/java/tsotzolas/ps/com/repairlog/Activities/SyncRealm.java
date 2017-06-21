@@ -13,7 +13,7 @@ import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
 /**
  * Created by tsotzolas on 15/6/2017.
- * This class is used for Realm Sync
+ * Είναι για τον συγχρονισμό του Realm με τον Realm Object Server
  */
 
 public class SyncRealm {
@@ -25,13 +25,17 @@ public class SyncRealm {
     public static void realmSync() {
         String username = "";
         String password = "";
-        //Φτιαχνουμε το username και το password απο το google sign in
+        //Φτιαχνουμε το username και το password απο το google sign in άμα ο χρήστης δεν υπάρχει
         if (MainActivity.acct != null) {
+            //Κάνουμε έναν έλεγχο άμα ο χρήστης έχει το συγκεκριμένο email να του το αλλάξουμε
+            // γιατί με το email αυτό είναι ο λογαρισμός του Database Administrator στο Realm
             if ("tsotzolas@gmail.com".equals(MainActivity.acct.getEmail())) {
                 username = "tsotzo1@gmail.com";
             } else {
+                //σαν username στο Realm βάζουμε το email του χρήστη απο το Google Sign In
                 username = MainActivity.acct.getEmail();
             }
+            //Σαν password στο Realm βάζουμε το google id
             password = MainActivity.acct.getId();
         }
 
@@ -48,13 +52,11 @@ public class SyncRealm {
             SyncUser.loginAsync(syncCredentials, RealmTasksApplication.AUTH_URL, new SyncUser.Callback() {
                 @Override
                 public void onSuccess(SyncUser user) {
+                    //Στο επιτυχημένο login κάνουμε και συγχρονισμό των δεδομένων
                     final SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, RealmTasksApplication.REALM_URL).build();
                     Realm.setDefaultConfiguration(syncConfiguration);
                     realm = Realm.getDefaultInstance();
 //                  Realm.setDefaultConfiguration(defaultConfig);
-
-
-
                 }
 
                 @Override
@@ -62,9 +64,6 @@ public class SyncRealm {
                     System.out.println("---------------------Not Valid User-------------------");
                 }
             });
-
-
-
         }
     }
 

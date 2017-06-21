@@ -48,15 +48,11 @@ import tsotzolas.ps.com.repairlog.R;
 
 import static tsotzolas.ps.com.repairlog.GooglePachages.GoogleSignIn.SignInActivity.mGoogleApiClient;
 
-public class MainActivity extends AppCompatActivity
-        implements SyncUser.Callback {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private ImageButton carImageButton;
-    private ImageButton motoImageButton;
     private FirebaseAuth mAuth;
     private Locale locale;
-    private GoogleAuth googleAuth;
     public static GoogleSignInAccount acct;
     private final String FIREBASE_USERNAME = "tsotzolas@gmail.com";
     private final String FIREBASE_PASSWORD = "123123123";
@@ -69,50 +65,23 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-
-
+        //Eίναι για το κουμπάκι κάτω δεξιά για να κάνεις εισαγωγη κάποιο όχημα
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
 
                 gotoInsert(view);
-
             }
         });
 
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.setDrawerListener(toggle);
-//        toggle.syncState();
 
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
-
-//        //Έλεγχος για το αν έχει κάνει google sign in ο χρήστης
-//        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-//            System.out.println("------------------>User is Sign in");
-//        }
-//        else{
-//            Intent ki = new Intent(this, SignInActivity.class);
-//            startActivity(ki);
-//
-//        }
-
-
-//        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+        // Κάνει τον έλεγχο άν ο χρήστης ειναι συνδεδεμένος στον Google Account
         if (mGoogleApiClient == null) {
             Intent ki = new Intent(this, SignInActivity.class);
             startActivity(ki);
 
         } else {
-
-            System.out.println("------------------>User is Sign in");
             Toast.makeText(this, "Login User:" + acct.getDisplayName(), Toast.LENGTH_SHORT).show();
         }
 
@@ -121,9 +90,8 @@ public class MainActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         login(FIREBASE_USERNAME, FIREBASE_PASSWORD);
 
-        carImageButton = (ImageButton) findViewById(R.id.imageButtonCar);
-        motoImageButton = (ImageButton) findViewById(R.id.imageButtonMoto);
 
+        //Έλεγχος την γλώσσας που έχει ο χρήστης και αντίστοιχη ρύθμηση στην γλώσσα της εφαρμογής
         if (SettingActivity.locale == null) {
             locale.setDefault(locale);
         } else {
@@ -147,16 +115,6 @@ public class MainActivity extends AppCompatActivity
         configuration.setLocale(SettingActivity.locale);
         resources.updateConfiguration(configuration, displayMetrics);
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -185,53 +143,29 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-//    @SuppressWarnings("StatementWithEmptyBody")
-//    @Override
-//    public boolean onNavigationItemSelected(MenuItem item) {
-//        // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
-
-
+    //Σε πάει στην κεντρική σελίδα με το οχήματα
     public void carSelected(View view) {
-//        Toast.makeText(this, "Select Car", Toast.LENGTH_SHORT).show();
         Intent ki = new Intent(this, VehicleView.class);
         startActivity(ki);
     }
 
+
+    //Σε πάει στο Google maps
     public void startMapActivity(View view) {
-//        Toast.makeText(this, "Select Car", Toast.LENGTH_SHORT).show();
         Intent ki = new Intent(this, MapsActivity.class);
         startActivity(ki);
     }
 
 
 
-    // Μέθοδος που σε πάώ για να κάνεις insert
+    // Μέθοδος που σε πάώ για να διαλέξει κάνεις insert κάποιο vehicle
     private void gotoInsert(View view) {
         Intent ki = new Intent(this, ChooseToInsertActivity.class);
         startActivity(ki);
     }
 
-    // Είναι για το Firebase Login Δεν το χρησιμοποιώ πουθενά απλά το έχω βάλει για να υπάρχει
+    // Είναι για το Firebase Login
+    // Δεν το χρησιμοποιώ πουθενά απλά το έχω βάλει για να υπάρχει
     private void login(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -265,88 +199,23 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void gotoGoogleSignIn(View view) {
-        Intent ki = new Intent(this, SignInActivity.class);
-        startActivity(ki);
-        System.out.println("---------------------");
-    }
-
-
-    private void registrationComplete(SyncUser user) {
-        UserManager.setActiveUser(user);
-        Intent intent = new Intent(this, SignInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onSuccess(SyncUser user) {
-//        loginComplete(user);
-        System.out.println("-------SUCCESS-------");
-    }
-
-    @Override
-    public void onError(ObjectServerError error) {
-        String errorMsg;
-        switch (error.getErrorCode()) {
-            case UNKNOWN_ACCOUNT:
-                errorMsg = "Account does not exists.";
-                break;
-            case INVALID_CREDENTIALS:
-                errorMsg = "The provided credentials are invalid!"; // This message covers also expired account token
-                break;
-            default:
-                errorMsg = error.toString();
-        }
-        Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_LONG).show();
-    }
-
-    private void loginComplete(SyncUser user) {
-        UserManager.setActiveUser(user);
-
-//        createInitialDataIfNeeded();
-//
-//        Intent listActivity = new Intent(this, TaskListActivity.class);
-//        Intent tasksActivity = new Intent(this, TaskActivity.class);
-//        tasksActivity.putExtra(TaskActivity.EXTRA_LIST_ID, RealmTasksApplication.DEFAULT_LIST_ID);
-//        startActivities(new Intent[] { listActivity, tasksActivity} );
-        finish();
-    }
-
-
-
-    //Αλλάζουμε τη λειτουργία του Back press button για να μας πηγαίνει στην αρχική οθόνη
+    //Αλλάζουμε τη λειτουργία του Back press button για να σε βγάζει απο την εφαρμογή
+    //Βάζοντας ένα AlertDialog με φωτογραφία μέσα
     @Override
     public void onBackPressed() {
-        Log.d("CDA", "onBackPressed Called");
-
-
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-//
-//        dialog.setTitle( R.string.exitHeader )
-//                .setIcon(R.mipmap.ic_minion)
-//                .setMessage(R.string.exit)
-//  .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//      public void onClick(DialogInterface dialoginterface, int i) {
-//          dialoginterface.cancel();
-//          }})
-//                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialoginterface, int i) {
-//                        System.exit(0);
-//                    }
-//                }).show();
-
-
-
-
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle( R.string.exitHeader )
                 .setMessage(R.string.exit);        builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                System.exit(0);
+
+                //Κάνουμε exit απο την εφαρμοή
+                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                homeIntent.addCategory( Intent.CATEGORY_HOME );
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -372,24 +241,7 @@ public class MainActivity extends AppCompatActivity
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(Math.round(imageWidthInPX),
                         Math.round(imageWidthInPX * (float)icon.getHeight() / (float)icon.getWidth()));
                 image.setLayoutParams(layoutParams);
-
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
 }

@@ -103,9 +103,8 @@ public class VehicleView extends AppCompatActivity {
         }
     }
 
-    /**
-     * Is the method for going to goToVehicleCenter page
-     */
+
+     //Is the method for going to goToVehicleCenter page
     private void goToVehicleCenter() {
         Intent ki = new Intent(this, VehicleRepairs.class);
         startActivity(ki);

@@ -53,12 +53,9 @@ public class SettingActivity extends AppCompatActivity {
         configuration.setLocale(locale);
         resources.updateConfiguration(configuration, displayMetrics);
 
-        //We can check the version api with
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-        //}
-
         Toast.makeText(this, R.string.main_language_changed_message, Toast.LENGTH_SHORT).show();
 
+        //Τον πάμε στην Αρχική οθόνη
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

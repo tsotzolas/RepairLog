@@ -46,11 +46,6 @@ public class NewRepair extends AppCompatActivity  implements
         realm = Realm.getDefaultInstance();
     }
 
-    private void gotoInsert(View view){
-//        Intent ki = new Intent(this, ChooseToInsertActivity.class);
-//        startActivity(ki);
-        System.out.println("Test");
-    }
 
     //Για να κάνουμε save το Repair
     public void save(View view) {
@@ -81,6 +76,7 @@ public class NewRepair extends AppCompatActivity  implements
 
             Toast.makeText(this, R.string.insert_repair_ok, Toast.LENGTH_SHORT).show();
 
+            //Πάμε τον χρήστη να δεί όλες τις επισκευές
             Intent ki = new Intent(this, VehicleRepairs.class);
             startActivity(ki);
         }

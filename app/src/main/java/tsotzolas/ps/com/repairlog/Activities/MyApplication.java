@@ -26,10 +26,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-
-
         Realm.init(this);
-//
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("RepairLog.realm")
 //                .schemaVersion(0)
@@ -41,6 +38,9 @@ public class MyApplication extends Application {
         // Use the config
         Realm realm = Realm.getInstance(config);
 
+        // Είναι για το Stetho για να μπορείς να βλέπεις την Realm Βαση σου στον Chrome
+        //https://github.com/uPhyca/stetho-realm
+        //Για κάποιο λόγο σε εμένα δεν δούλεψε σωστά
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))

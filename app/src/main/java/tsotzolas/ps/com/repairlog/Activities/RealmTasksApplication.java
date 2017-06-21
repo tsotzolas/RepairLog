@@ -32,14 +32,11 @@ public class RealmTasksApplication extends Application {
 
     public static final String AUTH_URL = "http://" +"83.212.105.36" + ":9080/auth";
     public static final String REALM_URL = "realm://" + "83.212.105.36" + ":9080/~/gr.repairlog.tsotzolas.android";
-    public static final String DEFAULT_LIST_ID = "80EB1620-165B-4600-A1B1-D97032FDD9A0";
-    public static String DEFAULT_LIST_NAME = "My Tasks";
 
     @Override
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
-//        FacebookSdk.sdkInitialize(this);
         RealmLog.setLevel(LogLevel.TRACE);
     }
 }

@@ -141,12 +141,16 @@ public class SignInActivity extends AppCompatActivity implements
             acct = result.getSignInAccount();
             String username = "";
             String password = "";
+            //Κάνουμε έναν έλεγχο άμα ο χρήστης έχει το συγκεκριμένο email να του το αλλάξουμε
+            // γιατί με το email αυτό είναι ο λογαρισμός του Database Administrator στο Realm
             if (acct != null) {
                 if ("tsotzolas@gmail.com".equals(acct.getEmail())) {
                     username = "tsotzo1@gmail.com";
                 } else {
+                    //σαν username στο Realm βάζουμε το email του χρήστη απο το Google Sign In
                     username = acct.getEmail();
                 }
+                //Σαν password στο Realm βάζουμε το google id
                 password = acct.getId();
             }
 
@@ -172,14 +176,12 @@ public class SignInActivity extends AppCompatActivity implements
                     }
                 }
             });
-
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
             updateUI(false);
         }
     }
-
 
     @Override
     public void onSuccess(SyncUser user) {
@@ -314,6 +316,8 @@ public class SignInActivity extends AppCompatActivity implements
 
     public void gotoMain(View view) {
         showProgressDialog1();
+
+        //Κάνουμε Συγχρονισμό του Realm με τον Realm Object Server
         SyncRealm.realmSync();
 
 

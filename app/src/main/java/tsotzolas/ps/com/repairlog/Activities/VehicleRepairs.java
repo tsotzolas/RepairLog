@@ -91,7 +91,6 @@ public class VehicleRepairs extends AppCompatActivity {
                                                     .equalTo("vehicleId", VehicleView.selectedVehicles.getId())
                                                     .findAll();
                                             repairList = realm.copyFromRealm(repairRealmList);
-//                                            realm.commitTransaction();
                                             myAdapter1 = new MyAdapter1(VehicleRepairs.this, R.layout.view_list_row, repairList);
 
                                             ListView listView = (ListView) findViewById(R.id.vehicleList1);
@@ -197,7 +196,6 @@ public class VehicleRepairs extends AppCompatActivity {
     //Αλλάζουμε την λειτουργία του BackPress για να μας πηγαίνει στην MainActivity
     @Override
     public void onBackPressed() {
-        Log.d("CDA", "onBackPressed Called");
         Intent ki = new Intent(this, MainActivity.class);
         startActivity(ki);
     }
