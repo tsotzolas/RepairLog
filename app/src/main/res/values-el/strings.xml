@@ -82,4 +82,5 @@
     <string name="exit">Είσαι σίγουρος??Θές να φύγεις??</string>
     <string name="exitHeader">Έξοδος απο το RepairLog</string>
     <string name="add_other_photo">Επιλέξτε άλλη φωτογραφία</string>
+    <string name="repair_details">Λεπτομέριες Εργασίας</string>
 </resources>

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,13 +59,65 @@ public class VehicleRepairs extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.vehicleList1);
         listView.setAdapter(myAdapter1);
 
+
+        //Για το απλό click δέιχνουμε στο χρήστη την εργασία
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View v, int position,
+                                    long arg3)
+            {
+
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(VehicleRepairs.this, android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(VehicleRepairs.this);
+                }
+
+
+
+                LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+                final View dialogView = inflater.inflate(R.layout.view_repairs_list_row_for_alert, null);
+
+                //Αρχικοποιούμε τα πεδία
+                VehicleView.selectedRepair = (Repair) adapter.getItemAtPosition(position);
+                TextView date = (TextView) dialogView
+                        .findViewById(R.id.date_repair_log1);
+                TextView km = (TextView) dialogView
+                        .findViewById(R.id.km_repair_log1);
+                TextView cost = (TextView) dialogView
+                        .findViewById(R.id.cost_repair_log1);
+                TextView desc = (TextView) dialogView
+                        .findViewById(R.id.desc_repair_log1);
+
+
+                //Γεμίζουμε τις τιμές
+                date.setText(VehicleView.selectedRepair.getRepairDate().toString());
+                km.setText(VehicleView.selectedRepair.getVehicleKM());
+                cost.setText(VehicleView.selectedRepair.getRepairCost());
+                desc.setText(VehicleView.selectedRepair.getRepairDescription());
+
+                builder.setView(dialogView);
+                builder.setTitle(R.string.repair_details)
+                      .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(R.drawable.ic_action_name)
+                        .show();
+            }
+        });
+
+
+
+        //Με το longClick διαγράψουμε μια εργασία
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int arg2, long arg3) {
 
                 VehicleView.selectedRepair = (Repair) parent.getItemAtPosition(arg2);
-                Toast.makeText(VehicleRepairs.this, "Clicked!! " + parent.getItemAtPosition(arg2), Toast.LENGTH_SHORT).show();
                 // Can't manage to remove an item here
                 AlertDialog.Builder builder;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -109,7 +162,7 @@ public class VehicleRepairs extends AppCompatActivity {
                         .show();
 
                 myAdapter1.notifyDataSetChanged();
-                return false;
+                return true;
             }
         });
     }

@@ -110,6 +110,7 @@
     <string name="exit">Are you sure??Do you want to exit??</string>
     <string name="exitHeader">Exit from RepairLog</string>
     <string name="add_other_photo">Please add other photo</string>
+    <string name="repair_details">Repair Details</string>
 
 
 </resources>
