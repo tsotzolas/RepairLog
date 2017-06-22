@@ -54,9 +54,15 @@ public class SyncRealm {
                 public void onSuccess(SyncUser user) {
                     //Στο επιτυχημένο login κάνουμε και συγχρονισμό των δεδομένων
                     final SyncConfiguration syncConfiguration = new SyncConfiguration.Builder(user, RealmTasksApplication.REALM_URL).build();
-                    Realm.setDefaultConfiguration(syncConfiguration);
-                    realm = Realm.getDefaultInstance();
+                    try {
+                        Realm.setDefaultConfiguration(syncConfiguration);
+                        realm = Realm.getDefaultInstance();
 //                  Realm.setDefaultConfiguration(defaultConfig);
+                    } catch (Exception e) {
+                        System.out.println(e);
+
+                    }
+
                 }
 
                 @Override
@@ -66,8 +72,6 @@ public class SyncRealm {
             });
         }
     }
-
-
 
 
 }

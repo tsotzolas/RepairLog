@@ -253,9 +253,10 @@ public class SignInActivity extends AppCompatActivity implements
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
+            mProgressDialog1.setIndeterminate(true);
+            mProgressDialog1.setCanceledOnTouchOutside(false);
 
+        }
         mProgressDialog.show();
     }
 
@@ -266,16 +267,20 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
 
-
     private void showProgressDialog1() {
         if (mProgressDialog1 == null) {
             mProgressDialog1 = new ProgressDialog(this);
             mProgressDialog1.setMessage(getString(R.string.login_to_Realm));
             mProgressDialog1.setIndeterminate(true);
+            mProgressDialog1.setCanceledOnTouchOutside(false);
+
+
+
         }
 
         mProgressDialog1.show();
     }
+
 
     private void hideProgressDialog1() {
         if (mProgressDialog1 != null && mProgressDialog1.isShowing()) {
@@ -297,6 +302,7 @@ public class SignInActivity extends AppCompatActivity implements
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
         }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -320,7 +326,6 @@ public class SignInActivity extends AppCompatActivity implements
         //Κάνουμε Συγχρονισμό του Realm με τον Realm Object Server
         SyncRealm.realmSync();
 
-
         //Καθηστερούμε την όλη διαδικασία για να προλαβει να κάνει συγχρονισμο το Realm
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -334,15 +339,5 @@ public class SignInActivity extends AppCompatActivity implements
             }
 
         }, 5000); // 5000ms delay
-
-
-
-
     }
-
-
-
-
-
-
 }

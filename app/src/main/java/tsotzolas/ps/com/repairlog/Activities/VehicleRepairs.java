@@ -138,8 +138,6 @@ public class VehicleRepairs extends AppCompatActivity {
                                                     .equalTo("repairId", VehicleView.selectedRepair.getRepairId())
                                                     .findAll();
                                             result1.deleteAllFromRealm();
-
-
                                             repairRealmList = realm.where(Repair.class)
                                                     .equalTo("vehicleId", VehicleView.selectedVehicles.getId())
                                                     .findAll();
