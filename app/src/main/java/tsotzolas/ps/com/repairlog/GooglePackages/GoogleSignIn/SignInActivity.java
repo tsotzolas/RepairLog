@@ -251,13 +251,9 @@ public class SignInActivity extends AppCompatActivity implements
 
     private void showProgressDialog() {
         if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog1.setIndeterminate(true);
-            mProgressDialog1.setCanceledOnTouchOutside(false);
-
+            mProgressDialog = ProgressDialog.show(SignInActivity.this, "",
+            getString(R.string.loading), true);
         }
-        mProgressDialog.show();
     }
 
     private void hideProgressDialog() {
@@ -269,15 +265,9 @@ public class SignInActivity extends AppCompatActivity implements
 
     private void showProgressDialog1() {
         if (mProgressDialog1 == null) {
-            mProgressDialog1 = new ProgressDialog(this);
-            mProgressDialog1.setMessage(getString(R.string.login_to_Realm));
-            mProgressDialog1.setIndeterminate(true);
-            mProgressDialog1.setCanceledOnTouchOutside(false);
-
-
-
+            mProgressDialog1 = ProgressDialog.show(SignInActivity.this, "",
+                    getString(R.string.loading), true);
         }
-
         mProgressDialog1.show();
     }
 
