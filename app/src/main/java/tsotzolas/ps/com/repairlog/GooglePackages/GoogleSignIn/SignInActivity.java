@@ -142,7 +142,7 @@ public class SignInActivity extends AppCompatActivity implements
             String username = "";
             String password = "";
             //Κάνουμε έναν έλεγχο άμα ο χρήστης έχει το συγκεκριμένο email να του το αλλάξουμε
-            // γιατί με το email αυτό είναι ο λογαρισμός του Database Administrator στο Realm
+            // γιατί με το email αυτό είναι ο λογαρισμός του Database Administrator στο Realm Object Server
             if (acct != null) {
                 if ("tsotzolas@gmail.com".equals(acct.getEmail())) {
                     username = "tsotzo1@gmail.com";
